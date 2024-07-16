@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
-  
+
   auth-service:
     build: ./auth-service
     environment:
@@ -34,7 +34,7 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - "5433:5432"
-  
+
   document-service:
     build: ./document-service
     environment:
@@ -47,3 +47,26 @@ services:
       - "3001:3001"
     depends_on:
       - document-db
+
+  project-db:
+    build:
+      context: ./database
+    environment:
+      POSTGRES_DB: projects
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5434:5432"
+
+  project-service:
+    build: ./project-service
+    environment:
+      DB_NAME: projects
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_HOST: project-db
+      PORT: 3002
+    ports:
+      - "3002:3002"
+    depends_on:
+      - project-db

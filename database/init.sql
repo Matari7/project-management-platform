@@ -10,3 +10,10 @@ CREATE TABLE IF NOT EXISTS Documents (
   content TEXT NOT NULL,
   createdBy VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS Projects (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  createdBy VARCHAR(255) NOT NULL
+);
