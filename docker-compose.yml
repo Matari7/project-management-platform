@@ -70,3 +70,26 @@ services:
       - "3002:3002"
     depends_on:
       - project-db
+
+  task-db:
+    build:
+      context: ./database
+    environment:
+      POSTGRES_DB: tasks
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5435:5432"
+
+  task-service:
+    build: ./task-service
+    environment:
+      DB_NAME: tasks
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_HOST: task-db
+      PORT: 3003
+    ports:
+      - "3003:3003"
+    depends_on:
+      - task-db

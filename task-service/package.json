@@ -1,7 +1,7 @@
 {
-  "name": "document-service",
+  "name": "task-service",
   "version": "1.0.0",
-  "description": "Document Management Service",
+  "description": "Task Management Service",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js"
@@ -10,7 +10,6 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "pg": "^8.6.0",
-    "sequelize": "^6.3.5",
-    "multer": "^1.4.2"
+    "sequelize": "^6.3.5"
   }
 }

@@ -1,19 +1,23 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 
-const Document = sequelize.define('Document', {
+const Task = sequelize.define('Task', {
   title: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  content: {
+  description: {
     type: DataTypes.TEXT,
+    allowNull: true
+  },
+  status: {
+    type: DataTypes.STRING,
     allowNull: false
   },
-  createdBy: {
-    type: DataTypes.STRING,
+  projectId: {
+    type: DataTypes.INTEGER,
     allowNull: false
   }
 });
 
-module.exports = Document;
+module.exports = Task;
