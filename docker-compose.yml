@@ -93,3 +93,28 @@ services:
       - "3003:3003"
     depends_on:
       - task-db
+
+  user-service:
+    build:
+      context: ./user-service
+    ports:
+      - "3004:3000"
+    environment:
+      - DB_HOST=user-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=userdb
+      - DB_PORT=5432
+    depends_on:
+      - user-db
+
+  user-db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: userdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./user-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5436:5432"
