@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  auth-db:
+    build:
+      context: ./database
+    environment:
+      POSTGRES_DB: auth
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+  
+  auth-service:
+    build: ./auth-service
+    environment:
+      DB_NAME: auth
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_HOST: auth-db
+      JWT_SECRET: your_jwt_secret
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - auth-db
+
+  document-db:
+    build:
+      context: ./database
+    environment:
+      POSTGRES_DB: documents
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+  
+  document-service:
+    build: ./document-service
+    environment:
+      DB_NAME: documents
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_HOST: document-db
+      PORT: 3001
+    ports:
+      - "3001:3001"
+    depends_on:
+      - document-db
