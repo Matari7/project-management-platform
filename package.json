@@ -1,0 +1,19 @@
+{
+    "name": "project-management",
+    "version": "1.0.0",
+    "description": "Microservices for project management",
+    "main": "index.js",
+    "scripts": {
+        "start:create-user": "node create-user/index.js",
+        "start:delete-user": "node delete-user/index.js",
+        "start:all": "concurrently \"npm run start:create-user\" \"npm run start:delete-user\""
+    },
+    "devDependencies": {
+        "concurrently": "^7.6.0"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "mysql": "^2.18.1"
+    }
+}
