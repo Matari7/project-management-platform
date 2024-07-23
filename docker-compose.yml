@@ -1,120 +1,207 @@
 version: '3.8'
-
 services:
-  auth-db:
-    build:
-      context: ./database
-    environment:
-      POSTGRES_DB: auth
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-    ports:
-      - "5432:5432"
-
   auth-service:
     build: ./auth-service
-    environment:
-      DB_NAME: auth
-      DB_USER: user
-      DB_PASSWORD: password
-      DB_HOST: auth-db
-      JWT_SECRET: your_jwt_secret
-      PORT: 3000
     ports:
-      - "3000:3000"
+      - "4000:4000"
+    env_file:
+      - ./auth-service/.env
     depends_on:
       - auth-db
+    networks:
+      - project-network
 
-  document-db:
-    build:
-      context: ./database
+  auth-db:
+    image: postgres:alpine
     environment:
-      POSTGRES_DB: documents
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: auth
     ports:
-      - "5433:5432"
+      - "5432:5432"
+    networks:
+      - project-network
 
-  document-service:
-    build: ./document-service
-    environment:
-      DB_NAME: documents
-      DB_USER: user
-      DB_PASSWORD: password
-      DB_HOST: document-db
-      PORT: 3001
+  user-service:
+    build: ./user-service
     ports:
-      - "3001:3001"
+      - "4001:4001"
+    env_file:
+      - ./user-service/.env
     depends_on:
-      - document-db
+      - user-db
+    networks:
+      - project-network
 
-  project-db:
-    build:
-      context: ./database
+  user-db:
+    image: postgres:alpine
     environment:
-      POSTGRES_DB: projects
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: users
     ports:
-      - "5434:5432"
+      - "5433:5433"
+    networks:
+      - project-network
 
   project-service:
     build: ./project-service
-    environment:
-      DB_NAME: projects
-      DB_USER: user
-      DB_PASSWORD: password
-      DB_HOST: project-db
-      PORT: 3002
     ports:
-      - "3002:3002"
+      - "4002:4002"
+    env_file:
+      - ./project-service/.env
     depends_on:
       - project-db
+    networks:
+      - project-network
 
-  task-db:
-    build:
-      context: ./database
-    environment:
-      POSTGRES_DB: tasks
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+  project-db:
+    image: mongo:latest
     ports:
-      - "5435:5432"
+      - "27017:27017"
+    networks:
+      - project-network
 
   task-service:
     build: ./task-service
-    environment:
-      DB_NAME: tasks
-      DB_USER: user
-      DB_PASSWORD: password
-      DB_HOST: task-db
-      PORT: 3003
     ports:
-      - "3003:3003"
+      - "4003:4003"
+    env_file:
+      - ./task-service/.env
     depends_on:
       - task-db
+    networks:
+      - project-network
 
-  user-service:
-    build:
-      context: ./user-service
+  task-db:
+    image: mongo:latest
     ports:
-      - "3004:3000"
-    environment:
-      - DB_HOST=user-db
-      - DB_USER=user
-      - DB_PASSWORD=password
-      - DB_NAME=userdb
-      - DB_PORT=5432
-    depends_on:
-      - user-db
+      - "27018:27017"
+    networks:
+      - project-network
 
-  user-db:
-    image: postgres:13
+  document-service:
+    build: ./document-service
+    ports:
+      - "4004:4004"
+    env_file:
+      - ./document-service/.env
+    depends_on:
+      - document-db
+    networks:
+      - project-network
+
+  document-db:
+    image: mongo:latest
+    ports:
+      - "27019:27017"
+    networks:
+      - project-network
+
+  collab-service:
+    build: ./collab-service
+    ports:
+      - "4005:4005"
+    env_file:
+      - ./collab-service/.env
+    depends_on:
+      - collab-db
+    networks:
+      - project-network
+
+  collab-db:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - project-network
+
+  calendar-service:
+    build: ./calendar-service
+    ports:
+      - "4006:4006"
+    env_file:
+      - ./calendar-service/.env
+    depends_on:
+      - calendar-db
+    networks:
+      - project-network
+
+  calendar-db:
+    image: postgres:alpine
     environment:
-      POSTGRES_DB: userdb
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-    volumes:
-      - ./user-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+      POSTGRES_DB: calendar
     ports:
-      - "5436:5432"
+      - "5434:5432"
+    networks:
+      - project-network
+
+  notification-service:
+    build: ./notification-service
+    ports:
+      - "4007:4007"
+    env_file:
+      - ./notification-service/.env
+    depends_on:
+      - notification-db
+    networks:
+      - project-network
+
+  notification-db:
+    image: redis:alpine
+    ports:
+      - "6380:6379"
+    networks:
+      - project-network
+
+  comment-service:
+    build: ./comment-service
+    ports:
+      - "4008:4008"
+    env_file:
+      - ./comment-service/.env
+    depends_on:
+      - comment-db
+    networks:
+      - project-network
+
+  comment-db:
+    image: cassandra:latest
+    ports:
+      - "9042:9042"
+    networks:
+      - project-network
+
+  search-service:
+    build: ./search-service
+    ports:
+      - "4009:4009"
+    env_file:
+      - ./search-service/.env
+    depends_on:
+      - search-db
+    networks:
+      - project-network
+
+  search-db:
+    image: elasticsearch:7.10.1
+    environment:
+      discovery.type: single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - project-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    networks:
+      - project-network
+
+networks:
+  project-network:
+    driver: bridge

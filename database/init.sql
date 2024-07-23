@@ -25,3 +25,10 @@ CREATE TABLE IF NOT EXISTS Tasks (
   status VARCHAR(50) NOT NULL,
   projectId INTEGER NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS Projects (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  createdBy VARCHAR(255) NOT NULL
+);
