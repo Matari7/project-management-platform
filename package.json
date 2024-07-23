@@ -1,5 +1,5 @@
 {
-  "name": "project-management",
+  "name": "project-management-platform",
   "version": "1.0.0",
   "description": "Microservices for project management",
   "main": "index.js",

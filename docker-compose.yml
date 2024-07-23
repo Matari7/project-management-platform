@@ -1,207 +1,52 @@
 version: '3.8'
-services:
-  auth-service:
-    build: ./auth-service
-    ports:
-      - "4000:4000"
-    env_file:
-      - ./auth-service/.env
-    depends_on:
-      - auth-db
-    networks:
-      - project-network
 
-  auth-db:
-    image: postgres:alpine
+services:
+  postgres:
+    image: postgres:13
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: auth
+      POSTGRES_DB: project_management
     ports:
       - "5432:5432"
-    networks:
-      - project-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
 
-  user-service:
-    build: ./user-service
+  createProject:
+    build: ./createproject
     ports:
-      - "4001:4001"
-    env_file:
-      - ./user-service/.env
-    depends_on:
-      - user-db
-    networks:
-      - project-network
-
-  user-db:
-    image: postgres:alpine
+      - "3007:3007"
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: users
-    ports:
-      - "5433:5433"
-    networks:
-      - project-network
-
-  project-service:
-    build: ./project-service
-    ports:
-      - "4002:4002"
-    env_file:
-      - ./project-service/.env
+      DATABASE_URL: postgres://user:password@postgres:5432/project_management
     depends_on:
-      - project-db
-    networks:
-      - project-network
+      - postgres
 
-  project-db:
-    image: mongo:latest
+  deleteProject:
+    build: ./deleteproject
     ports:
-      - "27017:27017"
-    networks:
-      - project-network
-
-  task-service:
-    build: ./task-service
-    ports:
-      - "4003:4003"
-    env_file:
-      - ./task-service/.env
-    depends_on:
-      - task-db
-    networks:
-      - project-network
-
-  task-db:
-    image: mongo:latest
-    ports:
-      - "27018:27017"
-    networks:
-      - project-network
-
-  document-service:
-    build: ./document-service
-    ports:
-      - "4004:4004"
-    env_file:
-      - ./document-service/.env
-    depends_on:
-      - document-db
-    networks:
-      - project-network
-
-  document-db:
-    image: mongo:latest
-    ports:
-      - "27019:27017"
-    networks:
-      - project-network
-
-  collab-service:
-    build: ./collab-service
-    ports:
-      - "4005:4005"
-    env_file:
-      - ./collab-service/.env
-    depends_on:
-      - collab-db
-    networks:
-      - project-network
-
-  collab-db:
-    image: redis:alpine
-    ports:
-      - "6379:6379"
-    networks:
-      - project-network
-
-  calendar-service:
-    build: ./calendar-service
-    ports:
-      - "4006:4006"
-    env_file:
-      - ./calendar-service/.env
-    depends_on:
-      - calendar-db
-    networks:
-      - project-network
-
-  calendar-db:
-    image: postgres:alpine
+      - "3008:3008"
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: calendar
-    ports:
-      - "5434:5432"
-    networks:
-      - project-network
-
-  notification-service:
-    build: ./notification-service
-    ports:
-      - "4007:4007"
-    env_file:
-      - ./notification-service/.env
+      DATABASE_URL: postgres://user:password@postgres:5432/project_management
     depends_on:
-      - notification-db
-    networks:
-      - project-network
+      - postgres
 
-  notification-db:
-    image: redis:alpine
+  updateProject:
+    build: ./updateproject
     ports:
-      - "6380:6379"
-    networks:
-      - project-network
-
-  comment-service:
-    build: ./comment-service
-    ports:
-      - "4008:4008"
-    env_file:
-      - ./comment-service/.env
-    depends_on:
-      - comment-db
-    networks:
-      - project-network
-
-  comment-db:
-    image: cassandra:latest
-    ports:
-      - "9042:9042"
-    networks:
-      - project-network
-
-  search-service:
-    build: ./search-service
-    ports:
-      - "4009:4009"
-    env_file:
-      - ./search-service/.env
-    depends_on:
-      - search-db
-    networks:
-      - project-network
-
-  search-db:
-    image: elasticsearch:7.10.1
+      - "3009:3009"
     environment:
-      discovery.type: single-node
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    networks:
-      - project-network
+      DATABASE_URL: postgres://user:password@postgres:5432/project_management
+    depends_on:
+      - postgres
 
-  frontend:
-    build: ./frontend
+  readProject:
+    build: ./readproject
     ports:
-      - "8080:80"
-    networks:
-      - project-network
+      - "3010:3010"
+    environment:
+      DATABASE_URL: postgres://user:password@postgres:5432/project_management
+    depends_on:
+      - postgres
 
-networks:
-  project-network:
-    driver: bridge
+volumes:
+  postgres-data:
