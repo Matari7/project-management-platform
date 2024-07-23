@@ -5,19 +5,17 @@ const userService = require('./userService');
 const app = express();
 app.use(bodyParser.json());
 
-app.delete('/users/:id', async (req, res) => {
-  const { id } = req.params;
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
   try {
-    await userService.deleteUser(id);
-    res.status(204).send();
+    const { token, user } = await userService.loginUser(email, password);
+    res.status(200).json({ token, user });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
   }
 });
 
-app.listen(3004, () => {
-  console.log('Delete User service running on port 3004');
+app.listen(3006, () => {
+  console.log('Login service running on port 3006');
 });
-
-  
