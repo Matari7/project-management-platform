@@ -45,15 +45,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.delete('/projects/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const deleted = await projectService.deleteProject(id);
-    if (deleted) {
-      res.status(200).json({ message: 'Project deleted' });
-    } else {
-      res.status(404).json({ message: 'Project not found' });
-    }
+      await projectService.deleteProject(id);
+      res.status(200).send('Project deleted successfully');
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({error: err.message});
   }
 });
 
