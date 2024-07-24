@@ -1,18 +1,20 @@
-const pool = require('./db');
+const { mysqlUsersPool, mysqlProjectsPool } = require('./db');
 
-const createProject = (name, description) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      'INSERT INTO projects (name, description) VALUES ($1, $2) RETURNING *',
-      [name, description],
-      (error, results) => {
-        if (error) {
-          return reject(error);
-        }
-        resolve(results.rows[0]);
-      }
-    );
-  });
+const createProject = async (name, description, start_date, end_date, status, user_id) => {
+  // Verify user exists in MySQL users database
+  const [userRows] = await mysqlUsersPool.query('SELECT * FROM users WHERE id = ?', [user_id]);
+  if (userRows.length === 0) {
+    throw new Error('User does not exist');
+  }
+
+  // Insert project into MySQL projects database
+  const query = `
+    INSERT INTO projects (name, description, start_date, end_date, status, user_id)
+    VALUES (?, ?, ?, ?, ?, ?)`;
+  const values = [name, description, start_date, end_date, status, user_id];
+
+  const [result] = await mysqlProjectsPool.query(query, values);
+  return { id: result.insertId, name, description, start_date, end_date, status, user_id };
 };
 
 module.exports = {

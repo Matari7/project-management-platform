@@ -1,52 +1,68 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  postgres:
-    image: postgres:13
+  mysql-users:
+    image: mysql:8.0
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: project_management
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: cristiancaiza_users
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - mysql-users-data:/var/lib/mysql
 
-  createProject:
+  mysql-projects:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: cristiancaiza_projects
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-projects-data:/var/lib/mysql
+
+  createproject:
     build: ./createproject
     ports:
       - "3007:3007"
     environment:
-      DATABASE_URL: postgres://user:password@postgres:5432/project_management
+      MYSQL_PROJECTS_DATABASE_URL: mysql://user:password@mysql-projects:3306/cristiancaiza_projects
+      MYSQL_USERS_DATABASE_URL: mysql://user:password@mysql-users:3306/cristiancaiza_users
     depends_on:
-      - postgres
+      - mysql-users
+      - mysql-projects
 
-  deleteProject:
+  deleteproject:
     build: ./deleteproject
     ports:
       - "3008:3008"
     environment:
-      DATABASE_URL: postgres://user:password@postgres:5432/project_management
+      DATABASE_URL: mysql://user:password@mysql-projects:3306/cristiancaiza_projects
     depends_on:
-      - postgres
+      - mysql-projects
 
-  updateProject:
+  updateproject:
     build: ./updateproject
     ports:
       - "3009:3009"
     environment:
-      DATABASE_URL: postgres://user:password@postgres:5432/project_management
+      DATABASE_URL: mysql://user:password@mysql-projects:3306/cristiancaiza_projects
     depends_on:
-      - postgres
+      - mysql-projects
 
-  readProject:
+  readproject:
     build: ./readproject
     ports:
       - "3010:3010"
     environment:
-      DATABASE_URL: postgres://user:password@postgres:5432/project_management
+      DATABASE_URL: mysql://user:password@mysql-projects:3306/cristiancaiza_projects
     depends_on:
-      - postgres
+      - mysql-projects
 
 volumes:
-  postgres-data:
+  mysql-users-data:
+  mysql-projects-data:
