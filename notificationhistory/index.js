@@ -17,5 +17,5 @@ app.get("/notifications/history/:userId", async (req, res) => {
 });
 
 app.listen(3013, () => {
-  console.log("Notification History service running on port 3006");
+  console.log("Notification History service running on port 3013");
 });

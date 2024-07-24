@@ -17,5 +17,5 @@ app.get("/notifications/:id", async (req, res) => {
 });
 
 app.listen(3012, () => {
-  console.log("Receive Notification service running on port 3005");
+  console.log("Receive Notification service running on port 3012");
 });

@@ -17,5 +17,5 @@ app.post("/notifications", async (req, res) => {
 });
 
 app.listen(3011, () => {
-  console.log("Send Notification service running on port 3004");
+  console.log("Send Notification service running on port 3011");
 });
