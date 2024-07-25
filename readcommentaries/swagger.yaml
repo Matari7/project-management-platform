@@ -1,0 +1,20 @@
+openapi: 3.0.0
+info:
+  title: Read Commentaries API
+  version: 1.0.0
+paths:
+  /commentaries/{projectId}:
+    get:
+      summary: Get all commentaries for a project
+      parameters:
+        - in: path
+          name: projectId
+          schema:
+            type: integer
+          required: true
+          description: ID of the project
+      responses:
+        '200':
+          description: A list of commentaries
+        '500':
+          description: Internal server error

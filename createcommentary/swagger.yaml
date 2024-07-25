@@ -1,0 +1,26 @@
+openapi: 3.0.0
+info:
+  title: Create Commentary API
+  version: 1.0.0
+paths:
+  /commentaries:
+    post:
+      summary: Create a new commentary
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectId:
+                  type: integer
+                user_id:
+                  type: integer
+                content:
+                  type: string
+      responses:
+        '201':
+          description: Commentary created
+        '500':
+          description: Internal server error

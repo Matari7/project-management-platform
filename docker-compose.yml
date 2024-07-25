@@ -1,0 +1,68 @@
+version: '3.9'
+
+services:
+  mysql-users:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: cristiancaiza_users
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-users-data:/var/lib/mysql
+
+  mysql-projects:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: cristiancaiza_projects
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-projects-data:/var/lib/mysql
+
+  createproject:
+    build: ./createproject
+    ports:
+      - "3007:3007"
+    environment:
+      MYSQL_PROJECTS_DATABASE_URL: mysql://user:password@mysql-projects:3306/cristiancaiza_projects
+      MYSQL_USERS_DATABASE_URL: mysql://user:password@mysql-users:3306/cristiancaiza_users
+    depends_on:
+      - mysql-users
+      - mysql-projects
+
+  deleteproject:
+    build: ./deleteproject
+    ports:
+      - "3008:3008"
+    environment:
+      DATABASE_URL: mysql://user:password@mysql-projects:3306/cristiancaiza_projects
+    depends_on:
+      - mysql-projects
+
+  updateproject:
+    build: ./updateproject
+    ports:
+      - "3009:3009"
+    environment:
+      DATABASE_URL: mysql://user:password@mysql-projects:3306/cristiancaiza_projects
+    depends_on:
+      - mysql-projects
+
+  readproject:
+    build: ./readproject
+    ports:
+      - "3010:3010"
+    environment:
+      DATABASE_URL: mysql://user:password@mysql-projects:3306/cristiancaiza_projects
+    depends_on:
+      - mysql-projects
+
+volumes:
+  mysql-users-data:
+  mysql-projects-data:
