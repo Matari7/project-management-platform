@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const userService = require('./userService');
+const userService = require('./userservice');
+const auditService = require('../audit-service/auditservice'); // Asegúrate de que la ruta sea correcta
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,4 +19,10 @@ app.post('/login', async (req, res) => {
 
 app.listen(3006, () => {
   console.log('Login service running on port 3006');
+});
+
+// Configura y escucha eventos de auditoría
+userService.on('loginAttempt', (event) => {
+  console.log('Login attempt event received in login service:', event);
+  auditService.emit('loginAttempt', event); // Emitir evento para el servicio de auditoría
 });
