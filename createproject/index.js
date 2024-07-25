@@ -16,6 +16,6 @@ app.post('/projects', async (req, res) => {
   }
 });
 
-app.listen(3007, () => {
-  console.log('Create Project service running on port 3007');
+app.listen(3018, () => {
+  console.log('Create Project service running on port 3018');
 });
