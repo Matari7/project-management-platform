@@ -15,7 +15,7 @@ paths:
               properties:
                 projectId:
                   type: integer
-                userId:
+                user_id:
                   type: integer
                 content:
                   type: string

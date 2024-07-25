@@ -1,8 +1,8 @@
 const notificationModel = require("./notificationModel");
 
 class NotificationService {
-  async getNotificationHistory(userId) {
-    const notifications = await notificationModel.getNotificationHistoryByUserId(userId);
+  async getNotificationHistory(user_id) {
+    const notifications = await notificationModel.getNotificationHistoryByUserId(user_id);
     return notifications;
   }
 }

@@ -6,9 +6,9 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/commentaries', async (req, res) => {
-  const { projectId, userId, content } = req.body;
+  const { projectId, user_id, content } = req.body;
   try {
-    const commentary = await commentaryService.createCommentary(projectId, userId, content);
+    const commentary = await commentaryService.createCommentary(projectId, user_id, content);
     res.status(201).json(commentary);
   } catch (err) {
     console.error(err);

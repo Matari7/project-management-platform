@@ -5,10 +5,10 @@ const notificationService = require("./notificationService");
 const app = express();
 app.use(bodyParser.json());
 
-app.get("/notifications/history/:userId", async (req, res) => {
-  const { userId } = req.params;
+app.get("/notifications/history/:user_id", async (req, res) => {
+  const { user_id } = req.params;
   try {
-    const notifications = await notificationService.getNotificationHistory(userId);
+    const notifications = await notificationService.getNotificationHistory(user_id);
     res.status(200).json(notifications);
   } catch (err) {
     console.error(err);

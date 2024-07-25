@@ -3,11 +3,11 @@ const { v4: uuidv4 } = require("uuid");
 const notificationModel = require("./notificationModel");
 
 class NotificationService extends EventEmitter {
-  async sendNotification(message, userId) {
+  async sendNotification(message, user_id) {
     const notification = {
       id: uuidv4(),
       message,
-      userId,
+      user_id,
       timestamp: new Date().toISOString(),
     };
     await notificationModel.createNotification(notification);

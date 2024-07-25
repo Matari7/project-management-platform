@@ -6,9 +6,9 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post("/notifications", async (req, res) => {
-  const { message, userId } = req.body;
+  const { message, user_id } = req.body;
   try {
-    const notification = await notificationService.sendNotification(message, userId);
+    const notification = await notificationService.sendNotification(message, user_id);
     res.status(201).json(notification);
   } catch (err) {
     console.error(err);

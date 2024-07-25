@@ -3,13 +3,13 @@ const ddbDocClient = require("./db");
 
 const tableName = "Notifications";
 
-const getNotificationHistoryByUserId = async (userId) => {
+const getNotificationHistoryByUserId = async (user_id) => {
   const params = {
     TableName: tableName,
-    IndexName: "userId-index",
-    KeyConditionExpression: "userId = :userId",
+    IndexName: "user_id-index",
+    KeyConditionExpression: "user_id = :user_id",
     ExpressionAttributeValues: {
-      ":userId": userId,
+      ":user_id": user_id,
     },
   };
   const { Items } = await ddbDocClient.send(new QueryCommand(params));
