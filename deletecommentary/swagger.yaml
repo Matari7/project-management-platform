@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: Delete Commentary API
+  version: 1.0.0
+paths:
+  /commentaries/{id}:
+    delete:
+      summary: Delete a commentary by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the commentary
+      responses:
+        '200':
+          description: Commentary deleted successfully
+        '404':
+          description: Commentary not found
+        '500':
+          description: Internal server error
