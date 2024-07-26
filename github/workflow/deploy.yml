@@ -86,3 +86,135 @@ jobs:
         AWS_REGION: ${{ secrets.AWS_REGION }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Deploy Create Project Service
+      run: |
+        echo "Deploying Create Project Service"
+       
+       
+       
+        export PROJECT_DB_USER=${{ secrets.PROJECT_DB_USER }}
+        export PROJECT_DB_PASSWORD=${{ secrets.PROJECT_DB_PASSWORD }}
+        export PROJECT_DB_NAME=${{ secrets.PROJECT_DB_NAME }}
+        export PROJECT_DB_PORT=${{ secrets.PROJECT_DB_PORT }}
+        export USER_DB_HOST=${{ secrets.USER_DB_HOST }}
+        export USER_DB_USER=${{ secrets.USER_DB_USER }}
+        export USER_DB_PASSWORD=${{ secrets.USER_DB_PASSWORD }}
+        export USER_DB_NAME=${{ secrets.USER_DB_NAME }}
+        export USER_DB_PORT=${{ secrets.USER_DB_PORT }}
+        npm start --prefix createproject
+      env:
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Deploy Read Project Service
+      run: |
+        echo "Deploying Read Project Service"
+        export PROJECT_DB_HOST=${{ secrets.PROJECT_DB_HOST }}
+        export PROJECT_DB_USER=${{ secrets.PROJECT_DB_USER }}
+        export PROJECT_DB_PASSWORD=${{ secrets.PROJECT_DB_PASSWORD }}
+        export PROJECT_DB_NAME=${{ secrets.PROJECT_DB_NAME }}
+        export PROJECT_DB_PORT=${{ secrets.PROJECT_DB_PORT }}
+        npm start --prefix readproject
+      env:
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Deploy Update Project Service
+      run: |
+        echo "Deploying Update Project Service"
+        export PROJECT_DB_HOST=${{ secrets.PROJECT_DB_HOST }}
+        export PROJECT_DB_USER=${{ secrets.PROJECT_DB_USER }}
+        export PROJECT_DB_PASSWORD=${{ secrets.PROJECT_DB_PASSWORD }}
+        export PROJECT_DB_NAME=${{ secrets.PROJECT_DB_NAME }}
+        export PROJECT_DB_PORT=${{ secrets.PROJECT_DB_PORT }}
+        npm start --prefix updateproject
+      env:
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Deploy Delete Project Service
+      run: |
+        echo "Deploying Delete Project Service"
+        export PROJECT_DB_HOST=${{ secrets.PROJECT_DB_HOST }}
+        export PROJECT_DB_USER=${{ secrets.PROJECT_DB_USER }}
+        export PROJECT_DB_PASSWORD=${{ secrets.PROJECT_DB_PASSWORD }}
+        export PROJECT_DB_NAME=${{ secrets.PROJECT_DB_NAME }}
+        export PROJECT_DB_PORT=${{ secrets.PROJECT_DB_PORT }}
+        npm start --prefix deleteproject
+      env:
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+
+    - name: Deploy Create Commentary Service
+      run: |
+        echo "Deploying Create Commentary Service"
+       
+       
+       
+        export COMMENTARY_DB_USER=${{ secrets.COMMENTARY_DB_USER }}
+        export COMMENTARY_DB_PASSWORD=${{ secrets.COMMENTARY_DB_PASSWORD }}
+        export COMMENTARY_DB_NAME=${{ secrets.COMMENTARY_DB_NAME }}
+        export COMMENTARY_DB_PORT=${{ secrets.COMMENTARY_DB_PORT }}
+        export USER_DB_HOST=${{ secrets.USER_DB_HOST }}
+        export USER_DB_USER=${{ secrets.USER_DB_USER }}
+        export USER_DB_PASSWORD=${{ secrets.USER_DB_PASSWORD }}
+        export USER_DB_NAME=${{ secrets.USER_DB_NAME }}
+        export USER_DB_PORT=${{ secrets.USER_DB_PORT }}
+        export PROJECT_DB_HOST=${{ secrets.PROJECT_DB_HOST }}
+        export PROJECT_DB_USER=${{ secrets.PROJECT_DB_USER }}
+        export PROJECT_DB_PASSWORD=${{ secrets.PROJECT_DB_PASSWORD }}
+        export PROJECT_DB_NAME=${{ secrets.PROJECT_DB_NAME }}
+        export PROJECT_DB_PORT=${{ secrets.PROJECT_DB_PORT }}
+        npm start --prefix createproject
+      env:
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Deploy Read Commentary Service
+      run: |
+        echo "Deploying Read Commentary Service"
+        export COMMENTARY_DB_HOST=${{ secrets.COMMENTARY_DB_HOST }}
+        export COMMENTARY_DB_USER=${{ secrets.COMMENTARY_DB_USER }}
+        export COMMENTARY_DB_PASSWORD=${{ secrets.COMMENTARY_DB_PASSWORD }}
+        export COMMENTARY_DB_NAME=${{ secrets.COMMENTARY_DB_NAME }}
+        export COMMENTARY_DB_PORT=${{ secrets.COMMENTARY_DB_PORT }}
+        npm start --prefix readcommentary
+      env:
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Deploy Update Commentary Service
+      run: |
+        echo "Deploying Update Commentary Service"
+        export COMMENTARY_DB_HOST=${{ secrets.COMMENTARY_DB_HOST }}
+        export COMMENTARY_DB_USER=${{ secrets.COMMENTARY_DB_USER }}
+        export COMMENTARY_DB_PASSWORD=${{ secrets.COMMENTARY_DB_PASSWORD }}
+        export COMMENTARY_DB_NAME=${{ secrets.COMMENTARY_DB_NAME }}
+        export COMMENTARY_DB_PORT=${{ secrets.COMMENTARY_DB_PORT }}
+        npm start --prefix updatecommentary
+      env:
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Deploy Delete Commentary Service
+      run: |
+        echo "Deploying Delete Commentary Service"
+        export COMMENTARY_DB_HOST=${{ secrets.COMMENTARY_DB_HOST }}
+        export COMMENTARY_DB_USER=${{ secrets.COMMENTARY_DB_USER }}
+        export COMMENTARY_DB_PASSWORD=${{ secrets.COMMENTARY_DB_PASSWORD }}
+        export COMMENTARY_DB_NAME=${{ secrets.COMMENTARY_DB_NAME }}
+        export COMMENTARY_DB_PORT=${{ secrets.COMMENTARY_DB_PORT }}
+        npm start --prefix deletecommentary
+      env:
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
