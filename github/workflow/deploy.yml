@@ -27,7 +27,9 @@ jobs:
     - name: Deploy Create Document Service
       run: |
         echo "Deploying Create Document Service"
-        export DOCUMENT_DB_HOST=${{ secrets.DOCUMENT_DB_HOST }}
+       
+       
+       
         export DOCUMENT_DB_USER=${{ secrets.DOCUMENT_DB_USER }}
         export DOCUMENT_DB_PASSWORD=${{ secrets.DOCUMENT_DB_PASSWORD }}
         export DOCUMENT_DB_NAME=${{ secrets.DOCUMENT_DB_NAME }}
