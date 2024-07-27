@@ -94,9 +94,9 @@ jobs:
     - name: Stop running containers
       run: |
         services=(
-          "createCommentary" "createProject" "deleteCommentary" "deleteProject" 
-          "notificationHistory" "readCommentaries" "readProject" "receiveNotification" 
-          "sendNotification" "updateCommentary" "updateProject"
+          "createcommentary" "createproject" "deletecommentary" "deleteproject" 
+          "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
+          "sendnotification" "updatecommentary" "updateproject"
         )
 
         for service in "${services[@]}"
@@ -112,12 +112,12 @@ jobs:
     - name: Run new containers
       run: |
         services=(
-          "createcommentary" "createproject" "deletepommentary" "deleteproject" 
-          "notificationpistory" "readpommentaries" "readproject" "receivenotification" 
+          "createcommentary" "createproject" "deletecommentary" "deleteproject" 
+          "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
           "sendnotification" "updatecommentary" "updateproject"
         )
 
-        ports=(3001 3002 3003 3004 3005 3006 3007 3008 3009 3010 3011)
+        ports=(3014 3018 3017 3008 3013 3015 3010 3012 3011 3016 3009)
 
         i=0
         for service in "${services[@]}"
