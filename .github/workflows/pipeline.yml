@@ -4,16 +4,7 @@ on:
   push:
     branches:
       - main
-env:
-  AWS_REGION: ${{ secrets.AWS_REGION }}                  # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REGISTRY: 339712766050.dkr.ecr.us-east-2.amazonaws.com  # set this to your ECR registry
-  ECR_REPOSITORY: grupo14-cinema-platform           # set this to your Amazon ECR repository name
-  ECS_SERVICE: srv-cinema-platform-g14                # set this to your Amazon ECS service name
-  ECS_CLUSTER: app-cinema-platform                # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION:  task-cinema-platform-frontend  # set this to the path to your Amazon ECS task definition
-                                               # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: cinemaFrontend                  # set this to the name of the container in the
-                                               # containerDefinitions section of your task definition
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -76,9 +67,9 @@ jobs:
     - name: Pull Docker images
       run: |
         services=(
-          "createCommentary" "createProject" "deleteCommentary" "deleteProject" 
-          "notificationHistory" "readCommentaries" "readProject" "receiveNotification" 
-          "sendNotification" "updateCommentary" "updateProject"
+          "createcommentary" "createproject" "deletecommentary" "deleteproject" 
+          "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
+          "sendnotification" "updatecommentary" "updateproject"
         )
 
         for service in "${services[@]}"

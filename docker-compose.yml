@@ -1,68 +1,131 @@
-version: '3.9'
+version: '3.8'
 
 services:
-  mysql-users:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: cristiancaiza_users
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+  createcommentaries:
+    image: ${DOCKERHUB_USERNAME}/createcommentaries:latest
+    container_name: createcommentaries
     ports:
-      - "3306:3306"
-    volumes:
-      - mysql-users-data:/var/lib/mysql
+      - "3014:3014"
+    environment:
+      - COMMENTARY_DB_HOST=${COMMENTARY_DB_HOST}
+      - COMMENTARY_DB_USER=${COMMENTARY_DB_USER}
+      - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
+      - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
+      - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
 
-  mysql-projects:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: cristiancaiza_projects
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+  readcommentaries:
+    image: ${DOCKERHUB_USERNAME}/readcommentaries:latest
+    container_name: readcommentaries
     ports:
-      - "3307:3306"
-    volumes:
-      - mysql-projects-data:/var/lib/mysql
+      - "3015:3015"
+    environment:
+      - COMMENTARY_DB_HOST=${COMMENTARY_DB_HOST}
+      - COMMENTARY_DB_USER=${COMMENTARY_DB_USER}
+      - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
+      - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
+      - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+
+  updatecommentary:
+    image: ${DOCKERHUB_USERNAME}/updatecommentary:latest
+    container_name: updatecommentary
+    ports:
+      - "3016:3016"
+    environment:
+      - COMMENTARY_DB_HOST=${COMMENTARY_DB_HOST}
+      - COMMENTARY_DB_USER=${COMMENTARY_DB_USER}
+      - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
+      - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
+      - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+
+  deletecommentary:
+    image: ${DOCKERHUB_USERNAME}/deletecommentary:latest
+    container_name: deletecommentary
+    ports:
+      - "3017:3017"
+    environment:
+      - COMMENTARY_DB_HOST=${COMMENTARY_DB_HOST}
+      - COMMENTARY_DB_USER=${COMMENTARY_DB_USER}
+      - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
+      - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
+      - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
 
   createproject:
-    build: ./createproject
+    image: ${DOCKERHUB_USERNAME}/createproject:latest
+    container_name: createproject
     ports:
-      - "3007:3007"
+      - "3018:3018"
     environment:
-      MYSQL_PROJECTS_DATABASE_URL: mysql://user:password@mysql-projects:3306/cristiancaiza_projects
-      MYSQL_USERS_DATABASE_URL: mysql://user:password@mysql-users:3306/cristiancaiza_users
-    depends_on:
-      - mysql-users
-      - mysql-projects
-
-  deleteproject:
-    build: ./deleteproject
-    ports:
-      - "3008:3008"
-    environment:
-      DATABASE_URL: mysql://user:password@mysql-projects:3306/cristiancaiza_projects
-    depends_on:
-      - mysql-projects
-
-  updateproject:
-    build: ./updateproject
-    ports:
-      - "3009:3009"
-    environment:
-      DATABASE_URL: mysql://user:password@mysql-projects:3306/cristiancaiza_projects
-    depends_on:
-      - mysql-projects
+      - PROJECT_DB_HOST=${PROJECT_DB_HOST}
+      - PROJECT_DB_USER=${PROJECT_DB_USER}
+      - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
+      - PROJECT_DB_NAME=${PROJECT_DB_NAME}
+      - PROJECT_DB_PORT=${PROJECT_DB_PORT}
 
   readproject:
-    build: ./readproject
+    image: ${DOCKERHUB_USERNAME}/readproject:latest
+    container_name: readproject
     ports:
       - "3010:3010"
     environment:
-      DATABASE_URL: mysql://user:password@mysql-projects:3306/cristiancaiza_projects
-    depends_on:
-      - mysql-projects
+      - PROJECT_DB_HOST=${PROJECT_DB_HOST}
+      - PROJECT_DB_USER=${PROJECT_DB_USER}
+      - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
+      - PROJECT_DB_NAME=${PROJECT_DB_NAME}
+      - PROJECT_DB_PORT=${PROJECT_DB_PORT}
 
-volumes:
-  mysql-users-data:
-  mysql-projects-data:
+  updateproject:
+    image: ${DOCKERHUB_USERNAME}/updateproject:latest
+    container_name: updateproject
+    ports:
+      - "3009:3009"
+    environment:
+      - PROJECT_DB_HOST=${PROJECT_DB_HOST}
+      - PROJECT_DB_USER=${PROJECT_DB_USER}
+      - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
+      - PROJECT_DB_NAME=${PROJECT_DB_NAME}
+      - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+
+  deleteproject:
+    image: ${DOCKERHUB_USERNAME}/deleteproject:latest
+    container_name: deleteProject
+    ports:
+      - "3008:3008"
+    environment:
+      - PROJECT_DB_HOST=${PROJECT_DB_HOST}
+      - PROJECT_DB_USER=${PROJECT_DB_USER}
+      - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
+      - PROJECT_DB_NAME=${PROJECT_DB_NAME}
+      - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+
+  notificationhistory:
+    image: ${DOCKERHUB_USERNAME}/notificationhistory:latest
+    container_name: notificationhistory
+    ports:
+      - "3013:3013"
+    environment:
+      - NOTIFICATION_DB_HOST=${NOTIFICATION_DB_HOST}
+      - NOTIFICATION_DB_USER=${NOTIFICATION_DB_USER}
+      - NOTIFICATION_DB_PASSWORD=${NOTIFICATION_DB_PASSWORD}
+      - NOTIFICATION_DB_NAME=${NOTIFICATION_DB_NAME}
+      - NOTIFICATION_DB_PORT=${NOTIFICATION_DB_PORT}
+
+  receivenotification:
+    image: ${DOCKERHUB_USERNAME}/receivenotification:latest
+    container_name: receivenotification
+    ports:
+      - "3012:3012"
+    environment:
+      - NOTIFICATION_DB_HOST=${NOTIFICATION_DB_HOST}
+      - NOTIFICATION_DB_USER=${NOTIFICATION_DB_USER}
+      - NOTIFICATION_DB_PASSWORD=${NOTIFICATION_DB_PASSWORD}
+      - NOTIFICATION_DB_NAME=${NOTIFICATION_DB_NAME}
+      - NOTIFICATION_DB_PORT=${NOTIFICATION_DB_PORT}
+
+  sendnotification:
+    image: ${DOCKERHUB_USERNAME}/sendnotification:latest
+    container_name: sendnotification
+    ports:
+      - "3011:3011"
+    environment:
+      - AWS_REGION=${AWS_REGION2}
+      - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
