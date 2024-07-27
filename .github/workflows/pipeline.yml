@@ -65,6 +65,21 @@ jobs:
         echo "${{ secrets.AWS_PRIVATE_KEY }}" > key.pem
         chmod 600 key.pem
 
+    - name: Install Docker on EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          sudo yum update -y
+          sudo amazon-linux-extras install docker -y
+          sudo service docker start
+          sudo usermod -a -G docker ec2-user
+          sudo systemctl enable docker
+        EOF
+
+    - name: Verify Docker installation
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} "docker --version"
+      
+
     - name: Pull Docker images
       run: |
         services=(
