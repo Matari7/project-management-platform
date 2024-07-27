@@ -25,9 +25,9 @@ jobs:
     - name: Build up Dockers
       run: |
         services=(
-          "createCommentary" "createProject" "deleteCommentary" "deleteProject" 
-          "notificationHistory" "readCommentaries" "readProject" "receiveNotification" 
-          "sendNotification" "updateCommentary" "updateProject"
+          "createcommentary" "createproject" "deletecommentary" "deleteproject" 
+          "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
+          "sendnotification" "updatecommentary" "updateproject"
         )
         
         for service in "${services[@]}"
