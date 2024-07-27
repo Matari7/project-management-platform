@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
@@ -56,6 +56,7 @@ jobs:
         docker-compose -f ./docker/docker-compose.yml up -d
 
   deploy-AWS:
+    needs: [build-and-push] 
     runs-on: ubuntu-latest
 
     steps:
@@ -98,9 +99,9 @@ jobs:
     - name: Run new containers
       run: |
         services=(
-          "createCommentary" "createProject" "deleteCommentary" "deleteProject" 
-          "notificationHistory" "readCommentaries" "readProject" "receiveNotification" 
-          "sendNotification" "updateCommentary" "updateProject"
+          "createcommentary" "createproject" "deletepommentary" "deleteproject" 
+          "notificationpistory" "readpommentaries" "readproject" "receivenotification" 
+          "sendnotification" "updatecommentary" "updateproject"
         )
 
         ports=(3001 3002 3003 3004 3005 3006 3007 3008 3009 3010 3011)
