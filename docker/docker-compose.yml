@@ -54,7 +54,8 @@ services:
       - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
 
   createproject:
-    image: ${DOCKERHUB_USERNAME}/createproject:latest
+    build:
+      context: ../createproject
     container_name: createproject
     ports:
       - "3018:3018"
@@ -66,7 +67,8 @@ services:
       - PROJECT_DB_PORT=${PROJECT_DB_PORT}
 
   readproject:
-    image: ${DOCKERHUB_USERNAME}/readproject:latest
+    build:
+      context: ../readproject
     container_name: readproject
     ports:
       - "3010:3010"
@@ -78,7 +80,8 @@ services:
       - PROJECT_DB_PORT=${PROJECT_DB_PORT}
 
   updateproject:
-    image: ${DOCKERHUB_USERNAME}/updateproject:latest
+    build:
+      context: ../updateproject
     container_name: updateproject
     ports:
       - "3009:3009"
@@ -90,8 +93,9 @@ services:
       - PROJECT_DB_PORT=${PROJECT_DB_PORT}
 
   deleteproject:
-    image: ${DOCKERHUB_USERNAME}/deleteproject:latest
-    container_name: deleteProject
+    build:
+      context: ../deleteproject
+    container_name: deleteproject
     ports:
       - "3008:3008"
     environment:
@@ -102,7 +106,8 @@ services:
       - PROJECT_DB_PORT=${PROJECT_DB_PORT}
 
   notificationhistory:
-    image: ${DOCKERHUB_USERNAME}/notificationhistory:latest
+    build:
+      context: ../notificationhistory
     container_name: notificationhistory
     ports:
       - "3013:3013"
@@ -114,7 +119,8 @@ services:
       - NOTIFICATION_DB_PORT=${NOTIFICATION_DB_PORT}
 
   receivenotification:
-    image: ${DOCKERHUB_USERNAME}/receivenotification:latest
+    build:
+      context: ../receivenotification
     container_name: receivenotification
     ports:
       - "3012:3012"
@@ -126,7 +132,8 @@ services:
       - NOTIFICATION_DB_PORT=${NOTIFICATION_DB_PORT}
 
   sendnotification:
-    image: ${DOCKERHUB_USERNAME}/sendnotification:latest
+    build:
+      context: ../sendnotification
     container_name: sendnotification
     ports:
       - "3011:3011"
