@@ -1,6 +1,6 @@
 const EventEmitter = require('events');
 const bcrypt = require('bcrypt');
-const userModel = require('./userModel');
+const userModel = require('./usermodel');
 
 class UserService extends EventEmitter {
   async updateUser(id, email, password) {
