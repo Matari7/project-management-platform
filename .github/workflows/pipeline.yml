@@ -134,7 +134,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name readdocument-plataform-aws -p 3021:3021 ${{ secrets.DOCKERHUB_USERNAME }}/readdocument:latest'
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name updatedocument-plataform-aws -p 3022:3022 ${{ secrets.DOCKERHUB_USERNAME }}/updatedocument:latest'
     
-          - name: Set up Node.js
+    - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '14'
