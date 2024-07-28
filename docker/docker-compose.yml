@@ -133,3 +133,120 @@ services:
     environment:
       - AWS_REGION=${AWS_REGION}
       - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
+
+  create-user:
+    build:
+      context: ../create-user
+    container_name: create-user
+    ports:
+      - "3001:3001"
+    environment:
+      - USER_DB_HOST=${USER_DB_HOST}
+      - USER_DB_USER=${USER_DB_USER}
+      - USER_DB_PASSWORD=${USER_DB_PASSWORD}
+      - USER_DB_NAME=${USER_DB_NAME}
+      - USER_DB_PORT=${USER_DB_PORT}
+
+  read-user:
+    build:
+      context: ../read-user
+    container_name: read-user
+    ports:
+      - "3002:3002"
+    environment:
+      - USER_DB_HOST=${USER_DB_HOST}
+      - USER_DB_USER=${USER_DB_USER}
+      - USER_DB_PASSWORD=${USER_DB_PASSWORD}
+      - USER_DB_NAME=${USER_DB_NAME}
+      - USER_DB_PORT=${USER_DB_PORT}
+          
+  update-user:
+    build:
+      context: ../update-user
+    container_name: update-user
+    ports:
+      - "3003:3003"
+    environment:
+      - USER_DB_HOST=${USER_DB_HOST}
+      - USER_DB_USER=${USER_DB_USER}
+      - USER_DB_PASSWORD=${USER_DB_PASSWORD}
+      - USER_DB_NAME=${USER_DB_NAME}
+      - USER_DB_PORT=${USER_DB_PORT}
+
+  delete-user:
+    build:
+      context: ./delete-user
+    container_name: delete-user
+    ports:
+      - "3004:3004"
+    environment:
+      - USER_DB_HOST=${USER_DB_HOST}
+      - USER_DB_USER=${USER_DB_USER}
+      - USER_DB_PASSWORD=${USER_DB_PASSWORD}
+      - USER_DB_NAME=${USER_DB_NAME}
+      - USER_DB_PORT=${USER_DB_PORT}
+
+  login:
+    build:
+      context: ./login
+    container_name: login
+    ports:
+      - "3006:3006"
+    environment:
+      - USER_DB_HOST=${USER_DB_HOST}
+      - USER_DB_USER=${USER_DB_USER}
+      - USER_DB_PASSWORD=${USER_DB_PASSWORD}
+      - USER_DB_NAME=${USER_DB_NAME}
+      - USER_DB_PORT=${USER_DB_PORT}
+
+  createdocument:
+    build:
+      context: ./createdocument
+    container_name: createdocument
+    ports:
+      - "3019:3019"
+    environment:
+      - DOCUMENT_DB_HOST=${DOCUMENT_DB_HOST}
+      - DOCUMENT_DB_USER=${DOCUMENT_DB_USER}
+      - DOCUMENT_DB_PASSWORD=${DOCUMENT_DB_PASSWORD}
+      - DOCUMENT_DB_NAME=${DOCUMENT_DB_NAME}
+      - DOCUMENT_DB_PORT=${DOCUMENT_DB_PORT}
+
+  deletedocument:
+    build:
+      context: ./deletecommentary
+    container_name: deletecommentary
+    ports:
+      - "3022:3022"
+    environment:
+      - DOCUMENT_DB_HOST=${DOCUMENT_DB_HOST}
+      - DOCUMENT_DB_USER=${DOCUMENT_DB_USER}
+      - DOCUMENT_DB_PASSWORD=${DOCUMENT_DB_PASSWORD}
+      - DOCUMENT_DB_NAME=${DOCUMENT_DB_NAME}
+      - DOCUMENT_DB_PORT=${DOCUMENT_DB_PORT}
+
+  readdocument:
+    build:
+      context: ../readdocument
+    container_name: readdocument
+    ports:
+      - "3020:3020"
+    environment:
+      - DOCUMENT_DB_HOST=${DOCUMENT_DB_HOST}
+      - DOCUMENT_DB_USER=${DOCUMENT_DB_USER}
+      - DOCUMENT_DB_PASSWORD=${DOCUMENT_DB_PASSWORD}
+      - DOCUMENT_DB_NAME=${DOCUMENT_DB_NAME}
+      - DOCUMENT_DB_PORT=${DOCUMENT_DB_PORT}
+    
+  updatedocument:
+    build:
+      context: ./updatedocument
+    container_name: updatedocument
+    ports:
+      - "3021:3021"
+    environment:
+      - DOCUMENT_DB_HOST=${DOCUMENT_DB_HOST}
+      - DOCUMENT_DB_USER=${DOCUMENT_DB_USER}
+      - DOCUMENT_DB_PASSWORD=${DOCUMENT_DB_PASSWORD}
+      - DOCUMENT_DB_NAME=${DOCUMENT_DB_NAME}
+      - DOCUMENT_DB_PORT=${DOCUMENT_DB_PORT}
