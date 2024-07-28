@@ -134,4 +134,138 @@ services:
       - AWS_REGION=${AWS_REGION}
       - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
     env_file:
-    - ./env
+    - ./envversion: '3.8'
+
+services:
+  createcommentary:
+    build:
+      context: ../createcommentary
+    container_name: createcommentary
+    ports:
+      - "3014:3014"
+    environment:
+      - COMMENTARY_DB_HOST=${COMMENTARY_DB_HOST}
+      - COMMENTARY_DB_USER=${COMMENTARY_DB_USER}
+      - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
+      - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
+      - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+
+  readcommentaries:
+    build:
+      context: ../readcommentaries
+    container_name: readcommentaries
+    ports:
+      - "3015:3015"
+    environment:
+      - COMMENTARY_DB_HOST=${COMMENTARY_DB_HOST}
+      - COMMENTARY_DB_USER=${COMMENTARY_DB_USER}
+      - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
+      - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
+      - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+
+  updatecommentary:
+    build:
+      context: ../updatecommentary
+    container_name: updatecommentary
+    ports:
+      - "3016:3016"
+    environment:
+      - COMMENTARY_DB_HOST=${COMMENTARY_DB_HOST}
+      - COMMENTARY_DB_USER=${COMMENTARY_DB_USER}
+      - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
+      - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
+      - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+
+  deletecommentary:
+    build:
+      context: ../deletecommentary
+    container_name: deletecommentary
+    ports:
+      - "3017:3017"
+    environment:
+      - COMMENTARY_DB_HOST=${COMMENTARY_DB_HOST}
+      - COMMENTARY_DB_USER=${COMMENTARY_DB_USER}
+      - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
+      - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
+      - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+
+  createproject:
+    build:
+      context: ../createproject
+    container_name: createproject
+    ports:
+      - "3018:3018"
+    environment:
+      - PROJECT_DB_HOST=${PROJECT_DB_HOST}
+      - PROJECT_DB_USER=${PROJECT_DB_USER}
+      - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
+      - PROJECT_DB_NAME=${PROJECT_DB_NAME}
+      - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+
+  readproject:
+    build:
+      context: ../readproject
+    container_name: readproject
+    ports:
+      - "3010:3010"
+    environment:
+      - PROJECT_DB_HOST=${PROJECT_DB_HOST}
+      - PROJECT_DB_USER=${PROJECT_DB_USER}
+      - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
+      - PROJECT_DB_NAME=${PROJECT_DB_NAME}
+      - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+
+  updateproject:
+    build:
+      context: ../updateproject
+    container_name: updateproject
+    ports:
+      - "3009:3009"
+    environment:
+      - PROJECT_DB_HOST=${PROJECT_DB_HOST}
+      - PROJECT_DB_USER=${PROJECT_DB_USER}
+      - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
+      - PROJECT_DB_NAME=${PROJECT_DB_NAME}
+      - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+
+  deleteproject:
+    build:
+      context: ../deleteproject
+    container_name: deleteproject
+    ports:
+      - "3008:3008"
+    environment:
+      - PROJECT_DB_HOST=${PROJECT_DB_HOST}
+      - PROJECT_DB_USER=${PROJECT_DB_USER}
+      - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
+      - PROJECT_DB_NAME=${PROJECT_DB_NAME}
+      - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+
+  notificationhistory:
+    build:
+      context: ../notificationhistory
+    container_name: notificationhistory
+    ports:
+      - "3013:3013"
+    environment:
+      - AWS_REGION=${AWS_REGION}
+      - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
+
+  receivenotification:
+    build:
+      context: ../receivenotification
+    container_name: receivenotification
+    ports:
+      - "3012:3012"
+    environment:
+      - AWS_REGION=${AWS_REGION}
+      - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
+  sendnotification:
+    build:
+      context: ../sendnotification
+    container_name: sendnotification
+    ports:
+      - "3011:3011"
+    environment:
+      - AWS_REGION=${AWS_REGION}
+      - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}

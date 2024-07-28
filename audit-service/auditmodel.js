@@ -1,7 +1,6 @@
 const AWS = require('aws-sdk');
 
 const recordLoginAttempt = (userId, email, success, timestamp) => {
-  // Crear el cliente de DynamoDB dentro de la función
   const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
   const params = {

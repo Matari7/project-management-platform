@@ -1,10 +1,14 @@
 require('dotenv').config();
+console.log('AWS_REGION:', process.env.AWS_REGION);
+console.log('AWS_ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID);
+console.log('AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY);
+
 
 const AWS = require('aws-sdk');
 const EventEmitter = require('events');
 const auditModel = require('./auditmodel');
 
-// Configura AWS SDK con valores directos para pruebas
+// Configurar AWS SDK usando variables de entorno
 AWS.config.update({
   region: process.env.AWS_REGION,
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
