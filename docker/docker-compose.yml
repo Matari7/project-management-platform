@@ -13,6 +13,8 @@ services:
       - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
       - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
       - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+    env_file:
+      - ./.env      
 
   readcommentaries:
     build:
@@ -26,7 +28,9 @@ services:
       - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
       - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
       - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
-
+    env_file:
+      - ./.env
+      
   updatecommentary:
     build:
       context: ../updatecommentary
@@ -39,6 +43,8 @@ services:
       - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
       - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
       - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+    env_file:
+      - ./.env
 
   deletecommentary:
     build:
@@ -52,6 +58,8 @@ services:
       - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
       - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
       - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+    env_file:
+      - ./.env
 
   createproject:
     build:
@@ -65,6 +73,8 @@ services:
       - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
       - PROJECT_DB_NAME=${PROJECT_DB_NAME}
       - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+    env_file:
+      - ./.env
 
   readproject:
     build:
@@ -78,6 +88,8 @@ services:
       - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
       - PROJECT_DB_NAME=${PROJECT_DB_NAME}
       - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+    env_file:
+      - ./.env
 
   updateproject:
     build:
@@ -91,6 +103,8 @@ services:
       - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
       - PROJECT_DB_NAME=${PROJECT_DB_NAME}
       - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+    env_file:
+      - ./.env
 
   deleteproject:
     build:
@@ -104,6 +118,8 @@ services:
       - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
       - PROJECT_DB_NAME=${PROJECT_DB_NAME}
       - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+    env_file:
+      - ./.env
 
   notificationhistory:
     build:
@@ -114,6 +130,8 @@ services:
     environment:
       - AWS_REGION=${AWS_REGION}
       - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
+    env_file:
+      - ./.env
 
   receivenotification:
     build:
@@ -124,6 +142,8 @@ services:
     environment:
       - AWS_REGION=${AWS_REGION}
       - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
+    env_file:
+      - ./.env
   sendnotification:
     build:
       context: ../sendnotification
@@ -133,3 +153,5 @@ services:
     environment:
       - AWS_REGION=${AWS_REGION}
       - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
+    env_file:
+      - ./.env
