@@ -3,7 +3,7 @@ version: '3.8'
 services:
   createcommentary:
     build:
-      context: ./createcommentary
+      context: ../createcommentary
     container_name: createcommentary
     ports:
       - "3014:3014"
@@ -12,7 +12,7 @@ services:
 
   readcommentaries:
     build:
-      context: ./readcommentaries
+      context: ../readcommentaries
     container_name: readcommentaries
     ports:
       - "3015:3015"
@@ -21,7 +21,7 @@ services:
 
   updatecommentary:
     build:
-      context: ./updatecommentary
+      context: ../updatecommentary
     container_name: updatecommentary
     ports:
       - "3016:3016"
@@ -29,7 +29,7 @@ services:
       - .env 
   deletecommentary:
     build:
-      context: ./deletecommentary
+      context: ../deletecommentary
     container_name: deletecommentary
     ports:
       - "3017:3017"
@@ -38,7 +38,7 @@ services:
 
   createproject:
     build:
-      context: ./createproject
+      context: ../createproject
     container_name: createproject
     ports:
       - "3018:3018"
@@ -47,7 +47,7 @@ services:
 
   readproject:
     build:
-      context: ./readproject
+      context: ../readproject
     container_name: readproject
     ports:
       - "3010:3010"
@@ -55,7 +55,7 @@ services:
       - .env 
   updateproject:
     build:
-      context: ./updateproject
+      context: ../updateproject
     container_name: updateproject
     ports:
       - "3009:3009"
@@ -64,7 +64,7 @@ services:
 
   deleteproject:
     build:
-      context: ./deleteproject
+      context: ../deleteproject
     container_name: deleteproject
     ports:
       - "3008:3008"
@@ -73,7 +73,7 @@ services:
 
   notificationhistory:
     build:
-      context: ./notificationhistory
+      context: ../notificationhistory
     container_name: notificationhistory
     ports:
       - "3013:3013"
@@ -82,7 +82,7 @@ services:
 
   receivenotification:
     build:
-      context: ./receivenotification
+      context: ../receivenotification
     container_name: receivenotification
     ports:
       - "3012:3012"
@@ -90,7 +90,7 @@ services:
       - .env 
   sendnotification:
     build:
-      context: ./sendnotification
+      context: ../sendnotification
     container_name: sendnotification
     ports:
       - "3011:3011"
@@ -99,7 +99,7 @@ services:
 
   create-user:
     build:
-      context: ./create-user
+      context: ../create-user
     container_name: create-user
     ports:
       - "3001:3001"
@@ -134,7 +134,7 @@ services:
 
   login:
     build:
-      context: ./login
+      context: ../login
     container_name: login
     ports:
       - "3006:3006"
@@ -143,7 +143,7 @@ services:
 
   createdocument:
     build:
-      context: ./createdocument
+      context: ../createdocument
     container_name: createdocument
     ports:
       - "3019:3019"
@@ -152,7 +152,7 @@ services:
 
   deletedocument:
     build:
-      context: ./deletecommentary
+      context: ../deletecommentary
     container_name: deletecommentary
     ports:
       - "3022:3022"
@@ -170,7 +170,7 @@ services:
     
   updatedocument:
     build:
-      context: ./updatedocument
+      context: ../updatedocument
     container_name: updatedocument
     ports:
       - "3021:3021"
