@@ -14,7 +14,7 @@ services:
       - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
       - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
     env_file:
-      - ./.env      
+      - .env      
 
   readcommentaries:
     build:
@@ -29,8 +29,8 @@ services:
       - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
       - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
     env_file:
-      - ./.env
-      
+      - .env
+
   updatecommentary:
     build:
       context: ../updatecommentary
@@ -44,7 +44,7 @@ services:
       - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
       - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
     env_file:
-      - ./.env
+      - .env
 
   deletecommentary:
     build:
@@ -59,7 +59,7 @@ services:
       - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
       - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
     env_file:
-      - ./.env
+      - .env
 
   createproject:
     build:
@@ -74,7 +74,7 @@ services:
       - PROJECT_DB_NAME=${PROJECT_DB_NAME}
       - PROJECT_DB_PORT=${PROJECT_DB_PORT}
     env_file:
-      - ./.env
+      - .env
 
   readproject:
     build:
@@ -89,7 +89,7 @@ services:
       - PROJECT_DB_NAME=${PROJECT_DB_NAME}
       - PROJECT_DB_PORT=${PROJECT_DB_PORT}
     env_file:
-      - ./.env
+      - .env
 
   updateproject:
     build:
@@ -104,7 +104,7 @@ services:
       - PROJECT_DB_NAME=${PROJECT_DB_NAME}
       - PROJECT_DB_PORT=${PROJECT_DB_PORT}
     env_file:
-      - ./.env
+      - .env
 
   deleteproject:
     build:
@@ -119,7 +119,7 @@ services:
       - PROJECT_DB_NAME=${PROJECT_DB_NAME}
       - PROJECT_DB_PORT=${PROJECT_DB_PORT}
     env_file:
-      - ./.env
+      - .env
 
   notificationhistory:
     build:
@@ -131,7 +131,7 @@ services:
       - AWS_REGION=${AWS_REGION}
       - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
     env_file:
-      - ./.env
+      - .env
 
   receivenotification:
     build:
@@ -143,7 +143,7 @@ services:
       - AWS_REGION=${AWS_REGION}
       - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
     env_file:
-      - ./.env
+      - .env
   sendnotification:
     build:
       context: ../sendnotification
@@ -154,4 +154,4 @@ services:
       - AWS_REGION=${AWS_REGION}
       - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
     env_file:
-      - ./.env
+      - .env
