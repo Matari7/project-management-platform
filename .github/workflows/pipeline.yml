@@ -22,6 +22,21 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: username/repo:latest
+        build-args:
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+      
+
+
     - name: Build up Dockers
       run: |
         services=(
