@@ -27,7 +27,9 @@ jobs:
         services=(
           "createcommentary" "createproject" "deletecommentary" "deleteproject" 
           "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
-          "sendnotification" "updatecommentary" "updateproject"
+          "sendnotification" "updatecommentary" "updateproject" "audit-service" "create-user"
+          "createdocument" "delete-user" "deletedocument" "login" "read-user" "readdocument"
+          "update-user" "updatedocument"
         )
         
         for service in "${services[@]}"
@@ -83,7 +85,9 @@ jobs:
         services=(
           "createcommentary" "createproject" "deletecommentary" "deleteproject" 
           "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
-          "sendnotification" "updatecommentary" "updateproject"
+          "sendnotification" "updatecommentary" "updateproject" "audit-service" "create-user"
+          "createdocument" "delete-user" "deletedocument" "login" "read-user" "readdocument"
+          "update-user" "updatedocument"
         )
 
         for service in "${services[@]}"
@@ -96,7 +100,9 @@ jobs:
         services=(
           "createcommentary" "createproject" "deletecommentary" "deleteproject" 
           "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
-          "sendnotification" "updatecommentary" "updateproject"
+          "sendnotification" "updatecommentary" "updateproject" "audit-service" "create-user"
+          "createdocument" "delete-user" "deletedocument" "login" "read-user" "readdocument"
+          "update-user" "updatedocument"
         )
 
         for service in "${services[@]}"
