@@ -132,151 +132,136 @@ jobs:
       with:
         node-version: '14'
 
-    - name: Install dependencies
-      run: |
-        cd /createproject
-        npm install
-        cd /readproject
-        npm install
-        cd /updateproject
-        npm install
-        cd /deleteproject
-        npm install
-        cd /createcommentary
-        npm install
-        cd /updatecommentary
-        npm install
-        cd /deletecommentary
-        npm install
-        cd /readcommentaries
-        npm install
+name: Deploy
 
-    - name: Deploy Create Project Service
-      run: |
-        echo "Deploying Create Project Service"
-       
-        export PROJECT_DB_USER=${{ secrets.PROJECT_DB_USER }}
-        export PROJECT_DB_PASSWORD=${{ secrets.PROJECT_DB_PASSWORD }}
-        export PROJECT_DB_NAME=${{ secrets.PROJECT_DB_NAME }}
-        export PROJECT_DB_PORT=${{ secrets.PROJECT_DB_PORT }}
-        export USER_DB_HOST=${{ secrets.USER_DB_HOST }}
-        export USER_DB_USER=${{ secrets.USER_DB_USER }}
-        export USER_DB_PASSWORD=${{ secrets.USER_DB_PASSWORD }}
-        export USER_DB_NAME=${{ secrets.USER_DB_NAME }}
-        export USER_DB_PORT=${{ secrets.USER_DB_PORT }}
-        npm start --prefix createproject
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+on:
+  push:
+    branches:
+      - main
 
-    - name: Deploy Read Project Service
-      run: |
-        echo "Deploying Read Project Service"
-        export PROJECT_DB_HOST=${{ secrets.PROJECT_DB_HOST }}
-        export PROJECT_DB_USER=${{ secrets.PROJECT_DB_USER }}
-        export PROJECT_DB_PASSWORD=${{ secrets.PROJECT_DB_PASSWORD }}
-        export PROJECT_DB_NAME=${{ secrets.PROJECT_DB_NAME }}
-        export PROJECT_DB_PORT=${{ secrets.PROJECT_DB_PORT }}
-        npm start --prefix readproject
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
 
-    - name: Deploy Update Project Service
-      run: |
-        echo "Deploying Update Project Service"
-        export PROJECT_DB_HOST=${{ secrets.PROJECT_DB_HOST }}
-        export PROJECT_DB_USER=${{ secrets.PROJECT_DB_USER }}
-        export PROJECT_DB_PASSWORD=${{ secrets.PROJECT_DB_PASSWORD }}
-        export PROJECT_DB_NAME=${{ secrets.PROJECT_DB_NAME }}
-        export PROJECT_DB_PORT=${{ secrets.PROJECT_DB_PORT }}
-        npm start --prefix updateproject
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
 
-    - name: Deploy Delete Project Service
-      run: |
-        echo "Deploying Delete Project Service"
-        export PROJECT_DB_HOST=${{ secrets.PROJECT_DB_HOST }}
-        export PROJECT_DB_USER=${{ secrets.PROJECT_DB_USER }}
-        export PROJECT_DB_PASSWORD=${{ secrets.PROJECT_DB_PASSWORD }}
-        export PROJECT_DB_NAME=${{ secrets.PROJECT_DB_NAME }}
-        export PROJECT_DB_PORT=${{ secrets.PROJECT_DB_PORT }}
-        npm start --prefix deleteproject
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-
-    - name: Deploy Create Commentary Service
+    - name: Build up Dockers
       run: |
-        echo "Deploying Create Commentary Service"
-       
-       
-       
-        export COMMENTARY_DB_USER=${{ secrets.COMMENTARY_DB_USER }}
-        export COMMENTARY_DB_PASSWORD=${{ secrets.COMMENTARY_DB_PASSWORD }}
-        export COMMENTARY_DB_NAME=${{ secrets.COMMENTARY_DB_NAME }}
-        export COMMENTARY_DB_PORT=${{ secrets.COMMENTARY_DB_PORT }}
-        export USER_DB_HOST=${{ secrets.USER_DB_HOST }}
-        export USER_DB_USER=${{ secrets.USER_DB_USER }}
-        export USER_DB_PASSWORD=${{ secrets.USER_DB_PASSWORD }}
-        export USER_DB_NAME=${{ secrets.USER_DB_NAME }}
-        export USER_DB_PORT=${{ secrets.USER_DB_PORT }}
-        export PROJECT_DB_HOST=${{ secrets.PROJECT_DB_HOST }}
-        export PROJECT_DB_USER=${{ secrets.PROJECT_DB_USER }}
-        export PROJECT_DB_PASSWORD=${{ secrets.PROJECT_DB_PASSWORD }}
-        export PROJECT_DB_NAME=${{ secrets.PROJECT_DB_NAME }}
-        export PROJECT_DB_PORT=${{ secrets.PROJECT_DB_PORT }}
-        npm start --prefix createproject
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        services=(
+          "createcommentary" "createproject" "deletecommentary" "deleteproject" 
+          "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
+          "sendnotification" "updatecommentary" "updateproject"
+        )
+        
+        for service in "${services[@]}"
+        do
+          if [ -d "$service" ]; then
+            docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest ./$service
+            docker push ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest
+          else
+            echo "Failed to find the path of directory of service $service"
+            exit 1
+          fi
+        done
 
-    - name: Deploy Read Commentary Service
+    - name: Paths of docker-compose
       run: |
-        echo "Deploying Read Commentary Service"
-        export COMMENTARY_DB_HOST=${{ secrets.COMMENTARY_DB_HOST }}
-        export COMMENTARY_DB_USER=${{ secrets.COMMENTARY_DB_USER }}
-        export COMMENTARY_DB_PASSWORD=${{ secrets.COMMENTARY_DB_PASSWORD }}
-        export COMMENTARY_DB_NAME=${{ secrets.COMMENTARY_DB_NAME }}
-        export COMMENTARY_DB_PORT=${{ secrets.COMMENTARY_DB_PORT }}
-        npm start --prefix readcommentary
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        sed -i 's|build: \./|build: ../|g' ./docker/docker-compose.yml
+        echo "Content Updated of docker-compose.yml:"
+        cat ./docker/docker-compose.yml
 
-    - name: Deploy Update Commentary Service
+    - name: Clean up previous containers
       run: |
-        echo "Deploying Update Commentary Service"
-        export COMMENTARY_DB_HOST=${{ secrets.COMMENTARY_DB_HOST }}
-        export COMMENTARY_DB_USER=${{ secrets.COMMENTARY_DB_USER }}
-        export COMMENTARY_DB_PASSWORD=${{ secrets.COMMENTARY_DB_PASSWORD }}
-        export COMMENTARY_DB_NAME=${{ secrets.COMMENTARY_DB_NAME }}
-        export COMMENTARY_DB_PORT=${{ secrets.COMMENTARY_DB_PORT }}
-        npm start --prefix updatecommentary
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        docker-compose -f ./docker/docker-compose.yml down
 
-    - name: Deploy Delete Commentary Service
+    - name: Execute Docker Compose
       run: |
-        echo "Deploying Delete Commentary Service"
-        export COMMENTARY_DB_HOST=${{ secrets.COMMENTARY_DB_HOST }}
-        export COMMENTARY_DB_USER=${{ secrets.COMMENTARY_DB_USER }}
-        export COMMENTARY_DB_PASSWORD=${{ secrets.COMMENTARY_DB_PASSWORD }}
-        export COMMENTARY_DB_NAME=${{ secrets.COMMENTARY_DB_NAME }}
-        export COMMENTARY_DB_PORT=${{ secrets.COMMENTARY_DB_PORT }}
-        npm start --prefix deletecommentary
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        docker-compose -f ./docker/docker-compose.yml up -d
+
+  deploy-AWS:
+    needs: [build-and-push] 
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set permissions for private key
+      run: |
+        echo "${{ secrets.AWS_PRIVATE_KEY }}" > key.pem
+        chmod 600 key.pem
+
+    - name: Install Docker on EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          sudo yum update -y
+          sudo yum install -y docker
+          sudo service docker start
+        EOF
+
+    - name: Verify Docker installation
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} "docker --version"
+      
+
+    - name: Pull Docker images
+      run: |
+        services=(
+          "createcommentary" "createproject" "deletecommentary" "deleteproject" 
+          "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
+          "sendnotification" "updatecommentary" "updateproject"
+        )
+
+        for service in "${services[@]}"
+        do
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} "sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
+        done
+
+    - name: Stop running containers
+      run: |
+        services=(
+          "createcommentary" "createproject" "deletecommentary" "deleteproject" 
+          "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
+          "sendnotification" "updatecommentary" "updateproject"
+        )
+
+        for service in "${services[@]}"
+        do
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} "sudo docker stop $service-plataform-aws || true"
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} "sudo docker rm $service-plataform-aws || true"
+        done
+
+    - name: Remove old Docker images
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker image prune -f'
+
+    - name: Run new containers
+      run: |
+        services=(
+          "createcommentary" "createproject" "deletecommentary" "deleteproject" 
+          "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
+          "sendnotification" "updatecommentary" "updateproject"
+        )
+
+        ports=(3014 3018 3017 3008 3013 3015 3010 3012 3011 3016 3009)
+
+        i=0
+        for service in "${services[@]}"
+        do
+          port=${ports[$i]}
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} "sudo docker run -d --name $service-plataform-aws -p $((8080 + i)):$port ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
+          i=$((i + 1))
+        done
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
