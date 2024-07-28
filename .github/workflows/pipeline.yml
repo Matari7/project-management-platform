@@ -111,23 +111,30 @@ jobs:
 
     - name: Run new containers
       run: |
-        services=(
-          "createcommentary" "createproject" "deletecommentary" "deleteproject" 
-          "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
-          "sendnotification" "updatecommentary" "updateproject"
-        )
-
-        ports=(3014 3018 3017 3008 3013 3015 3010 3012 3011 3016 3009)
-
-        i=0
-        for service in "${services[@]}"
-        do
-          port=${ports[$i]}
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} "sudo docker run -d --name $service-plataform-aws -p $((8080 + i)):$port ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
-          i=$((i + 1))
-        done
-
-    - name: Set up Node.js
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name create-user-plataform-aws -p 3001:3001 ${{ secrets.DOCKERHUB_USERNAME }}/create-user:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name read-user-plataform-aws -p 3002:3002 ${{ secrets.DOCKERHUB_USERNAME }}/read-user:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name update-user-plataform-aws -p 3003:3003 ${{ secrets.DOCKERHUB_USERNAME }}/update-user:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name delete-user-plataform-aws -p 3004:3004 ${{ secrets.DOCKERHUB_USERNAME }}/delete-user:latest'
+    
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name login-plataform-aws -p 3006:3006 ${{ secrets.DOCKERHUB_USERNAME }}/login:latest'          
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name audit-service-plataform-aws -p 3007:3007 ${{ secrets.DOCKERHUB_USERNAME }}/audit-service:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name deleteproject-plataform-aws -p 3008:3008 ${{ secrets.DOCKERHUB_USERNAME }}/deleteproject:latest'         
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name updateproject-plataform-aws -p 3009:3009 ${{ secrets.DOCKERHUB_USERNAME }}/updateproject:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name readproject-plataform-aws -p 3010:3010 ${{ secrets.DOCKERHUB_USERNAME }}/readproject:latest'         
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name sendnotification-plataform-aws -p 3011:3011 ${{ secrets.DOCKERHUB_USERNAME }}/sendnotification:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name receivenotification-plataform-aws -p 3012:3012 ${{ secrets.DOCKERHUB_USERNAME }}/receivenotification:latest'         
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name notificationhistory-plataform-aws -p 3013:3013 ${{ secrets.DOCKERHUB_USERNAME }}/notificationhistory:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name createcommentary-plataform-aws -p 3014:3014 ${{ secrets.DOCKERHUB_USERNAME }}/createcommentary:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name readcommentaries-plataform-aws -p 3015:3015 ${{ secrets.DOCKERHUB_USERNAME }}/readcommentaries:latest'          
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name updatecommentary-plataform-aws -p 3016:3016 ${{ secrets.DOCKERHUB_USERNAME }}/updatecommentary:latest'          
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name deletecommentary-plataform-aws -p 3017:3017 ${{ secrets.DOCKERHUB_USERNAME }}/deletecommentary:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name createproject-plataform-aws -p 3018:3018 ${{ secrets.DOCKERHUB_USERNAME }}/createproject:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name createdocument-plataform-aws -p 3019:3019 ${{ secrets.DOCKERHUB_USERNAME }}/createdocument:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name deletedocument-plataform-aws -p 3020:3020 ${{ secrets.DOCKERHUB_USERNAME }}/deletedocument:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name readdocument-plataform-aws -p 3021:3021 ${{ secrets.DOCKERHUB_USERNAME }}/readdocument:latest'
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name updatedocument-plataform-aws -p 3022:3022 ${{ secrets.DOCKERHUB_USERNAME }}/updatedocument:latest'
+    
+          - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '14'
