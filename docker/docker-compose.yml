@@ -191,7 +191,7 @@ services:
 
   delete-user:
     build:
-      context: ./delete-user
+      context: ../delete-user
     container_name: delete-user
     ports:
       - "3004:3004"
@@ -204,7 +204,7 @@ services:
 
   login:
     build:
-      context: ./login
+      context: ../login
     container_name: login
     ports:
       - "3006:3006"
@@ -217,7 +217,7 @@ services:
 
   createdocument:
     build:
-      context: ./createdocument
+      context: ../createdocument
     container_name: createdocument
     ports:
       - "3019:3019"
@@ -235,7 +235,7 @@ services:
 
   deletedocument:
     build:
-      context: ./deletecommentary
+      context: ../deletecommentary
     container_name: deletecommentary
     ports:
       - "3022:3022"
@@ -261,7 +261,7 @@ services:
 
   updatedocument:
     build:
-      context: ./updatedocument
+      context: ../updatedocument
     container_name: updatedocument
     ports:
       - "3021:3021"
