@@ -7,8 +7,22 @@ services:
     container_name: createcommentary
     ports:
       - "3014:3014"
-    env_file:
-      - .env 
+    environment:
+      - COMMENTARY_DB_HOST=commentary.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - COMMENTARY_DB_USER=admin
+      - COMMENTARY_DB_PASSWORD=adminmysql
+      - COMMENTARY_DB_NAME=commentariesdb
+      - COMMENTARY_DB_PORT=3306
+      - PROJECT_DB_HOST=projects.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - PROJECT_DB_USER=admin
+      - PROJECT_DB_PASSWORD=adminmysql
+      - PROJECT_DB_NAME=projectsdb
+      - PROJECT_DB_PORT=3306
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
 
   readcommentaries:
     build:
@@ -16,8 +30,12 @@ services:
     container_name: readcommentaries
     ports:
       - "3015:3015"
-    env_file:
-      - .env 
+    environment:
+      - COMMENTARY_DB_HOST=commentary.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - COMMENTARY_DB_USER=admin
+      - COMMENTARY_DB_PASSWORD=adminmysql
+      - COMMENTARY_DB_NAME=commentariesdb
+      - COMMENTARY_DB_PORT=3306
 
   updatecommentary:
     build:
@@ -25,16 +43,25 @@ services:
     container_name: updatecommentary
     ports:
       - "3016:3016"
-    env_file:
-      - .env 
+    environment:
+      - COMMENTARY_DB_HOST=commentary.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - COMMENTARY_DB_USER=admin
+      - COMMENTARY_DB_PASSWORD=adminmysql
+      - COMMENTARY_DB_NAME=commentariesdb
+      - COMMENTARY_DB_PORT=3306
+
   deletecommentary:
     build:
       context: ../deletecommentary
     container_name: deletecommentary
     ports:
       - "3017:3017"
-    env_file:
-      - .env 
+    environment:
+      - COMMENTARY_DB_HOST=commentary.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - COMMENTARY_DB_USER=admin
+      - COMMENTARY_DB_PASSWORD=adminmysql
+      - COMMENTARY_DB_NAME=commentariesdb
+      - COMMENTARY_DB_PORT=3306
 
   createproject:
     build:
@@ -42,8 +69,17 @@ services:
     container_name: createproject
     ports:
       - "3018:3018"
-    env_file:
-      - .env 
+    environment:
+      - PROJECT_DB_HOST=projects.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - PROJECT_DB_USER=admin
+      - PROJECT_DB_PASSWORD=adminmysql
+      - PROJECT_DB_NAME=projectsdb
+      - PROJECT_DB_PORT=3306
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
 
   readproject:
     build:
@@ -51,16 +87,25 @@ services:
     container_name: readproject
     ports:
       - "3010:3010"
-    env_file:
-      - .env 
+    environment:
+      - PROJECT_DB_HOST=projects.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - PROJECT_DB_USER=admin
+      - PROJECT_DB_PASSWORD=adminmysql
+      - PROJECT_DB_NAME=projectsdb
+      - PROJECT_DB_PORT=3306
+
   updateproject:
     build:
       context: ../updateproject
     container_name: updateproject
     ports:
       - "3009:3009"
-    env_file:
-      - .env 
+    environment:
+      - PROJECT_DB_HOST=projects.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - PROJECT_DB_USER=admin
+      - PROJECT_DB_PASSWORD=adminmysql
+      - PROJECT_DB_NAME=projectsdb
+      - PROJECT_DB_PORT=3306
 
   deleteproject:
     build:
@@ -68,8 +113,12 @@ services:
     container_name: deleteproject
     ports:
       - "3008:3008"
-    env_file:
-      - .env 
+    environment:
+      - PROJECT_DB_HOST=projects.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - PROJECT_DB_USER=admin
+      - PROJECT_DB_PASSWORD=adminmysql
+      - PROJECT_DB_NAME=projectsdb
+      - PROJECT_DB_PORT=3306
 
   notificationhistory:
     build:
@@ -77,8 +126,9 @@ services:
     container_name: notificationhistory
     ports:
       - "3013:3013"
-    env_file:
-      - .env 
+    environment:
+      - AWS_REGION=us-east-1
+      - DYNAMODB_TABLE_NAME=Notifications
 
   receivenotification:
     build:
@@ -86,16 +136,19 @@ services:
     container_name: receivenotification
     ports:
       - "3012:3012"
-    env_file:
-      - .env 
+    environment:
+      - AWS_REGION=us-east-1
+      - DYNAMODB_TABLE_NAME=Notifications
+
   sendnotification:
     build:
       context: ../sendnotification
     container_name: sendnotification
     ports:
       - "3011:3011"
-    env_file:
-      - .env 
+    environment:
+      - AWS_REGION=us-east-1
+      - DYNAMODB_TABLE_NAME=Notifications
 
   create-user:
     build:
@@ -103,8 +156,12 @@ services:
     container_name: create-user
     ports:
       - "3001:3001"
-    env_file:
-      - .env 
+    environment:
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
 
   read-user:
     build:
@@ -112,52 +169,82 @@ services:
     container_name: read-user
     ports:
       - "3002:3002"
-    env_file:
-      - .env 
-          
+    environment:
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
+
   update-user:
     build:
       context: ../update-user
     container_name: update-user
     ports:
       - "3003:3003"
-    env_file:
-      - .env 
+    environment:
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
+
   delete-user:
     build:
       context: ./delete-user
     container_name: delete-user
     ports:
       - "3004:3004"
-    env_file:
-      - .env 
+    environment:
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
 
   login:
     build:
-      context: ../login
+      context: ./login
     container_name: login
     ports:
       - "3006:3006"
-    env_file:
-      - .env 
+    environment:
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
 
   createdocument:
     build:
-      context: ../createdocument
+      context: ./createdocument
     container_name: createdocument
     ports:
       - "3019:3019"
-    env_file:
-      - .env 
+    environment:
+      - DOCUMENT_DB_HOST=documentsdb.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - DOCUMENT_DB_USER=admin
+      - DOCUMENT_DB_PASSWORD=adminmysql
+      - DOCUMENT_DB_NAME=documentsdb
+      - DOCUMENT_DB_PORT=3306
+      - PROJECT_DB_HOST=projects.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - PROJECT_DB_USER=admin
+      - PROJECT_DB_PASSWORD=adminmysql
+      - PROJECT_DB_NAME=projectsdb
+      - PROJECT_DB_PORT=3306
 
   deletedocument:
     build:
-      context: ../deletecommentary
+      context: ./deletecommentary
     container_name: deletecommentary
     ports:
       - "3022:3022"
-    env_file:
-      - .env 
+    environment:
+      - DOCUMENT_DB_HOST=documentsdb.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - DOCUMENT_DB_USER=admin
+      - DOCUMENT_DB_PASSWORD=adminmysql
+      - DOCUMENT_DB_NAME=documentsdb
+      - DOCUMENT_DB_PORT=3306
 
   readdocument:
     build:
@@ -165,14 +252,22 @@ services:
     container_name: readdocument
     ports:
       - "3020:3020"
-    env_file:
-      - .env 
-    
+    environment:
+      - DOCUMENT_DB_HOST=documentsdb.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - DOCUMENT_DB_USER=admin
+      - DOCUMENT_DB_PASSWORD=adminmysql
+      - DOCUMENT_DB_NAME=documentsdb
+      - DOCUMENT_DB_PORT=3306
+
   updatedocument:
     build:
-      context: ../updatedocument
+      context: ./updatedocument
     container_name: updatedocument
     ports:
       - "3021:3021"
-    env_file:
-      - .env 
+    environment:
+      - DOCUMENT_DB_HOST=documentsdb.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - DOCUMENT_DB_USER=admin
+      - DOCUMENT_DB_PASSWORD=adminmysql
+      - DOCUMENT_DB_NAME=documentsdb
+      - DOCUMENT_DB_PORT=3306
