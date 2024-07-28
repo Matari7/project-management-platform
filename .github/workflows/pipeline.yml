@@ -126,3 +126,11 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} "sudo docker run -d --name $service-plataform-aws -p $((8080 + i)):$port ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
           i=$((i + 1))
         done
+
+    - name: Update Load Balancer
+      run: |
+          aws elbv2 register-targets --target-group-arn ${{ secrets.TARGET_GROUP_ARN }} --targets Id=<INSTANCE_ID_1> Id=<INSTANCE_ID_2>
+      env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
