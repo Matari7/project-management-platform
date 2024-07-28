@@ -133,3 +133,5 @@ services:
     environment:
       - AWS_REGION=${AWS_REGION}
       - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
+    env_file:
+    - ./env
