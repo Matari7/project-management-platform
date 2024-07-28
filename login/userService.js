@@ -39,13 +39,13 @@ class UserService extends EventEmitter {
     const token = jwt.sign({ id: user.id, email: user.email }, 'your_jwt_secret', { expiresIn: '1h' });
     console.log('Login successful for user:', email);
     this.emit('loginAttempt', {
-        eventType: 'LoginAttempt',
-        data: {
-            userId: user.id,
-            email: email,
-            success: true,
-            timestamp: new Date().toISOString()
-        }
+      eventType: 'LoginAttempt',
+      data: {
+        userId: user.id,
+        email: email,
+        success: true,
+        timestamp: new Date().toISOString()
+      }
     });
     return { token, user: { id: user.id, email: user.email } };
   }
