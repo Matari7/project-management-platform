@@ -23,40 +23,51 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
 
-    - name: Build and push
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        tags: username/repo:latest
-        build-args:
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_NAME: ${{ secrets.DB_NAME }}
-      
 
-
-    - name: Build up Dockers
+    - name: Build and push each microservice
       run: |
-        services=(
-          "createcommentary" "createproject" "deletecommentary" "deleteproject" 
-          "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
-          "sendnotification" "updatecommentary" "updateproject" "audit-service" "create-user"
-          "createdocument" "delete-user" "deletedocument" "login" "read-user" "readdocument"
-          "update-user" "updatedocument"
-        )
-        
-        for service in "${services[@]}"
-        do
-          if [ -d "$service" ]; then
-            docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest ./$service
-            docker push ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest
-          else
-            echo "Failed to find the path of directory of service $service"
-            exit 1
-          fi
-        done
+          services=(
+            "createcommentary" "createproject" "deletecommentary" "deleteproject" 
+            "notificationhistory" "readcommentaries" "readproject" "receivenotification" 
+            "sendnotification" "updatecommentary" "updateproject" "audit-service" "create-user"
+            "createdocument" "delete-user" "deletedocument" "login" "read-user" "readdocument"
+            "update-user" "updatedocument"
+          )
+          
+          for service in "${services[@]}"
+          do
+            if [ -d "$service" ]; then
+              docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest ./$service \
+                --build-arg PROJECT_DB_HOST=${{ secrets.PROJECT_DB_HOST }} \
+                --build-arg PROJECT_DB_USER=${{ secrets.PROJECT_DB_USER }} \
+                --build-arg PROJECT_DB_PASSWORD=${{ secrets.PROJECT_DB_PASSWORD }} \
+                --build-arg PROJECT_DB_NAME=${{ secrets.PROJECT_DB_NAME }} \
+                --build-arg PROJECT_DB_PORT=${{ secrets.PROJECT_DB_PORT }} \
+                --build-arg AWS_REGION=${{ secrets.AWS_REGION }} \
+                --build-arg DYNAMODB_TABLE_NAME=${{ secrets.NOTIFICATION_DB_TABLE_NAME }} \
+                --build-arg USER_DB_HOST=${{ secrets.USER_DB_HOST }} \
+                --build-arg USER_DB_USER=${{ secrets.USER_DB_USER }} \
+                --build-arg USER_DB_PASSWORD=${{ secrets.USER_DB_PASSWORD }} \
+                --build-arg USER_DB_NAME=${{ secrets.USER_DB_NAME }} \
+                --build-arg USER_DB_PORT=${{ secrets.USER_DB_PORT }} \
+                --build-arg DOCUMENT_DB_HOST=${{ secrets.DOCUMENT_DB_HOST }} \
+                --build-arg DOCUMENT_DB_USER=${{ secrets.DOCUMENT_DB_USER }} \
+                --build-arg DOCUMENT_DB_PASSWORD=${{ secrets.DOCUMENT_DB_PASSWORD }} \
+                --build-arg DOCUMENT_DB_NAME=${{ secrets.DOCUMENT_DB_NAME }} \
+                --build-arg DOCUMENT_DB_PORT=${{ secrets.DOCUMENT_DB_PORT }} \
+                --build-arg COMMENTARY_DB_HOST=${{ secrets.COMMENTARY_DB_HOST }} \
+                --build-arg COMMENTARY_DB_USER=${{ secrets.COMMENTARY_DB_USER }} \
+                --build-arg COMMENTARY_DB_PASSWORD=${{ secrets.COMMENTARY_DB_PASSWORD }} \
+                --build-arg COMMENTARY_DB_NAME=${{ secrets.COMMENTARY_DB_NAME }} \
+                --build-arg COMMENTARY_DB_PORT=${{ secrets.COMMENTARY_DB_PORT }}
+                
+              docker push ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest
+            else
+              echo "Failed to find the path of directory of service $service"
+              exit 1
+            fi
+          done
+      
 
     - name: Paths of docker-compose
       run: |
@@ -155,7 +166,3 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name readdocument-plataform-aws -p 3021:3021 ${{ secrets.DOCKERHUB_USERNAME }}/readdocument:latest'
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name updatedocument-plataform-aws -p 3022:3022 ${{ secrets.DOCKERHUB_USERNAME }}/updatedocument:latest'
     
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
