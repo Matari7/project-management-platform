@@ -1,6 +1,6 @@
 const EventEmitter = require('events');
 const { v4: uuidv4 } = require('uuid');
-const userModel = require('./userModel');
+const userModel = require('./usermodel');
 
 class UserService extends EventEmitter {
   async deleteUser(id) {
