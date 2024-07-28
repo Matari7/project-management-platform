@@ -134,21 +134,21 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd /createproject
+        cd ./createproject
         npm install
-        cd /readproject
+        cd ./readproject
         npm install
-        cd /updateproject
+        cd ./updateproject
         npm install
-        cd /deleteproject
+        cd ./deleteproject
         npm install
-        cd /createcommentary
+        cd ./createcommentary
         npm install
-        cd /updatecommentary
+        cd ./updatecommentary
         npm install
-        cd /deletecommentary
+        cd ./deletecommentary
         npm install
-        cd /readcommentaries
+        cd ./readcommentaries
         npm install
 
     - name: Deploy Create Project Service
