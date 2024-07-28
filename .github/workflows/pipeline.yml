@@ -127,21 +127,6 @@ jobs:
           i=$((i + 1))
         done
 
-    - name: Update Load Balancer
-      run: |
-          aws elbv2 register-targets --target-group-arn ${{ secrets.TARGET_GROUP_ARN }} --targets Id=${{ secrets.INSTANCE_ID_1 }} --region ${{ secrets.AWS_REGION }}
-      env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-
-    - name: Deploy to API Gateway
-      run: |
-          aws apigateway create-deployment --http-api-id ${{ secrets.AWS_GATEWAY_ID }} --stage-name <STAGE_NAME>
-      env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
