@@ -1,20 +1,46 @@
 const mysql = require('mysql2/promise');
-require('dotenv').config();
+const AWS = require('aws-sdk');
 
-const mysqlUsersPool = mysql.createPool({
-  host: process.env.USER_DB_HOST,
-  user: process.env.USER_DB_USER,
-  password: process.env.USER_DB_PASSWORD,
-  database: process.env.USER_DB_NAME,
-  port: process.env.USER_DB_PORT,
-});
+AWS.config.update({ region: 'your-aws-region' });
+const secretsManager = new AWS.SecretsManager();
 
-const mysqlProjectsPool = mysql.createPool({
-  host: process.env.PROJECT_DB_HOST,
-  user: process.env.PROJECT_DB_USER,
-  password: process.env.PROJECT_DB_PASSWORD,
-  database: process.env.PROJECT_DB_NAME,
-  port: process.env.PROJECT_DB_PORT,
-});
+async function getSecretValue(secretName) {
+  try {
+    const secret = await secretsManager.getSecretValue({ SecretId: secretName }).promise();
+    return JSON.parse(secret.SecretString);
+  } catch (error) {
+    console.error('Error retrieving secret:', error);
+    throw error;
+  }
+}
 
-module.exports = { mysqlUsersPool, mysqlProjectsPool };
+async function createDatabasePools() {
+  try {
+    // Obtén los secretos para la base de datos de usuarios
+    const userDbSecrets = await getSecretValue('USER_DB_SECRET_ID');
+    const mysqlUsersPool = mysql.createPool({
+      host: userDbSecrets.USER_DB_HOST,
+      user: userDbSecrets.USER_DB_USER,
+      password: userDbSecrets.USER_DB_PASSWORD,
+      database: userDbSecrets.USER_DB_NAME,
+      port: userDbSecrets.USER_DB_PORT,
+    });
+
+    // Obtén los secretos para la base de datos de proyectos
+    const projectDbSecrets = await getSecretValue('PROJECT_DB_SECRET_ID');
+    const mysqlProjectsPool = mysql.createPool({
+      host: projectDbSecrets.PROJECT_DB_HOST,
+      user: projectDbSecrets.PROJECT_DB_USER,
+      password: projectDbSecrets.PROJECT_DB_PASSWORD,
+      database: projectDbSecrets.PROJECT_DB_NAME,
+      port: projectDbSecrets.PROJECT_DB_PORT,
+    });
+
+    return { mysqlUsersPool, mysqlProjectsPool };
+  } catch (error) {
+    console.error('Error creating database pools:', error);
+    throw error;
+  }
+}
+
+module.exports = createDatabasePools;
