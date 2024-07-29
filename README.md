@@ -1,4 +1,4 @@
-![Universidad Central Seal](https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Escudo_Universidad_Central_del_Ecuador.png/800px-Escudo_Universidad_Central_del_Ecuador.png)
+![Universidad Central del Ecuador ](https://upload.wikimedia.org/wikipedia/commons/6/66/Escudo_Universidad_Central_del_Ecuador.png)
 
 # Project Management Platform with 20 Microservices
 
