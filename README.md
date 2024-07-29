@@ -1,4 +1,9 @@
-[![Universidad Central del Ecuador](https://th.bing.com/th/id/OIP.K6VZj13Ib8CVgRii6EUMcwAAAA?rs=1&pid=ImgDetMain)](https://www.uce.edu.ec/)
+<div style="text-align: center;">
+    <a href="https://www.uce.edu.ec/">
+        <img src="https://th.bing.com/th/id/OIP.K6VZj13Ib8CVgRii6EUMcwAAAA?rs=1&pid=ImgDetMain" alt="Universidad Central del Ecuador">
+    </a>
+</div>
+
 
 
 
