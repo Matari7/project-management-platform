@@ -55,14 +55,16 @@ _This is the installation of the project._
    ```sh
    docker-compose up --build
    ```
-
-
+4. You can push the project to use de CI/CD for EC2 and use the microservices
+   ```sh
+   Only commit and push the project to use the CI/CD and go to EC2 AWS
+   ```
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+We can use 
 
 1. Open Postman and add the following URL in the POST method:
 ```sh
