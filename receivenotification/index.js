@@ -5,6 +5,44 @@ const notificationService = require("./notificationService");
 const app = express();
 app.use(bodyParser.json());
 
+/**
+ * @swagger
+ * /notifications/{id}:
+ *   get:
+ *     summary: Get notification by ID
+ *     description: Retrieve a notification by its unique identifier.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the notification to retrieve
+ *     responses:
+ *       '200':
+ *         description: Successful retrieval of notification
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *                 timestamp:
+ *                   type: string
+ *                   format: date-time
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
 app.get("/notifications/:id", async (req, res) => {
   const { id } = req.params;
   try {

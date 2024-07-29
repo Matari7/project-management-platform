@@ -5,6 +5,50 @@ const notificationService = require("./notificationService");
 const app = express();
 app.use(bodyParser.json());
 
+/**
+ * @swagger
+ * /notifications:
+ *   post:
+ *     summary: Send a notification
+ *     description: Create and send a notification to a user.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               message:
+ *                 type: string
+ *               user_id:
+ *                 type: string
+ *     responses:
+ *       '201':
+ *         description: Successfully sent notification
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *                 user_id:
+ *                   type: string
+ *                 timestamp:
+ *                   type: string
+ *                   format: date-time
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
 app.post("/notifications", async (req, res) => {
   const { message, user_id } = req.body;
   try {
@@ -17,5 +61,4 @@ app.post("/notifications", async (req, res) => {
 });
 
 app.listen(3011, () => {
-  console.log("Send Notification service running on port 3011");
-});
+  console.lo

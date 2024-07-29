@@ -5,6 +5,50 @@ const commentaryService = require('./commentaryService');
 const app = express();
 app.use(bodyParser.json());
 
+/**
+ * @swagger
+ * /commentaries/{id}:
+ *   delete:
+ *     summary: Delete a commentary by ID
+ *     description: Delete a commentary by its unique identifier.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the commentary to delete
+ *     responses:
+ *       '200':
+ *         description: Successfully deleted commentary
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Commentary deleted successfully
+ *       '404':
+ *         description: Commentary not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Commentary not found
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
 app.delete('/commentaries/:id', async (req, res) => {
   const { id } = req.params;
   try {
