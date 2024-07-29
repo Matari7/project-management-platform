@@ -1,6 +1,5 @@
-<a href="https://www.uce.edu.ec/">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Escudo_de_la_Universidad_Central_del_Ecuador_-_Andr%C3%A9s_Agual.png" alt="Universidad Central del Ecuador" style="width:70%;">
-</a>
+[![Universidad Central del Ecuador](https://th.bing.com/th/id/OIP.K6VZj13Ib8CVgRii6EUMcwAAAA?rs=1&pid=ImgDetMain)](https://www.uce.edu.ec/)
+
 
 
 # Project Management Platform with 20 Microservices
