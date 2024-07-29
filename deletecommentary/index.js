@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const commentaryService = require('./commentaryService');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const app = express();
 app.use(bodyParser.json());
@@ -9,9 +11,9 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'Delete Project API',
+      title: 'Delete Commentary API',
       version: '1.0.0',
-      description: 'API documentation for Delete Project service',
+      description: 'API documentation for Delete Comentary service',
     },
   },
   apis: ['./index.js'],
