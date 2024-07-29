@@ -1,12 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const DocumentService = require('./documentservice');
+const { swaggerUi, swaggerSpec } = require('./swagger');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3022;
 
 app.use(bodyParser.json());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.delete('/documents/:id', async (req, res) => {
   const documentId = parseInt(req.params.id, 10);
@@ -30,3 +33,26 @@ app.delete('/documents/:id', async (req, res) => {
 app.listen(port, () => {
   console.log(`Delete Document service running on port ${port}`);
 });
+
+/**
+ * @swagger
+ * /documents/{id}:
+ *   delete:
+ *     summary: Delete a document by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the document to delete
+ *     responses:
+ *       204:
+ *         description: Document deleted successfully
+ *       400:
+ *         description: Invalid document ID
+ *       404:
+ *         description: Document not found
+ *       500:
+ *         description: Internal server error
+ */
