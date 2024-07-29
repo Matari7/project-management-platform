@@ -8,11 +8,21 @@ services:
     ports:
       - "3014:3014"
     environment:
-      - COMMENTARY_DB_HOST=${COMMENTARY_DB_HOST}
-      - COMMENTARY_DB_USER=${COMMENTARY_DB_USER}
-      - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
-      - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
-      - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+      - COMMENTARY_DB_HOST=commentary.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - COMMENTARY_DB_USER=admin
+      - COMMENTARY_DB_PASSWORD=adminmysql
+      - COMMENTARY_DB_NAME=commentariesdb
+      - COMMENTARY_DB_PORT=3306
+      - PROJECT_DB_HOST=projects.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - PROJECT_DB_USER=admin
+      - PROJECT_DB_PASSWORD=adminmysql
+      - PROJECT_DB_NAME=projectsdb
+      - PROJECT_DB_PORT=3306
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
 
   readcommentaries:
     build:
@@ -21,11 +31,11 @@ services:
     ports:
       - "3015:3015"
     environment:
-      - COMMENTARY_DB_HOST=${COMMENTARY_DB_HOST}
-      - COMMENTARY_DB_USER=${COMMENTARY_DB_USER}
-      - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
-      - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
-      - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+      - COMMENTARY_DB_HOST=commentary.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - COMMENTARY_DB_USER=admin
+      - COMMENTARY_DB_PASSWORD=adminmysql
+      - COMMENTARY_DB_NAME=commentariesdb
+      - COMMENTARY_DB_PORT=3306
 
   updatecommentary:
     build:
@@ -34,11 +44,11 @@ services:
     ports:
       - "3016:3016"
     environment:
-      - COMMENTARY_DB_HOST=${COMMENTARY_DB_HOST}
-      - COMMENTARY_DB_USER=${COMMENTARY_DB_USER}
-      - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
-      - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
-      - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+      - COMMENTARY_DB_HOST=commentary.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - COMMENTARY_DB_USER=admin
+      - COMMENTARY_DB_PASSWORD=adminmysql
+      - COMMENTARY_DB_NAME=commentariesdb
+      - COMMENTARY_DB_PORT=3306
 
   deletecommentary:
     build:
@@ -47,11 +57,11 @@ services:
     ports:
       - "3017:3017"
     environment:
-      - COMMENTARY_DB_HOST=${COMMENTARY_DB_HOST}
-      - COMMENTARY_DB_USER=${COMMENTARY_DB_USER}
-      - COMMENTARY_DB_PASSWORD=${COMMENTARY_DB_PASSWORD}
-      - COMMENTARY_DB_NAME=${COMMENTARY_DB_NAME}
-      - COMMENTARY_DB_PORT=${COMMENTARY_DB_PORT}
+      - COMMENTARY_DB_HOST=commentary.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - COMMENTARY_DB_USER=admin
+      - COMMENTARY_DB_PASSWORD=adminmysql
+      - COMMENTARY_DB_NAME=commentariesdb
+      - COMMENTARY_DB_PORT=3306
 
   createproject:
     build:
@@ -60,11 +70,16 @@ services:
     ports:
       - "3018:3018"
     environment:
-      - PROJECT_DB_HOST=${PROJECT_DB_HOST}
-      - PROJECT_DB_USER=${PROJECT_DB_USER}
-      - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
-      - PROJECT_DB_NAME=${PROJECT_DB_NAME}
-      - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+      - PROJECT_DB_HOST=projects.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - PROJECT_DB_USER=admin
+      - PROJECT_DB_PASSWORD=adminmysql
+      - PROJECT_DB_NAME=projectsdb
+      - PROJECT_DB_PORT=3306
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
 
   readproject:
     build:
@@ -73,11 +88,11 @@ services:
     ports:
       - "3010:3010"
     environment:
-      - PROJECT_DB_HOST=${PROJECT_DB_HOST}
-      - PROJECT_DB_USER=${PROJECT_DB_USER}
-      - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
-      - PROJECT_DB_NAME=${PROJECT_DB_NAME}
-      - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+      - PROJECT_DB_HOST=projects.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - PROJECT_DB_USER=admin
+      - PROJECT_DB_PASSWORD=adminmysql
+      - PROJECT_DB_NAME=projectsdb
+      - PROJECT_DB_PORT=3306
 
   updateproject:
     build:
@@ -86,11 +101,11 @@ services:
     ports:
       - "3009:3009"
     environment:
-      - PROJECT_DB_HOST=${PROJECT_DB_HOST}
-      - PROJECT_DB_USER=${PROJECT_DB_USER}
-      - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
-      - PROJECT_DB_NAME=${PROJECT_DB_NAME}
-      - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+      - PROJECT_DB_HOST=projects.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - PROJECT_DB_USER=admin
+      - PROJECT_DB_PASSWORD=adminmysql
+      - PROJECT_DB_NAME=projectsdb
+      - PROJECT_DB_PORT=3306
 
   deleteproject:
     build:
@@ -99,11 +114,11 @@ services:
     ports:
       - "3008:3008"
     environment:
-      - PROJECT_DB_HOST=${PROJECT_DB_HOST}
-      - PROJECT_DB_USER=${PROJECT_DB_USER}
-      - PROJECT_DB_PASSWORD=${PROJECT_DB_PASSWORD}
-      - PROJECT_DB_NAME=${PROJECT_DB_NAME}
-      - PROJECT_DB_PORT=${PROJECT_DB_PORT}
+      - PROJECT_DB_HOST=projects.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - PROJECT_DB_USER=admin
+      - PROJECT_DB_PASSWORD=adminmysql
+      - PROJECT_DB_NAME=projectsdb
+      - PROJECT_DB_PORT=3306
 
   notificationhistory:
     build:
@@ -112,8 +127,8 @@ services:
     ports:
       - "3013:3013"
     environment:
-      - AWS_REGION=${AWS_REGION}
-      - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
+      - AWS_REGION=us-east-1
+      - DYNAMODB_TABLE_NAME=Notifications
 
   receivenotification:
     build:
@@ -122,8 +137,9 @@ services:
     ports:
       - "3012:3012"
     environment:
-      - AWS_REGION=${AWS_REGION}
-      - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
+      - AWS_REGION=us-east-1
+      - DYNAMODB_TABLE_NAME=Notifications
+
   sendnotification:
     build:
       context: ../sendnotification
@@ -131,8 +147,8 @@ services:
     ports:
       - "3011:3011"
     environment:
-      - AWS_REGION=${AWS_REGION}
-      - DYNAMODB_TABLE_NAME=${NOTIFICATION_DB_TABLE_NAME}
+      - AWS_REGION=us-east-1
+      - DYNAMODB_TABLE_NAME=Notifications
 
   create-user:
     build:
@@ -141,11 +157,11 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - USER_DB_HOST=${USER_DB_HOST}
-      - USER_DB_USER=${USER_DB_USER}
-      - USER_DB_PASSWORD=${USER_DB_PASSWORD}
-      - USER_DB_NAME=${USER_DB_NAME}
-      - USER_DB_PORT=${USER_DB_PORT}
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
 
   read-user:
     build:
@@ -154,12 +170,12 @@ services:
     ports:
       - "3002:3002"
     environment:
-      - USER_DB_HOST=${USER_DB_HOST}
-      - USER_DB_USER=${USER_DB_USER}
-      - USER_DB_PASSWORD=${USER_DB_PASSWORD}
-      - USER_DB_NAME=${USER_DB_NAME}
-      - USER_DB_PORT=${USER_DB_PORT}
-          
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
+
   update-user:
     build:
       context: ../update-user
@@ -167,63 +183,68 @@ services:
     ports:
       - "3003:3003"
     environment:
-      - USER_DB_HOST=${USER_DB_HOST}
-      - USER_DB_USER=${USER_DB_USER}
-      - USER_DB_PASSWORD=${USER_DB_PASSWORD}
-      - USER_DB_NAME=${USER_DB_NAME}
-      - USER_DB_PORT=${USER_DB_PORT}
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
 
   delete-user:
     build:
-      context: ./delete-user
+      context: ../delete-user
     container_name: delete-user
     ports:
       - "3004:3004"
     environment:
-      - USER_DB_HOST=${USER_DB_HOST}
-      - USER_DB_USER=${USER_DB_USER}
-      - USER_DB_PASSWORD=${USER_DB_PASSWORD}
-      - USER_DB_NAME=${USER_DB_NAME}
-      - USER_DB_PORT=${USER_DB_PORT}
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
 
   login:
     build:
-      context: ./login
+      context: ../login
     container_name: login
     ports:
       - "3006:3006"
     environment:
-      - USER_DB_HOST=${USER_DB_HOST}
-      - USER_DB_USER=${USER_DB_USER}
-      - USER_DB_PASSWORD=${USER_DB_PASSWORD}
-      - USER_DB_NAME=${USER_DB_NAME}
-      - USER_DB_PORT=${USER_DB_PORT}
+      - USER_DB_HOST=users.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - USER_DB_USER=admin
+      - USER_DB_PASSWORD=adminmysql
+      - USER_DB_NAME=usersdb
+      - USER_DB_PORT=3306
 
   createdocument:
     build:
-      context: ./createdocument
+      context: ../createdocument
     container_name: createdocument
     ports:
       - "3019:3019"
     environment:
-      - DOCUMENT_DB_HOST=${DOCUMENT_DB_HOST}
-      - DOCUMENT_DB_USER=${DOCUMENT_DB_USER}
-      - DOCUMENT_DB_PASSWORD=${DOCUMENT_DB_PASSWORD}
-      - DOCUMENT_DB_NAME=${DOCUMENT_DB_NAME}
-      - DOCUMENT_DB_PORT=${DOCUMENT_DB_PORT}
+      - DOCUMENT_DB_HOST=documentsdb.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - DOCUMENT_DB_USER=admin
+      - DOCUMENT_DB_PASSWORD=adminmysql
+      - DOCUMENT_DB_NAME=documentsdb
+      - DOCUMENT_DB_PORT=3306
+      - PROJECT_DB_HOST=projects.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - PROJECT_DB_USER=admin
+      - PROJECT_DB_PASSWORD=adminmysql
+      - PROJECT_DB_NAME=projectsdb
+      - PROJECT_DB_PORT=3306
 
   deletedocument:
     build:
-      context: ./deletecommentary
-    container_name: deletecommentary
+      context: ../deletedocument
+    container_name: deletedocument
     ports:
       - "3022:3022"
     environment:
-      - DOCUMENT_DB_HOST=${DOCUMENT_DB_HOST}
-      - DOCUMENT_DB_USER=${DOCUMENT_DB_USER}
-      - DOCUMENT_DB_PASSWORD=${DOCUMENT_DB_PASSWORD}
-      - DOCUMENT_DB_NAME=${DOCUMENT_DB_NAME}
-      - DOCUMENT_DB_PORT=${DOCUMENT_DB_PORT}
+      - DOCUMENT_DB_HOST=documentsdb.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - DOCUMENT_DB_USER=admin
+      - DOCUMENT_DB_PASSWORD=adminmysql
+      - DOCUMENT_DB_NAME=documentsdb
+      - DOCUMENT_DB_PORT=3306
 
   readdocument:
     build:
@@ -232,21 +253,21 @@ services:
     ports:
       - "3020:3020"
     environment:
-      - DOCUMENT_DB_HOST=${DOCUMENT_DB_HOST}
-      - DOCUMENT_DB_USER=${DOCUMENT_DB_USER}
-      - DOCUMENT_DB_PASSWORD=${DOCUMENT_DB_PASSWORD}
-      - DOCUMENT_DB_NAME=${DOCUMENT_DB_NAME}
-      - DOCUMENT_DB_PORT=${DOCUMENT_DB_PORT}
-    
+      - DOCUMENT_DB_HOST=documentsdb.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - DOCUMENT_DB_USER=admin
+      - DOCUMENT_DB_PASSWORD=adminmysql
+      - DOCUMENT_DB_NAME=documentsdb
+      - DOCUMENT_DB_PORT=3306
+
   updatedocument:
     build:
-      context: ./updatedocument
+      context: ../updatedocument
     container_name: updatedocument
     ports:
       - "3021:3021"
     environment:
-      - DOCUMENT_DB_HOST=${DOCUMENT_DB_HOST}
-      - DOCUMENT_DB_USER=${DOCUMENT_DB_USER}
-      - DOCUMENT_DB_PASSWORD=${DOCUMENT_DB_PASSWORD}
-      - DOCUMENT_DB_NAME=${DOCUMENT_DB_NAME}
-      - DOCUMENT_DB_PORT=${DOCUMENT_DB_PORT}
+      - DOCUMENT_DB_HOST=documentsdb.cp88o8squjfi.us-east-1.rds.amazonaws.com
+      - DOCUMENT_DB_USER=admin
+      - DOCUMENT_DB_PASSWORD=adminmysql
+      - DOCUMENT_DB_NAME=documentsdb
+      - DOCUMENT_DB_PORT=3306
