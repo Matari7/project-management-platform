@@ -235,8 +235,8 @@ services:
 
   deletedocument:
     build:
-      context: ../deletecommentary
-    container_name: deletecommentary
+      context: ../deletedocument
+    container_name: deletedocument
     ports:
       - "3022:3022"
     environment:
