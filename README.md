@@ -1,4 +1,5 @@
-![Universidad Central del Ecuador ](https://upload.wikimedia.org/wikipedia/commons/6/66/Escudo_Universidad_Central_del_Ecuador.png)
+[![Escudo de la Universidad Central del Ecuador](https://upload.wikimedia.org/wikipedia/commons/4/41/Escudo_de_la_Universidad_Central_del_Ecuador_-_Andr%C3%A9s_Agual.png)](https://www.uce.edu.ec/)
+
 
 # Project Management Platform with 20 Microservices
 
