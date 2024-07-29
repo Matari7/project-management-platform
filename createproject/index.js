@@ -5,6 +5,21 @@ const projectService = require('./projectService');
 const app = express();
 app.use(bodyParser.json());
 
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Create Project API',
+      version: '1.0.0',
+      description: 'API documentation for Create Project service',
+    },
+  },
+  apis: ['./index.js'],
+};
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 /**
  * @swagger
  * /projects:

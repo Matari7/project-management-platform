@@ -5,6 +5,21 @@ const notificationService = require("./notificationService");
 const app = express();
 app.use(bodyParser.json());
 
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Send Notification API',
+      version: '1.0.0',
+      description: 'API documentation for Send Notification service',
+    },
+  },
+  apis: ['./index.js'],
+};
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 /**
  * @swagger
  * /notifications:
@@ -61,4 +76,5 @@ app.post("/notifications", async (req, res) => {
 });
 
 app.listen(3011, () => {
-  console.lo
+  console.log("Send Notification service running on port 3011");
+});

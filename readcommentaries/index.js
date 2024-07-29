@@ -5,6 +5,21 @@ const commentaryService = require('./commentaryService');
 const app = express();
 app.use(bodyParser.json());
 
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Read Commentaries API',
+      version: '1.0.0',
+      description: 'API documentation for Read Commentaries service',
+    },
+  },
+  apis: ['./index.js'],
+};
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 /**
  * @swagger
  * /commentaries/{projectId}:
