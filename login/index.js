@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const userService = require('./userservice');
+const userService = require('./userService');
 const auditService = require('../audit-service/auditservice'); 
 
 const app = express();

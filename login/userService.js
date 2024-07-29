@@ -1,7 +1,7 @@
 const EventEmitter = require('events');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const userModel = require('./usermodel');
+const userModel = require('./userModel');
 
 class UserService extends EventEmitter {
   async loginUser(email, password) {

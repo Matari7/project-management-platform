@@ -1,7 +1,7 @@
 const EventEmitter = require('events');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
-const userModel = require('./usermodel');
+const userModel = require('./userModel');
 
 class UserService extends EventEmitter {
   async createUser(email, password) {
