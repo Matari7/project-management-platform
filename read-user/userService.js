@@ -1,5 +1,5 @@
 const EventEmitter = require('events');
-const userModel = require('./usermodel');
+const userModel = require('./userModel');
 
 class UserService extends EventEmitter {
   async getUser(id) {

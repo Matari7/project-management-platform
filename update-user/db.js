@@ -1,12 +1,12 @@
-const mysql = require('mysql');
+const mysql = require('mysql2/promise');
+require('dotenv').config();
 
-const pool = mysql.createPool({
-    host: 'mysql-cristiancaiza.alwaysdata.net',
-    user: '357693_cris',
-    password: 'mysql123',
-    database: 'cristiancaiza_users',
-    port: 3306,
-  });
-  
-  module.exports = pool;
-  
+const documentPool = mysql.createPool({
+  host: process.env.DOCUMENT_DB_HOST,
+  user: process.env.DOCUMENT_DB_USER,
+  password: process.env.DOCUMENT_DB_PASSWORD,
+  database: process.env.DOCUMENT_DB_NAME,
+  port: process.env.DOCUMENT_DB_PORT,
+});
+
+module.exports = { documentPool };
