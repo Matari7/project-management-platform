@@ -1,8 +1,8 @@
-const pool = require('./db');
+const { documentPool } = require('./db');
 
 const updateUser = (id, email, passwordHash) => {
   return new Promise((resolve, reject) => {
-    pool.query(
+    documentPool.query(
       'UPDATE users SET email = ?, password_hash = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
       [email, passwordHash, id],
       (error, results) => {

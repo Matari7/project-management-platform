@@ -1,12 +1,12 @@
 const EventEmitter = require('events');
 const bcrypt = require('bcrypt');
-const userModel = require('./usermodel');
+const userModel = require('./userModel');
 
 class UserService extends EventEmitter {
   async updateUser(id, email, password) {
-    console.log('ID:', id);  // Verifica el ID
-    console.log('Email:', email);  // Verifica el email
-    console.log('Password:', password);  // Verifica la contraseña
+    console.log('ID:', id);  
+    console.log('Email:', email);  
+    console.log('Password:', password);  
 
     if (!password) {
       throw new Error('Password is required');
