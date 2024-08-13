@@ -10,10 +10,19 @@
     "start:read-user": "node read-user/index.js",
     "start:all": "concurrently \"npm run start:create-user\" \"npm run start:delete-user\" \"npm run start:update-user\" \"npm run start:read-user\""
   },
-  "dependencies": {},
   "devDependencies": {
     "concurrently": "^7.0.0"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "keywords": [],
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.9.0",
+    "mysql2": "^3.11.0",
+    "sequelize": "^6.37.3"
+  }
 }

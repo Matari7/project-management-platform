@@ -1,0 +1,43 @@
+<definitions name="DocumentService"
+             targetNamespace="http://www.example.org/DocumentService/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://www.example.org/DocumentService/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <message name="getDocumentsRequest">
+        <part name="projectId" type="xsd:int"/>
+        <part name="userId" type="xsd:int"/>
+    </message>
+
+    <message name="getDocumentsResponse">
+        <part name="documents" type="xsd:string"/>
+    </message>
+
+    <portType name="DocumentServicePortType">
+        <operation name="getDocuments">
+            <input message="tns:getDocumentsRequest"/>
+            <output message="tns:getDocumentsResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="DocumentServiceBinding" type="tns:DocumentServicePortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getDocuments">
+            <soap:operation soapAction="getDocuments"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="DocumentService">
+        <port name="DocumentServicePort" binding="tns:DocumentServiceBinding">
+            <soap:address location="http://localhost:4016/wsdl"/>
+        </port>
+    </service>
+
+</definitions>

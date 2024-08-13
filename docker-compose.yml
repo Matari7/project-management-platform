@@ -1,0 +1,149 @@
+version: '3.8'
+
+services:
+  create-user:
+    build: ./create-user
+    ports:
+      - "3001:3000"  # Puerto externo 3001 mapeado al interno 3000
+    env_file:
+      - ./create-user/.env
+
+  delete-user:
+    build: ./delete-user
+    ports:
+      - "3002:3000"  # Puerto externo 3002 mapeado al interno 3000
+    env_file:
+      - ./delete-user/.env      
+
+  update-user:
+    build: ./update-user
+    ports:
+      - "3003:3000"  # Puerto externo 3003 mapeado al interno 3000
+    env_file:
+      - ./update-user/.env
+
+  read-user:
+    build: ./read-user
+    ports:
+      - "3004:3000"  # Puerto externo 3004 mapeado al interno 3000
+
+  createproject:
+    build: ./createproject
+    ports:
+      - "3005:3000"  # Puerto externo 3005 mapeado al interno 3000
+    env_file:
+      - ./createproject/.env
+
+  deleteproject:
+    build: ./deleteproject
+    ports:
+      - "3006:3000"  # Puerto externo 3006 mapeado al interno 3000
+    env_file:
+      - ./deleteproject/.env
+
+  updateproject:
+    build: ./updateproject
+    ports:
+      - "3007:3000"  # Puerto externo 3007 mapeado al interno 3000
+    env_file:
+      - ./updateproject/.env      
+
+  readproject2:
+    build: ./readproject2
+    ports:
+      - "3008:3000"  # Puerto externo 3008 mapeado al interno 3000
+
+  createcommentary:
+    build: ./createcommentary
+    ports:
+      - "3009:3000"  # Puerto externo 3009 mapeado al interno 3000
+    env_file:
+      - ./createcommentary/.env
+
+  deletecommentary:
+    build: ./deletecommentary
+    ports:
+      - "3010:3000"  # Puerto externo 3010 mapeado al interno 3000
+    env_file:
+      - ./deletecommentary/.env
+
+  updatecommentary:
+    build: ./updatecommentary
+    ports:
+      - "3011:3000"  # Puerto externo 3011 mapeado al interno 3000
+    env_file:
+      - ./updatecommentary/.env
+
+  readcommentaries:
+    build: ./readcommentaries
+    ports:
+      - "3012:3000"  # Puerto externo 3012 mapeado al interno 3000
+    env_file:
+      - ./readcommentaries/.env      
+
+  createdocument:
+    build: ./createdocument
+    ports:
+      - "3013:3000"  # Puerto externo 3013 mapeado al interno 3000
+    env_file:
+      - ./createdocument/.env
+
+  deletedocument:
+    build: ./deletedocument
+    ports:
+      - "3014:3000"  # Puerto externo 3014 mapeado al interno 3000
+    env_file:
+      - ./deletedocument/.env
+
+  updatedocument:
+    build: ./updatedocument
+    ports:
+      - "3015:3000"  # Puerto externo 3015 mapeado al interno 3000
+    env_file:
+      - ./updatedocument/.env
+
+  readdocument:
+    build: ./readdocument
+    ports:
+      - "3016:3000"  # Puerto externo 3016 mapeado al interno 3000
+    env_file:
+      - ./readdocument/.env
+
+  notificationhistory:
+    build: ./notificationhistory
+    ports:
+      - "3017:3000"  # Puerto externo 3017 mapeado al interno 3000
+    env_file:
+      - ./notificationhistory/.env      
+
+  receivenotification:
+    build: ./receivenotification
+    ports:
+      - "3018:3000"  # Puerto externo 3018 mapeado al interno 3000
+    env_file:
+      - ./receivenotification/.env
+
+  sendnotification:
+    build: ./sendnotification
+    ports:
+      - "3019:3000"  # Puerto externo 3019 mapeado al interno 3000
+    env_file:
+      - ./sendnotification/.env
+
+  audit-service:
+    build: ./audit-service
+    ports:
+      - "3020:3000"  # Puerto externo 3020 mapeado al interno 3000
+    env_file:
+      - ./audit-service/.env
+
+
+  # Agrega aquí los demás microservicios
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: matari_test
+      MONGO_INITDB_ROOT_PASSWORD: UniversidadCentral123*

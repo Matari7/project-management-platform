@@ -256,3 +256,38 @@ This project was carried out by the following collaborator:
 [JavaScript-url]: https://developer.mozilla.org/es/docs/Learn/JavaScript/First_steps/What_is_JavaScript
 [JsonWebToken]: https://img.shields.io/badge/JsonWebToken-D5A000
 [JsonWebToken-url]: https://jwt.io/introduction
+
+
+$env:NODE_OPTIONS = "--openssl-legacy-provider"
+npm start
+
+
+Revisar que elimine el delete-user, update-user
+
+Sale este error en el read-user
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Finished at: 2024-08-12T01:25:04-05:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project read-user: Compilation failure
+[ERROR] No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK?
+[ERROR]
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+PS C:\Users\Ariel\Documents\GitHub\project-management-platform\read-user> ./mvnw.cmd clean package
+>>
+"JAVA_HOME is not set or java.exe not found in JAVA_HOME."
+
+Mandar a CHATGPT
+
+Despues hay que hacer que el proyecto vincular los estudiantes
+
+Eliminar JWT para createcommentary
+
+Hay que estar muy atento en el Service ahi arregle lo de la base de datos a donde apunta
