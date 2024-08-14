@@ -1,6 +1,6 @@
 const documentService = require('../services/documentService');
-const Project = require('../../createproject/src/models/Project');
-const User = require('../../create-user/src/models/User');
+const Project = require('../models/Project');
+const User = require('../models/User');
 
 exports.createDocument = async (req, res) => {
     try {

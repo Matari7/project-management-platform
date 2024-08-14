@@ -1,5 +1,4 @@
-# Dockerfile para el frontend React
-FROM node:16-alpine
+FROM node:14-alpine
 
 WORKDIR /app
 

@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelizeProject } = require('../config/db'); // Asegúrate de usar la conexión correcta para projects
-const User = require('../../../create-user/src/models/User'); // Asegúrate de que la ruta sea correcta
+const User = require('./User'); // Asegúrate de que la ruta sea correcta
 
 const Project = sequelizeProject.define('projects', {
   name: {

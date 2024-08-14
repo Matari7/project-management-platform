@@ -1,5 +1,5 @@
 # Dockerfile para chat
-FROM golang:1.18-alpine
+FROM golang:1.23-alpine
 
 WORKDIR /app
 

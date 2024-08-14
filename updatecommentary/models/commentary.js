@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../db/connection');
-const User = require('../../create-user/src/models/User'); // Asegúrate de que la ruta sea correcta
-const Project = require('../../createproject/src/models/Project');
+const User = require('./User'); // Asegúrate de que la ruta sea correcta
+const Project = require('./Project');
 
 const Commentary = sequelize.define('comments', {
     id: {

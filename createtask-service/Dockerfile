@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 4024
 
-CMD ["npx", "ts-node-dev", "src/app.ts"]
+CMD ["npx", "ts-node-dev", "src/index.ts"]

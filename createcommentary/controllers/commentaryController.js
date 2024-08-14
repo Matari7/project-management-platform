@@ -1,6 +1,6 @@
 const commentaryService = require('../services/commentaryService');
-const Project = require('../../createproject/src/models/Project');
-const User = require('../../create-user/src/models/User');
+const Project = require('../models/Project');
+const User = require('../models/User');
 
 const createCommentary = async (req, res) => {
     try {

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../db/connection');
-const User = require('../../create-user/src/models/User');
-const Project = require('../../createproject/src/models/Project');
+const User = require('./User');
+const Project = require('./Project');
 
 const Document = sequelize.define('documents', {
     id: {
