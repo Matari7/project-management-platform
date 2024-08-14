@@ -2,6 +2,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
+import ReadTask from './components/ReadTask';
+import CreateTask from './components/CreateTask'
+import Chat from './components/Chat';
+import ProjectSubscriptionService from './components/ProjectSubscriptionService';
+import FileUpload from './components/FileUpload'
+import UserRoleService from './components/UserRoleService';
+
 // Importa los componentes para cada microservicio
 import CreateUser from './components/CreateUser';
 import DeleteUser from './components/DeleteUser';
@@ -37,6 +44,13 @@ function App() {
         <h1>Microservices Frontend</h1>
         <nav>
           <ul>
+            <li><Link to="/readtask-service">Read Task</Link></li>
+            <li><Link to="/createtask-service">Create Task</Link></li>
+            <li><Link to="/user-role-service">User Role Service</Link></li>
+          <li><Link to="/chat-service">Chat</Link></li>
+          <li><Link to="/projectSubscriptionService">Project Subscription Service</Link></li>
+          <li><Link to="/files">File Upload</Link></li>
+
           <li><Link to="/login">Login</Link></li>
             {/* Enlaces para los microservicios de usuarios */}
             <li><Link to="/create-user">Create User</Link></li>
@@ -74,6 +88,12 @@ function App() {
 
         <Routes>
 
+        <Route path="/readtask-service" element={<ReadTask />} />
+        <Route path="/createtask-service" element={<CreateTask />} />
+        <Route path="/user-role-service" element={<UserRoleService />} />
+        <Route path="/chat-service" element={<Chat />} />
+        <Route path="/projectSubscriptionService" element={<ProjectSubscriptionService />} />
+
         <Route path="/login" element={<Login />} />
 
           {/* Rutas para gestionar usuarios */}
@@ -104,6 +124,7 @@ function App() {
           <Route path="/notificationhistory" element={<NotificationHistory />} />
           <Route path="/receivenotification" element={<ReceiveNotification />} />
           <Route path="/sendnotification" element={<SendNotification />} />
+          <Route path="/files" element={<FileUpload />} />
 
           {/* Ruta para el servicio de auditoría */}
           <Route path="/audit-service" element={<AuditService />} />

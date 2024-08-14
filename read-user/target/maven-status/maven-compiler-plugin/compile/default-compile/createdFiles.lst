@@ -1,0 +1,5 @@
+com\example\readuser\model\User.class
+com\example\readuser\ReadUserApplication.class
+com\example\readuser\repository\UserRepository.class
+com\example\readuser\controller\UserController.class
+com\example\readuser\service\UserService.class
