@@ -1,13 +1,13 @@
-FROM node:14
+# Dockerfile para createcommentary
+FROM node:16-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
-
 RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 4009
 
-CMD ["node", "index.js"]
+CMD ["npm", "start"]

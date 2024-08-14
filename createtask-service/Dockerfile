@@ -1,0 +1,13 @@
+# Dockerfile para createtask-service
+FROM node:16-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 4024
+
+CMD ["npx", "ts-node-dev", "src/app.ts"]

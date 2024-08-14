@@ -1,14 +1,13 @@
-FROM node:14
+# Dockerfile para create-user
+FROM node:16-alpine
 
 WORKDIR /app
 
-COPY package.json ./
-COPY package-lock.json ./
-
+COPY package*.json ./
 RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 4001
 
 CMD ["npm", "start"]

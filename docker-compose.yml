@@ -1,149 +1,333 @@
 version: '3.8'
 
 services:
+  # Traefik service
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=tu-email@example.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"       # Externo -> Interno
+      - "443:443"     # Externo -> Interno
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.api.rule=Host(`traefik.yourdomain.com`)"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.entrypoints=web"
+
+  # REACT Frontend
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    command: npm start
+    networks:
+      - web
+
+  # Microservice: login (Python)
+  login:
+    build:
+      context: ./login
+    ports:
+      - "5000:5000"
+    working_dir: /app
+    command: python app.py
+    env_file:
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.login.rule=Host(`login.yourdomain.com`)"
+      - "traefik.http.services.login.loadbalancer.server.port=5000"
+
+  # Microservice: create-user
   create-user:
-    build: ./create-user
+    build:
+      context: ./create-user
     ports:
-      - "3001:3000"  # Puerto externo 3001 mapeado al interno 3000
+      - "4001:4001"
     env_file:
-      - ./create-user/.env
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.create-user.rule=Host(`create-user.yourdomain.com`)"
+      - "traefik.http.services.create-user.loadbalancer.server.port=4001"
 
+  # Microservice: delete-user
   delete-user:
-    build: ./delete-user
+    build:
+      context: ./delete-user
     ports:
-      - "3002:3000"  # Puerto externo 3002 mapeado al interno 3000
+      - "4002:4002"
     env_file:
-      - ./delete-user/.env      
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.delete-user.rule=Host(`delete-user.yourdomain.com`)"
+      - "traefik.http.services.delete-user.loadbalancer.server.port=4002"
 
+  # Microservice: update-user
   update-user:
-    build: ./update-user
+    build:
+      context: ./update-user
     ports:
-      - "3003:3000"  # Puerto externo 3003 mapeado al interno 3000
+      - "4003:4003"
     env_file:
-      - ./update-user/.env
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.update-user.rule=Host(`update-user.yourdomain.com`)"
+      - "traefik.http.services.update-user.loadbalancer.server.port=4003"
 
-  read-user:
-    build: ./read-user
-    ports:
-      - "3004:3000"  # Puerto externo 3004 mapeado al interno 3000
-
+  # Microservice: createproject
   createproject:
-    build: ./createproject
+    build:
+      context: ./createproject
     ports:
-      - "3005:3000"  # Puerto externo 3005 mapeado al interno 3000
+      - "4005:4005"
     env_file:
-      - ./createproject/.env
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.createproject.rule=Host(`createproject.yourdomain.com`)"
+      - "traefik.http.services.createproject.loadbalancer.server.port=4005"
 
+  # Microservice: deleteproject
   deleteproject:
-    build: ./deleteproject
+    build:
+      context: ./deleteproject
     ports:
-      - "3006:3000"  # Puerto externo 3006 mapeado al interno 3000
+      - "4006:4006"
     env_file:
-      - ./deleteproject/.env
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.deleteproject.rule=Host(`deleteproject.yourdomain.com`)"
+      - "traefik.http.services.deleteproject.loadbalancer.server.port=4006"
 
+  # Microservice: updateproject
   updateproject:
-    build: ./updateproject
+    build:
+      context: ./updateproject
     ports:
-      - "3007:3000"  # Puerto externo 3007 mapeado al interno 3000
+      - "4007:4007"
     env_file:
-      - ./updateproject/.env      
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.updateproject.rule=Host(`updateproject.yourdomain.com`)"
+      - "traefik.http.services.updateproject.loadbalancer.server.port=4007"
 
-  readproject2:
-    build: ./readproject2
+  # Microservice: readproject
+  readproject:
+    build:
+      context: ./readproject
     ports:
-      - "3008:3000"  # Puerto externo 3008 mapeado al interno 3000
+      - "4008:4008"
+    env_file:
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.readproject.rule=Host(`readproject.yourdomain.com`)"
+      - "traefik.http.services.readproject.loadbalancer.server.port=4008"
 
+  # Microservice: createcommentary
   createcommentary:
-    build: ./createcommentary
+    build:
+      context: ./createcommentary
     ports:
-      - "3009:3000"  # Puerto externo 3009 mapeado al interno 3000
+      - "4009:4009"
     env_file:
-      - ./createcommentary/.env
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.createcommentary.rule=Host(`createcommentary.yourdomain.com`)"
+      - "traefik.http.services.createcommentary.loadbalancer.server.port=4009"
 
+  # Microservice: deletecommentary
   deletecommentary:
-    build: ./deletecommentary
+    build:
+      context: ./deletecommentary
     ports:
-      - "3010:3000"  # Puerto externo 3010 mapeado al interno 3000
+      - "4010:4010"
     env_file:
-      - ./deletecommentary/.env
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.deletecommentary.rule=Host(`deletecommentary.yourdomain.com`)"
+      - "traefik.http.services.deletecommentary.loadbalancer.server.port=4010"
 
+  # Microservice: updatecommentary
   updatecommentary:
-    build: ./updatecommentary
+    build:
+      context: ./updatecommentary
     ports:
-      - "3011:3000"  # Puerto externo 3011 mapeado al interno 3000
+      - "4011:4011"
     env_file:
-      - ./updatecommentary/.env
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.updatecommentary.rule=Host(`updatecommentary.yourdomain.com`)"
+      - "traefik.http.services.updatecommentary.loadbalancer.server.port=4011"
 
+  # Microservice: readcommentaries
   readcommentaries:
-    build: ./readcommentaries
+    build:
+      context: ./readcommentaries
     ports:
-      - "3012:3000"  # Puerto externo 3012 mapeado al interno 3000
+      - "4012:4012"
     env_file:
-      - ./readcommentaries/.env      
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.readcommentaries.rule=Host(`readcommentaries.yourdomain.com`)"
+      - "traefik.http.services.readcommentaries.loadbalancer.server.port=4012"
 
+  # Microservice: createdocument
   createdocument:
-    build: ./createdocument
+    build:
+      context: ./createdocument
     ports:
-      - "3013:3000"  # Puerto externo 3013 mapeado al interno 3000
+      - "4013:4013"
     env_file:
-      - ./createdocument/.env
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.createdocument.rule=Host(`createdocument.yourdomain.com`)"
+      - "traefik.http.services.createdocument.loadbalancer.server.port=4013"
 
+  # Microservice: deletedocument
   deletedocument:
-    build: ./deletedocument
+    build:
+      context: ./deletedocument
     ports:
-      - "3014:3000"  # Puerto externo 3014 mapeado al interno 3000
+      - "4014:4014"
     env_file:
-      - ./deletedocument/.env
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.deletedocument.rule=Host(`deletedocument.yourdomain.com`)"
+      - "traefik.http.services.deletedocument.loadbalancer.server.port=4014"
 
+  # Microservice: updatedocument
   updatedocument:
-    build: ./updatedocument
+    build:
+      context: ./updatedocument
     ports:
-      - "3015:3000"  # Puerto externo 3015 mapeado al interno 3000
+      - "4015:4015"
     env_file:
-      - ./updatedocument/.env
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.updatedocument.rule=Host(`updatedocument.yourdomain.com`)"
+      - "traefik.http.services.updatedocument.loadbalancer.server.port=4015"
 
-  readdocument:
-    build: ./readdocument
+  # Microservice: chat (Go + WebSocket)
+  chat-service:
+    build:
+      context: ./chat-service
     ports:
-      - "3016:3000"  # Puerto externo 3016 mapeado al interno 3000
+      - "8080:8080"
+    working_dir: /app
+    command: go run main.go
     env_file:
-      - ./readdocument/.env
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.chat.rule=Host(`chat.yourdomain.com`)"
+      - "traefik.http.services.chat.loadbalancer.server.port=8080"
 
-  notificationhistory:
-    build: ./notificationhistory
+  # Microservice: projectSubscriptionService (Kafka)
+  projectSubscriptionService:
+    image: wurstmeister/kafka:latest
     ports:
-      - "3017:3000"  # Puerto externo 3017 mapeado al interno 3000
+      - "4021:4021"
     env_file:
-      - ./notificationhistory/.env      
+      - .env
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:4021
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.projectSubscriptionService.rule=Host(`projectSubscriptionService.yourdomain.com`)"
+      - "traefik.http.services.projectSubscriptionService.loadbalancer.server.port=4021"
 
-  receivenotification:
-    build: ./receivenotification
+  # Microservice: user-role-service (MongoDB Atlas)
+  user-role-service:
+    image: mongo:latest
     ports:
-      - "3018:3000"  # Puerto externo 3018 mapeado al interno 3000
+      - "4023:4023"
     env_file:
-      - ./receivenotification/.env
-
-  sendnotification:
-    build: ./sendnotification
-    ports:
-      - "3019:3000"  # Puerto externo 3019 mapeado al interno 3000
-    env_file:
-      - ./sendnotification/.env
-
-  audit-service:
-    build: ./audit-service
-    ports:
-      - "3020:3000"  # Puerto externo 3020 mapeado al interno 3000
-    env_file:
-      - ./audit-service/.env
-
-
-  # Agrega aquí los demás microservicios
-
-  mongodb:
-    image: mongo
-    ports:
-      - "27017:27017"
+      - .env
     environment:
       MONGO_INITDB_ROOT_USERNAME: matari_test
       MONGO_INITDB_ROOT_PASSWORD: UniversidadCentral123*
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.user-role-service.rule=Host(`user-role-service.yourdomain.com`)"
+      - "traefik.http.services.user-role-service.loadbalancer.server.port=4023"
+
+  # Microservice: createtask-service (TypeScript)
+  createtask-service:
+    build:
+      context: ./createtask-service
+    ports:
+      - "4024:4024"
+    env_file:
+      - .env
+    working_dir: /app
+    command: npm run start
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.createtask-service.rule=Host(`createtask-service.yourdomain.com`)"
+      - "traefik.http.services.createtask-service.loadbalancer.server.port=4024"
+
+  # Microservice: readtask-service (gRPC)
+  readtask-service:
+    build:
+      context: ./readtask-service
+    ports:
+      - "4025:4025"
+    env_file:
+      - .env
+    working_dir: /app
+    command: npm run start
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.readtask-service.rule=Host(`readtask-service.yourdomain.com`)"
+      - "traefik.http.services.readtask-service.loadbalancer.server.port=4025"
+
+networks:
+  web:
+    external: true

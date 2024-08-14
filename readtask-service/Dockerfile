@@ -1,4 +1,4 @@
-
+# Dockerfile para readtask-service
 FROM node:16-alpine
 
 WORKDIR /app
@@ -8,6 +8,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 4011
+EXPOSE 4025
 
 CMD ["npm", "start"]
