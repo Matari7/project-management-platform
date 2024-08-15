@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../db/connection');
-const User = require('../models/User'); 
-const Project = require('../models/Project');
+const User = require('./User'); 
+const Project = require('./Project');
 
 
 const Subscription = sequelize.define('subscription', {

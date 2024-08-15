@@ -279,7 +279,7 @@ services:
   # Microservice: projectSubscriptionService (Kafka)
   projectsubscriptionservice:
     build:
-      context: ./projectSubscriptionService
+      context: ./projectsubscriptionservice
     ports:
       - "4021:4021"
     env_file:
@@ -287,8 +287,8 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.projectSubscriptionService.rule=Host(`projectSubscriptionService.yourdomain.com`)"
-      - "traefik.http.services.projectSubscriptionService.loadbalancer.server.port=4021"
+      - "traefik.http.routers.projectsubscriptionservice.rule=Host(`projectsubscriptionservice.yourdomain.com`)"
+      - "traefik.http.services.projectsubscriptionservice.loadbalancer.server.port=4021"
 
   # Microservice: user-role-service (MongoDB Atlas)
   user-role-service:
