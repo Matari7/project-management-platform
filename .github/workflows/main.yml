@@ -60,10 +60,6 @@ jobs:
         echo "Content Updated of docker-compose.yml:"
         cat ./docker/docker-compose.yml
 
-    - name: Clean up previous containers
-      run: |
-        docker-compose -f ./docker/docker-compose.yml down
-
     - name: Execute Docker Compose
       run: |
         docker-compose -f ./docker/docker-compose.yml up -d
