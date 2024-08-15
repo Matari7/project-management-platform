@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # Traefik service
   traefik:
     image: traefik:v2.10
     command:
@@ -13,8 +12,8 @@ services:
       - "--certificatesresolvers.myresolver.acme.email=tu-email@example.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
-      - "80:80"       # Externo -> Interno
-      - "443:443"     # Externo -> Interno
+      - "80:80"       
+      - "443:443"   
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./letsencrypt:/letsencrypt"
@@ -25,7 +24,6 @@ services:
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.entrypoints=web"
 
-  # REACT Frontend
   frontend:
     build:
       context: ../frontend
@@ -36,7 +34,6 @@ services:
     networks:
       - web
 
-  # Microservice: login (Python)
   login:
     build:
       context: ../login
@@ -50,7 +47,6 @@ services:
       - "traefik.http.routers.login.rule=Host(`login.yourdomain.com`)"
       - "traefik.http.services.login.loadbalancer.server.port=5000"
 
-  # Microservice: create-user
   create-user:
     build:
       context: ../create-user
@@ -64,7 +60,6 @@ services:
       - "traefik.http.routers.create-user.rule=Host(`create-user.yourdomain.com`)"
       - "traefik.http.services.create-user.loadbalancer.server.port=4001"
 
-  # Microservice: delete-user
   delete-user:
     build:
       context: ../delete-user
@@ -78,7 +73,6 @@ services:
       - "traefik.http.routers.delete-user.rule=Host(`delete-user.yourdomain.com`)"
       - "traefik.http.services.delete-user.loadbalancer.server.port=4002"
 
-  # Microservice: update-user
   update-user:
     build:
       context: ../update-user
@@ -92,7 +86,6 @@ services:
       - "traefik.http.routers.update-user.rule=Host(`update-user.yourdomain.com`)"
       - "traefik.http.services.update-user.loadbalancer.server.port=4003"
 
-# Microservice: update-user
   read-user:
     build:
       context: ../read-user
@@ -106,7 +99,6 @@ services:
       - "traefik.http.routers.read-user.rule=Host(`read-user.yourdomain.com`)"
       - "traefik.http.services.read-user.loadbalancer.server.port=4004"
 
-  # Microservice: createproject
   createproject:
     build:
       context: ../createproject
@@ -120,7 +112,6 @@ services:
       - "traefik.http.routers.createproject.rule=Host(`createproject.yourdomain.com`)"
       - "traefik.http.services.createproject.loadbalancer.server.port=4005"
 
-  # Microservice: deleteproject
   deleteproject:
     build:
       context: ../deleteproject
@@ -134,7 +125,6 @@ services:
       - "traefik.http.routers.deleteproject.rule=Host(`deleteproject.yourdomain.com`)"
       - "traefik.http.services.deleteproject.loadbalancer.server.port=4006"
 
-  # Microservice: updateproject
   updateproject:
     build:
       context: ../updateproject
@@ -148,7 +138,6 @@ services:
       - "traefik.http.routers.updateproject.rule=Host(`updateproject.yourdomain.com`)"
       - "traefik.http.services.updateproject.loadbalancer.server.port=4007"
 
-  # Microservice: readproject
   readproject:
     build:
       context: ../readproject
@@ -162,7 +151,6 @@ services:
       - "traefik.http.routers.readproject.rule=Host(`readproject.yourdomain.com`)"
       - "traefik.http.services.readproject.loadbalancer.server.port=4008"
 
-  # Microservice: createcommentary
   createcommentary:
     build:
       context: ../createcommentary
@@ -176,7 +164,6 @@ services:
       - "traefik.http.routers.createcommentary.rule=Host(`createcommentary.yourdomain.com`)"
       - "traefik.http.services.createcommentary.loadbalancer.server.port=4009"
 
-  # Microservice: deletecommentary
   deletecommentary:
     build:
       context: ../deletecommentary
@@ -190,7 +177,6 @@ services:
       - "traefik.http.routers.deletecommentary.rule=Host(`deletecommentary.yourdomain.com`)"
       - "traefik.http.services.deletecommentary.loadbalancer.server.port=4010"
 
-  # Microservice: updatecommentary
   updatecommentary:
     build:
       context: ../updatecommentary
@@ -204,7 +190,6 @@ services:
       - "traefik.http.routers.updatecommentary.rule=Host(`updatecommentary.yourdomain.com`)"
       - "traefik.http.services.updatecommentary.loadbalancer.server.port=4011"
 
-  # Microservice: readcommentaries
   readcommentaries:
     build:
       context: ../readcommentaries
@@ -218,7 +203,6 @@ services:
       - "traefik.http.routers.readcommentaries.rule=Host(`readcommentaries.yourdomain.com`)"
       - "traefik.http.services.readcommentaries.loadbalancer.server.port=4012"
 
-  # Microservice: createdocument
   createdocument:
     build:
       context: ../createdocument
@@ -232,7 +216,6 @@ services:
       - "traefik.http.routers.createdocument.rule=Host(`createdocument.yourdomain.com`)"
       - "traefik.http.services.createdocument.loadbalancer.server.port=4013"
 
-  # Microservice: deletedocument
   deletedocument:
     build:
       context: ../deletedocument
@@ -246,7 +229,6 @@ services:
       - "traefik.http.routers.deletedocument.rule=Host(`deletedocument.yourdomain.com`)"
       - "traefik.http.services.deletedocument.loadbalancer.server.port=4014"
 
-  # Microservice: updatedocument
   updatedocument:
     build:
       context: ../updatedocument
@@ -260,7 +242,6 @@ services:
       - "traefik.http.routers.updatedocument.rule=Host(`updatedocument.yourdomain.com`)"
       - "traefik.http.services.updatedocument.loadbalancer.server.port=4015"
 
-  # Microservice: chat (Go + WebSocket)
   chat-service:
     build:
       context: ../chat-service
@@ -276,7 +257,6 @@ services:
       - "traefik.http.routers.chat.rule=Host(`chat.yourdomain.com`)"
       - "traefik.http.services.chat.loadbalancer.server.port=8080"
 
-  # Microservice: projectSubscriptionService (Kafka)
   projectsubscriptionservice:
     build:
       context: ../projectSubscriptionService
@@ -290,7 +270,6 @@ services:
       - "traefik.http.routers.projectSubscriptionService.rule=Host(`projectSubscriptionService.yourdomain.com`)"
       - "traefik.http.services.projectSubscriptionService.loadbalancer.server.port=4021"
 
-  # Microservice: user-role-service (MongoDB Atlas)
   user-role-service:
     build:
       context: ../user-role-service
@@ -314,7 +293,6 @@ services:
     networks:
       - web
 
-  # Kafka service
   kafka:
     image: confluentinc/cp-kafka:latest
     ports:
@@ -334,7 +312,6 @@ services:
       - web
 
       
-  # Microservice: createtask-service (TypeScript)
   createtask-service:
     build:
       context: ../createtask-service
@@ -350,7 +327,6 @@ services:
       - "traefik.http.routers.createtask-service.rule=Host(`createtask-service.yourdomain.com`)"
       - "traefik.http.services.createtask-service.loadbalancer.server.port=4024"
 
-  # Microservice: readtask-service (gRPC)
   readtask-service:
     build:
       context: ../readtask-service
