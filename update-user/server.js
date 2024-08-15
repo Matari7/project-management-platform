@@ -1,13 +1,10 @@
 const express = require('express');
 const app = express();
 const userRoutes = require('./src/routes/userRoutes');
-const cors = require('cors');  // Importa el paquete cors
+const cors = require('cors');
 
-const corsOptions = {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000' // Permite el dominio del frontend en desarrollo o producción
-};
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 require('dotenv').config();
 require('./config/db');

@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { sequelizeUser } = require('../config/db'); // Ajusta la ruta a tu archivo de configuración de la base de datos
+const { sequelizeUser } = require('../config/db'); 
 
 const User = sequelizeUser.define('users', {
   username: {
@@ -16,7 +16,7 @@ const User = sequelizeUser.define('users', {
     allowNull: false
   }
 }, {
-  timestamps: false // o true si quieres timestamps
+  timestamps: false 
 });
 
 module.exports = User;

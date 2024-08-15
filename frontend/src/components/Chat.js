@@ -6,7 +6,7 @@ const Chat = () => {
     const [ws, setWs] = useState(null);
 
     useEffect(() => {
-        const socket = new WebSocket(`ws:${process.env.REACT_APP_API_URL}:8080/ws`);
+        const socket = new WebSocket(`ws://${process.env.REACT_APP_API_URL.split('http://').join('')}:8080/ws`);
         socket.onmessage = (event) => {
             setMessages((prevMessages) => [...prevMessages, event.data]);
         };

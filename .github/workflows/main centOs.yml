@@ -53,25 +53,7 @@ jobs:
         docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/projectsubscriptionservice:latest ./projectSubscriptionService
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/projectsubscriptionservice:latest
 
-    - name: Paths of docker-compose
-      run: |
-        sed -i 's|build: \./|build: ../|g' ./docker/docker-compose.yml
-        echo "Content Updated of docker-compose.yml:"
-        cat ./docker/docker-compose.yml
-
-    - name: Create network
-      run: |
-        docker network create web || true
-
-    - name: Clean up previous containers
-      run: |
-        docker-compose -f ./docker/docker-compose.yml down || true
-
-    - name: Execute Docker Compose
-      run: |
-        docker-compose -f ./docker/docker-compose.yml up -d
-
-  deploy-DigitalOcean:
+  deploy-Ubuntu:
     needs: [build-and-push] 
     runs-on: ubuntu-latest
 
@@ -91,21 +73,6 @@ jobs:
           docker network create web || true
         EOF
         
-    - name: Deploy to CentOS Droplet
-      run: |
-        ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_CENTOS }} << 'EOF'
-          yum update -y
-          yum install -y yum-utils
-          yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-          yum install -y docker-ce docker-ce-cli containerd.io
-          systemctl start docker
-          systemctl enable docker
-          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          chmod +x /usr/local/bin/docker-compose
-          ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-          docker network create web || true
-        EOF
-
     - name: Pull Docker images on Ubuntu
       run: |
         services=(
@@ -119,21 +86,6 @@ jobs:
         for service in "${services[@]}"
         do
           ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_UBUNTU }} "sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
-        done
-
-    - name: Pull Docker images on CentOS
-      run: |
-        services=(
-          "frontend" "create-user" "delete-user" "update-user" "read-user" "createproject" "deleteproject" 
-          "updateproject" "readproject" "createcommentary" "deletecommentary" 
-          "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
-          "updatedocument" "login" "chat-service" "projectsubscriptionservice"
-          "user-role-service" "createtask-service" "readtask-service"
-        )
-
-        for service in "${services[@]}"
-        do
-          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_CENTOS }} "sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
         done
 
     - name: Stop running containers on Ubuntu
@@ -152,29 +104,9 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_UBUNTU }} "sudo docker rm $service-plataform-do || true"
         done
 
-    - name: Stop running containers on CentOS
-      run: |
-        services=(
-          "frontend" "create-user" "delete-user" "update-user" "read-user" "createproject" "deleteproject" 
-          "updateproject" "readproject" "createcommentary" "deletecommentary" 
-          "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
-          "updatedocument" "login" "chat-service" "projectsubscriptionservice"
-          "user-role-service" "createtask-service" "readtask-service"
-        )
-
-        for service in "${services[@]}"
-        do
-          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_CENTOS }} "sudo docker stop $service-plataform-do || true"
-          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_CENTOS }} "sudo docker rm $service-plataform-do || true"
-        done
-
     - name: Remove old Docker images on Ubuntu
       run: |
         ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_UBUNTU }} 'sudo docker image prune -f'
-
-    - name: Remove old Docker images on CentOS
-      run: |
-        ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_CENTOS }} 'sudo docker image prune -f'
 
     - name: Run new containers on Ubuntu
       run: |
@@ -194,6 +126,66 @@ jobs:
           port=${ports[$index]}
           ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_UBUNTU }} "sudo docker run -d --name $service-plataform-do -p $port:$port ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
         done
+
+  deploy-CentOS:
+    needs: [build-and-push] 
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set permissions for private key
+      run: |
+        echo "${{ secrets.DIGITALOCEAN_SSH_KEY }}" > key
+        chmod 600 key
+        
+    - name: Deploy to CentOS Droplet
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_CENTOS }} << 'EOF'
+          yum update -y
+          yum install -y yum-utils
+          yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+          yum install -y docker-ce docker-ce-cli containerd.io
+          systemctl start docker
+          systemctl enable docker
+          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+          ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+          docker network create web || true
+        EOF
+
+    - name: Pull Docker images on CentOS
+      run: |
+        services=(
+          "frontend" "create-user" "delete-user" "update-user" "read-user" "createproject" "deleteproject" 
+          "updateproject" "readproject" "createcommentary" "deletecommentary" 
+          "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
+          "updatedocument" "login" "chat-service" "projectsubscriptionservice"
+          "user-role-service" "createtask-service" "readtask-service"
+        )
+
+        for service in "${services[@]}"
+        do
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_CENTOS }} "sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
+        done
+
+    - name: Stop running containers on CentOS
+      run: |
+        services=(
+          "frontend" "create-user" "delete-user" "update-user" "read-user" "createproject" "deleteproject" 
+          "updateproject" "readproject" "createcommentary" "deletecommentary" 
+          "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
+          "updatedocument" "login" "chat-service" "projectsubscriptionservice"
+          "user-role-service" "createtask-service" "readtask-service"
+        )
+
+        for service in "${services[@]}"
+        do
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_CENTOS }} "sudo docker stop $service-plataform-do || true"
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_CENTOS }} "sudo docker rm $service-plataform-do || true"
+        done
+
+    - name: Remove old Docker images on CentOS
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_CENTOS }} 'sudo docker image prune -f'
 
     - name: Run new containers on CentOS
       run: |

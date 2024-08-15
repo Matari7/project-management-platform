@@ -5,11 +5,8 @@ const cors = require('cors');
 require('./config/db');
 const app = express();
 
-const corsOptions = {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000' // Permite el dominio del frontend en desarrollo o producción
-};
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 
 app.use(express.json());
