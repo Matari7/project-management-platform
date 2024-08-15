@@ -28,7 +28,7 @@ jobs:
           "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
           "updateproject" "readproject" "createcommentary" "deletecommentary" 
           "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
-          "updatedocument" "login" "chat-service" "projectSubscriptionService"
+          "updatedocument" "login" "chat-service" "projectsubscriptionservice"
           "user-role-service" "createtask-service" "readtask-service"
         )
         
@@ -83,7 +83,7 @@ jobs:
           "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
           "updateproject" "readproject" "createcommentary" "deletecommentary" 
           "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
-          "updatedocument" "login" "chat-service" "projectSubscriptionService"
+          "updatedocument" "login" "chat-service" "projectsubscriptionservice"
           "user-role-service" "createtask-service" "readtask-service"
         )
 
@@ -98,7 +98,7 @@ jobs:
           "frontend" "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
           "updateproject" "readproject" "createcommentary" "deletecommentary" 
           "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
-          "updatedocument" "login" "chat-service" "projectSubscriptionService"
+          "updatedocument" "login" "chat-service" "projectsubscriptionservice"
           "user-role-service" "createtask-service" "readtask-service"
         )
 
@@ -118,7 +118,7 @@ jobs:
           "frontend" "create-user" "delete-user" "update-user" "read-user" "createproject" "deleteproject" 
           "updateproject" "readproject" "createcommentary" "deletecommentary" 
           "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
-          "updatedocument" "login" "chat-service" "projectSubscriptionService"
+          "updatedocument" "login" "chat-service" "projectsubscriptionservice"
           "user-role-service" "createtask-service" "readtask-service"
         )
         
