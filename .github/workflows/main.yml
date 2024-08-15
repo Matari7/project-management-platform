@@ -125,13 +125,13 @@ jobs:
 
         for service in "${services[@]}"
         do
-          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} "sudo docker stop $service || true"
-          ssh -o StrictHostKeyChecking-no -i key root@${{ secrets.DROPLET_IP }} "sudo docker rm $service || true"
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} "sudo docker stop $service-plataform-do || true"
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} "sudo docker rm $service-plataform-do || true"
         done
 
     - name: Remove old Docker images
       run: |
-        ssh -o StrictHostKeyChecking-no -i key root@${{ secrets.DROPLET_IP }} 'sudo docker image prune -f'
+        ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} 'sudo docker image prune -f'
 
     - name: Run new containers
       run: |
