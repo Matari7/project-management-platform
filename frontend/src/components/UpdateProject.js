@@ -9,7 +9,7 @@ const UpdateProject = () => {
 
     const handleUpdate = async () => {
         try {
-            const response = await axios.put(`http://localhost:4007/api/projects/update/${projectId}`, { name, description });
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}:4007/api/projects/update/${projectId}`, { name, description });
             setMessage(response.data.message);
         } catch (error) {
             setMessage('Error updating project: ' + (error.response?.data?.message || error.message));

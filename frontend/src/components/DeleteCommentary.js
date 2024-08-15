@@ -8,7 +8,7 @@ const DeleteCommentary = () => {
 
     const handleDelete = async () => {
         try {
-            const response = await axios.delete(`http://localhost:4010/api/commentaries/delete/${commentaryId}`);
+            const response = await axios.delete(`${process.env.REACT_APP_API_URL}:4010/api/commentaries/delete/${commentaryId}`);
             setMessage(response.data.message);
         } catch (error) {
             setMessage('Error deleting commentary: '+ (error.response?.data?.message || error.message));

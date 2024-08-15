@@ -9,7 +9,7 @@ const CreateProject = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:4005/api/projects/create', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}:4005/api/projects/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

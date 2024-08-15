@@ -8,7 +8,7 @@ const ProjectSubscriptionService = () => {
 
     const subscribeToProject = async () => {
         try {
-            const response = await fetch('http://localhost:4021/api/subscribe', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}:4021/api/subscribe`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ user_id: userId, project_id: projectId })
@@ -24,7 +24,7 @@ const ProjectSubscriptionService = () => {
 
     const fetchSubscriptions = async () => {
         try {
-            const response = await fetch('http://localhost:4021/api/subscriptions');
+            const response = await fetch(`${process.env.REACT_APP_API_URL}:4021/api/subscriptions`);
             const result = await response.json();
             setSubscriptions(result);
         } catch (error) {

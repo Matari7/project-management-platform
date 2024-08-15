@@ -8,7 +8,7 @@ const DeleteDocument = () => {
 
     const handleDelete = async () => {
         try {
-            const response = await axios.delete(`http://localhost:4014/api/documents/${documentId}`);
+            const response = await axios.delete(`${process.env.REACT_APP_API_URL}:4014/api/documents/${documentId}`);
             setMessage('Deleted document successfully: '+ response.data.message);
         } catch (error) {
             setMessage('Error deleting document: '+ (error.response?.data?.message || error.message));

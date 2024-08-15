@@ -8,7 +8,7 @@ const ReadTask = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await axios.get('http://157.245.92.109:4025/api/tasks');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}:4025/api/tasks`);
                 setTasks(response.data.tasks || []);
                 setMessage('Tasks retrieved successfully');
             } catch (error) {

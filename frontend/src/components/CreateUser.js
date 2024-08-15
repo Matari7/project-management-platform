@@ -9,7 +9,7 @@ function CreateUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('http://localhost:4001/api/users', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}:4001/api/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -12,7 +12,7 @@ const UserRoleService = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get('http://localhost:4023/api/users');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}:4023/api/users`);
                 setUsers(response.data);
                 if (response.data.length > 0) {
                     setSelectedUserId(response.data[0].id);  // Seleccionar el primer usuario por defecto
@@ -27,7 +27,7 @@ const UserRoleService = () => {
 
     const fetchRoles = async () => {
         try {
-            const response = await axios.get(`http://localhost:4023/api/roles/${selectedUserId}`);
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}:4023/api/roles/${selectedUserId}`);
             setRole(response.data.role || []);
             setMessage('Roles retrieved successfully');
         } catch (error) {
@@ -42,7 +42,7 @@ const UserRoleService = () => {
     const addRole = async () => {
 
         try {
-            await axios.post('http://localhost:4023/api/roles/add', { userId: selectedUserId, role: selectedRole });
+            await axios.post(`${process.env.REACT_APP_API_URL}:4023/api/roles/add`, { userId: selectedUserId, role: selectedRole });
             fetchRoles(); // Fetch roles again after adding a new one
             setMessage('Role added successfully');
         } catch (error) {

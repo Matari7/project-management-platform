@@ -2,7 +2,7 @@ const { ApolloClient, InMemoryCache, HttpLink } = require('@apollo/client');
 
 const client = new ApolloClient({
     link: new HttpLink({
-        uri: 'http://localhost:4008/graphql',
+        uri: `${process.env.REACT_APP_API_URL}:4008/graphql`,
     }),
     cache: new InMemoryCache(),
 });

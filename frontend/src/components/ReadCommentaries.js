@@ -9,7 +9,7 @@ const ReadCommentaries = () => {
 
     const fetchCommentaries = useCallback(async () => {
         try {
-            const response = await axios.get(`http://localhost:4012/api/commentaries/${projectId}`);
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}:4012/api/commentaries/${projectId}`);
             setCommentaries(response.data);
         } catch (error) {
             setMessage(`Error fetching commentaries: ${error.message}`);

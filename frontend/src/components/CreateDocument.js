@@ -11,7 +11,7 @@ const CreateDocument = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:4013/api/documents', { 
+            const response = await fetch(`${process.env.REACT_APP_API_URL}:4013/api/documents`, { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -9,7 +9,7 @@ const CreateTask = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:4024/api/tasks', { title, description });
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}:4024/api/tasks`, { title, description });
             setMessage('Task created successfully: '+ response);
         } catch (error) {
             setMessage('Error creating task: '+ (error.response?.data?.message || error.message));

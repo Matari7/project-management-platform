@@ -7,7 +7,7 @@ function DeleteUser() {
   const handleDelete = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(`http://localhost:4002/api/users/${userId}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}:4002/api/users/${userId}`, {
       method: 'DELETE'
     });
 

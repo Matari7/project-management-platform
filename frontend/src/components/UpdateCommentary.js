@@ -8,7 +8,7 @@ const UpdateCommentary = () => {
 
     const handleUpdate = async () => {
         try {
-            const response = await axios.put(`http://localhost:4011/api/commentaries/update/${commentaryId}`, { content });
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}:4011/api/commentaries/update/${commentaryId}`, { content });
             setMessage(response.data.message);
         } catch (error) {
             setMessage ('Error updating commentary: ' + (error.response?.data?.message || error.message));

@@ -10,7 +10,7 @@ const UpdateDocument = () => {
 
     const handleUpdate = async () => {
         try {
-            const response = await axios.put(`http://localhost:4015/api/documents/${documentId}`, { title, content });
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}:4015/api/documents/${documentId}`, { title, content });
             setMessage(response.data.message);
         } catch (error) {
             setMessage ('Error updating document: ' + (error.response?.data?.message || error.message));

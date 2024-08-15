@@ -8,7 +8,7 @@ const ReadUser = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get('http://localhost:4004/users');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}:4004/users`);
                 setUsers(response.data);
             } catch (error) {
                 setMessage('Error fetching users');

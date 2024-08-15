@@ -10,7 +10,7 @@ function UpdateUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(`http://localhost:4003/api/users/${userId}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
