@@ -4,11 +4,6 @@ const User = require('./User');
 const Project = require('./Project');
 
 const Document = sequelize.define('documents', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
     document_name: {
         type: DataTypes.STRING,
         allowNull: false

@@ -30,11 +30,6 @@ import DeleteProject from './components/DeleteProject';
 import UpdateProject from './components/UpdateProject';
 import ReadProject from './components/ReadProject';
 
-import NotificationHistory from './components/NotificationHistory';
-import ReceiveNotification from './components/ReceiveNotification';
-import SendNotification from './components/SendNotification';
-
-import AuditService from './components/AuditService'; // Ejemplo para un microservicio adicional
 import Login from './components/Login';
 
 function App() {
@@ -56,7 +51,7 @@ function App() {
             <li><Link to="/create-user">Create User</Link></li>
             <li><Link to="/delete-user">Delete User</Link></li>
             <li><Link to="/update-user">Update User</Link></li>
-            <li><Link to="/read-user">Read User</Link></li>
+            <li><Link to="/read-user">Read User PENDIENTE</Link></li>
 
             {/* Enlaces para los microservicios de comentarios */}
             <li><Link to="/createcommentary">Create Commentary</Link></li>
@@ -76,13 +71,7 @@ function App() {
             <li><Link to="/updateproject">Update Project</Link></li>
             <li><Link to="/readproject">Read Project</Link></li>
 
-            {/* Enlaces para los microservicios de notificaciones */}
-            <li><Link to="/notificationhistory">Notification History</Link></li>
-            <li><Link to="/receivenotification">Receive Notification</Link></li>
-            <li><Link to="/sendnotification">Send Notification</Link></li>
-
-            {/* Enlace para el servicio de auditoría */}
-            <li><Link to="/audit-service">Audit Service</Link></li>
+           
           </ul>
         </nav>
 
@@ -120,14 +109,8 @@ function App() {
           <Route path="/updateproject" element={<UpdateProject />} />
           <Route path="/readproject" element={<ReadProject />} />
 
-          {/* Rutas para notificaciones */}
-          <Route path="/notificationhistory" element={<NotificationHistory />} />
-          <Route path="/receivenotification" element={<ReceiveNotification />} />
-          <Route path="/sendnotification" element={<SendNotification />} />
           <Route path="/files" element={<FileUpload />} />
 
-          {/* Ruta para el servicio de auditoría */}
-          <Route path="/audit-service" element={<AuditService />} />
         </Routes>
       </div>
     </Router>

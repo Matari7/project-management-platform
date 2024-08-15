@@ -6,13 +6,13 @@ const createCommentary = async (req, res) => {
     try {
         const { content, projectId, userId } = req.body;
 
-        // Verifica que el usuario exista
+        // Check that the user exists
         const user = await User.findByPk(userId);
         if (!user) {
             return res.status(400).json({ message: 'User does not exist' });
         }
 
-         // Verifica que el proyecto exista
+         // Check that the project exists
          const project = await Project.findByPk(projectId);
          if (!project) {
              return res.status(400).json({ message: 'Project does not exist' });

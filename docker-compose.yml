@@ -43,7 +43,6 @@ services:
     ports:
       - "5000:5000"
     working_dir: /app
-    command: python app.py
     env_file:
       - .env
     networks:
@@ -93,6 +92,20 @@ services:
     labels:
       - "traefik.http.routers.update-user.rule=Host(`update-user.yourdomain.com`)"
       - "traefik.http.services.update-user.loadbalancer.server.port=4003"
+
+# Microservice: update-user
+  read-user:
+    build:
+      context: ./read-user
+    ports:
+      - "4004:4004"
+    env_file:
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.read-user.rule=Host(`read-user.yourdomain.com`)"
+      - "traefik.http.services.read-user.loadbalancer.server.port=4004"
 
   # Microservice: createproject
   createproject:
@@ -266,15 +279,16 @@ services:
 
   # Microservice: projectSubscriptionService (Kafka)
   projectSubscriptionService:
-    image: wurstmeister/kafka:latest
     ports:
       - "4021:4021"
     env_file:
       - .env
     environment:
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:4021
+      KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:4021
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://projectSubscriptionService:4021
+
     networks:
       - web
     labels:
@@ -283,14 +297,12 @@ services:
 
   # Microservice: user-role-service (MongoDB Atlas)
   user-role-service:
-    image: mongo:latest
+    build:
+      context: ./user-role-service
     ports:
       - "4023:4023"
     env_file:
       - .env
-    environment:
-      - MONGODB_URI=mongodb+srv://matari_test:UniversidadCentral123*@cluster0.5lzjk.mongodb.net/roles_db?retryWrites=true&w=majority
-      - MONGO_DB_NAME=roles_db
     networks:
       - web
     labels:
@@ -298,25 +310,31 @@ services:
       - "traefik.http.services.user-role-service.loadbalancer.server.port=4023"
 
   zookeeper:
-    image: wurstmeister/zookeeper
+    image: confluentinc/cp-zookeeper:latest
     ports:
       - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
     networks:
       - web
 
   # Kafka service
   kafka:
-    image: wurstmeister/kafka
+    image: confluentinc/cp-kafka:latest
     ports:
       - "9092:9092"
+    depends_on:
+    - zookeeper
     environment:
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:4021
       KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      KAFKA_MESSAGE_MAX_BYTES: 200000000 
+      KAFKA_REPLICA_FETCH_MAX_BYTES: 200000000
     networks:
       - web
 

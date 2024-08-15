@@ -17,6 +17,11 @@ const sequelizeProject = new Sequelize(process.env.PROJECT_DB_NAME,
     dialect: 'mysql',
 });
 
+const userDb = new Sequelize(process.env.USER_DB_NAME, process.env.USER_DB_USER, process.env.USER_DB_PASSWORD, {
+    host: process.env.USER_DB_HOST,
+    dialect: 'mysql',
+});
+
 
 
 sequelize.authenticate()
@@ -31,4 +36,4 @@ sequelize.authenticate()
         console.error('No se pudo conectar a la base de datos de projects:', err);
     });
 
-module.exports = { sequelize, sequelizeProject };
+module.exports = { sequelize, sequelizeProject, userDb };

@@ -8,7 +8,7 @@ const DeleteProject = () => {
     const handleDelete = async () => {
         try {
             const response = await axios.delete(`http://localhost:4006/api/projects/delete/${projectId}`);
-            setMessage(response.data.message);
+            setMessage('Deleted document successfully: '+ response.data.message);
         } catch (error) {
             setMessage('Error deleting project: ' + (error.response?.data?.message || error.message));
         }

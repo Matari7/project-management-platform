@@ -1,10 +1,9 @@
 import express from "express";
-import cors from "cors";  // Importa el paquete cors
+import cors from "cors";  
 import client from "./client.js";
 
 const app = express();
 
-// Habilita CORS para todas las rutas
 app.use(cors());
 
 app.get("/api/tasks", (req, res) => {
@@ -20,6 +19,6 @@ app.get("/api/tasks", (req, res) => {
     });
 });
 
-app.listen(5555, () => {
-    console.log("Server started on port 5555");
+app.listen(4025, () => {
+    console.log("Server started on port 4025");
 });

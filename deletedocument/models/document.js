@@ -33,8 +33,6 @@ const Document = sequelize.define('documents', {
           key: 'id'
         }
       }
-    }, {
-        timestamps: false,
 });
 
 module.exports = Document;

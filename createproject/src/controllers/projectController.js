@@ -1,5 +1,4 @@
-// Importa User y projectService
-const User = require('../models/User'); // Asegúrate de que la ruta sea correcta
+const User = require('../models/User');
 const projectService = require('../services/projectService');
 
 const createProject = async (req, res) => {

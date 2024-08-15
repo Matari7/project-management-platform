@@ -1,4 +1,3 @@
-# Dockerfile para createcommentary
 FROM node:16-alpine
 
 WORKDIR /app

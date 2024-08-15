@@ -1,6 +1,6 @@
 const Subscription = require('../models/Subscription');
-const User = require('../../create-user/src/models/User'); // Asegúrate de que la ruta sea correcta
-const Project = require('../../createproject/src/models/Project'); // Asegúrate de que la ruta sea correcta
+const User = require('../models/User'); // Asegúrate de que la ruta sea correcta
+const Project = require('../models/Project'); // Asegúrate de que la ruta sea correcta
 const sendMessage = require('./kafkaProducer');
 
 const subscribeToProject = async (user_id, project_id) => {

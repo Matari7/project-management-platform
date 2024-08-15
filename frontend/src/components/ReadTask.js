@@ -8,7 +8,7 @@ const ReadTask = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await axios.get('http://localhost:5555/api/tasks');
+                const response = await axios.get('http://localhost:4025/api/tasks');
                 setTasks(response.data.tasks || []);
                 setMessage('Tasks retrieved successfully');
             } catch (error) {

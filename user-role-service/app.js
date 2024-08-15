@@ -11,10 +11,6 @@ app.use(express.json());
 
 mongoDBConnection();
 
-sequelize.authenticate()
-    .then(() => console.log('Connected to MySQL Database'))
-    .catch(err => console.error('Unable to connect to MySQL Database:', err));
-
 app.use('/api', roleRoutes);
 
 const PORT = process.env.PORT || 4023;
