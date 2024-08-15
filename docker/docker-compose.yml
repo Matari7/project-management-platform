@@ -28,7 +28,7 @@ services:
   # REACT Frontend
   frontend:
     build:
-      context: ./frontend
+      context: ../frontend
     ports:
       - "3000:3000"
     working_dir: /app
@@ -39,7 +39,7 @@ services:
   # Microservice: login (Python)
   login:
     build:
-      context: ./login
+      context: ../login
     ports:
       - "5000:5000"
     env_file:
@@ -53,7 +53,7 @@ services:
   # Microservice: create-user
   create-user:
     build:
-      context: ./create-user
+      context: ../create-user
     ports:
       - "4001:4001"
     env_file:
@@ -67,7 +67,7 @@ services:
   # Microservice: delete-user
   delete-user:
     build:
-      context: ./delete-user
+      context: ../delete-user
     ports:
       - "4002:4002"
     env_file:
@@ -81,7 +81,7 @@ services:
   # Microservice: update-user
   update-user:
     build:
-      context: ./update-user
+      context: ../update-user
     ports:
       - "4003:4003"
     env_file:
@@ -95,7 +95,7 @@ services:
 # Microservice: update-user
   read-user:
     build:
-      context: ./read-user
+      context: ../read-user
     ports:
       - "4004:4004"
     env_file:
@@ -109,7 +109,7 @@ services:
   # Microservice: createproject
   createproject:
     build:
-      context: ./createproject
+      context: ../createproject
     ports:
       - "4005:4005"
     env_file:
@@ -123,7 +123,7 @@ services:
   # Microservice: deleteproject
   deleteproject:
     build:
-      context: ./deleteproject
+      context: ../deleteproject
     ports:
       - "4006:4006"
     env_file:
@@ -137,7 +137,7 @@ services:
   # Microservice: updateproject
   updateproject:
     build:
-      context: ./updateproject
+      context: ../updateproject
     ports:
       - "4007:4007"
     env_file:
@@ -151,7 +151,7 @@ services:
   # Microservice: readproject
   readproject:
     build:
-      context: ./readproject
+      context: ../readproject
     ports:
       - "4008:4008"
     env_file:
@@ -165,7 +165,7 @@ services:
   # Microservice: createcommentary
   createcommentary:
     build:
-      context: ./createcommentary
+      context: ../createcommentary
     ports:
       - "4009:4009"
     env_file:
@@ -179,7 +179,7 @@ services:
   # Microservice: deletecommentary
   deletecommentary:
     build:
-      context: ./deletecommentary
+      context: ../deletecommentary
     ports:
       - "4010:4010"
     env_file:
@@ -193,7 +193,7 @@ services:
   # Microservice: updatecommentary
   updatecommentary:
     build:
-      context: ./updatecommentary
+      context: ../updatecommentary
     ports:
       - "4011:4011"
     env_file:
@@ -207,7 +207,7 @@ services:
   # Microservice: readcommentaries
   readcommentaries:
     build:
-      context: ./readcommentaries
+      context: ../readcommentaries
     ports:
       - "4012:4012"
     env_file:
@@ -221,7 +221,7 @@ services:
   # Microservice: createdocument
   createdocument:
     build:
-      context: ./createdocument
+      context: ../createdocument
     ports:
       - "4013:4013"
     env_file:
@@ -235,7 +235,7 @@ services:
   # Microservice: deletedocument
   deletedocument:
     build:
-      context: ./deletedocument
+      context: ../deletedocument
     ports:
       - "4014:4014"
     env_file:
@@ -249,7 +249,7 @@ services:
   # Microservice: updatedocument
   updatedocument:
     build:
-      context: ./updatedocument
+      context: ../updatedocument
     ports:
       - "4015:4015"
     env_file:
@@ -263,7 +263,7 @@ services:
   # Microservice: chat (Go + WebSocket)
   chat-service:
     build:
-      context: ./chat-service
+      context: ../chat-service
     ports:
       - "8080:8080"
     working_dir: /app
@@ -279,7 +279,7 @@ services:
   # Microservice: projectSubscriptionService (Kafka)
   projectsubscriptionservice:
     build:
-      context: ./projectSubscriptionService
+      context: ../projectSubscriptionService
     ports:
       - "4021:4021"
     env_file:
@@ -293,7 +293,7 @@ services:
   # Microservice: user-role-service (MongoDB Atlas)
   user-role-service:
     build:
-      context: ./user-role-service
+      context: ../user-role-service
     ports:
       - "4023:4023"
     env_file:
@@ -337,7 +337,7 @@ services:
   # Microservice: createtask-service (TypeScript)
   createtask-service:
     build:
-      context: ./createtask-service
+      context: ../createtask-service
     ports:
       - "4024:4024"
     env_file:
@@ -353,7 +353,7 @@ services:
   # Microservice: readtask-service (gRPC)
   readtask-service:
     build:
-      context: ./readtask-service
+      context: ../readtask-service
     ports:
       - "4025:4025"
     env_file:
