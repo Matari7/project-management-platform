@@ -30,7 +30,7 @@ jobs:
     - name: Build and Push Dockers
       run: |
         services=(
-          "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
+          "frontend" "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
           "updateproject" "readproject" "createcommentary" "deletecommentary" 
           "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
           "updatedocument" "login" "chat-service"
@@ -101,7 +101,7 @@ jobs:
     - name: Pull Docker images
       run: |
         services=(
-          "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
+          "frontend" "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
           "updateproject" "readproject" "createcommentary" "deletecommentary" 
           "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
           "updatedocument" "login" "chat-service" "projectsubscriptionservice"
@@ -125,8 +125,8 @@ jobs:
 
         for service in "${services[@]}"
         do
-          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} "sudo docker stop $service-plataform-aws || true"
-          ssh -o StrictHostKeyChecking-no -i key root@${{ secrets.DROPLET_IP }} "sudo docker rm $service-plataform-aws || true"
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} "sudo docker stop $service-plataform-do || true"
+          ssh -o StrictHostKeyChecking-no -i key root@${{ secrets.DROPLET_IP }} "sudo docker rm $service-plataform-do || true"
         done
 
     - name: Remove old Docker images
@@ -149,5 +149,5 @@ jobs:
         do
           service=${services[$index]}
           port=${ports[$index]}
-          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} "sudo docker run -d --name $service-plataform-aws -p $port:$port ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} "sudo docker run -d --name $service-plataform-do -p $port:$port ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
         done
