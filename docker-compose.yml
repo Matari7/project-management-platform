@@ -42,7 +42,6 @@ services:
       context: ./login
     ports:
       - "5000:5000"
-    working_dir: /app
     env_file:
       - .env
     networks:
@@ -278,17 +277,13 @@ services:
       - "traefik.http.services.chat.loadbalancer.server.port=8080"
 
   # Microservice: projectSubscriptionService (Kafka)
-  projectSubscriptionService:
+  projectsubscriptionservice:
+    build:
+      context: ./projectSubscriptionService
     ports:
       - "4021:4021"
     env_file:
       - .env
-    environment:
-      KAFKA_BROKER_ID: 2
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:4021
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://projectSubscriptionService:4021
-
     networks:
       - web
     labels:
