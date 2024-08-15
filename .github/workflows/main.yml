@@ -28,7 +28,7 @@ jobs:
           "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
           "updateproject" "readproject" "createcommentary" "deletecommentary" 
           "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
-          "updatedocument" "login" "chat-service" "projectsubscriptionservice"
+          "updatedocument" "login" "chat-service"
           "user-role-service" "createtask-service" "readtask-service"
         )
         
@@ -42,6 +42,13 @@ jobs:
             exit 1
           fi
         done
+
+    - name: Build and Push projectSubscriptionService
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/projectsubscriptionservice:latest ./projectSubscriptionService
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/projectsubscriptionservice:latest
+
+
     - name: Paths of docker-compose
       run: |
         sed -i 's|build: \./|build: ../|g' ./docker/docker-compose.yml
