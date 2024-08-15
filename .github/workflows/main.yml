@@ -42,3 +42,91 @@ jobs:
             exit 1
           fi
         done
+    - name: Paths of docker-compose
+      run: |
+        sed -i 's|build: \./|build: ../|g' ./docker/docker-compose.yml
+        echo "Content Updated of docker-compose.yml:"
+        cat ./docker/docker-compose.yml
+
+    - name: Clean up previous containers
+      run: |
+        docker-compose -f ./docker/docker-compose.yml down
+
+    - name: Execute Docker Compose
+      run: |
+        docker-compose -f ./docker/docker-compose.yml up -d
+
+  deploy-DigitalOcean:
+    needs: [build-and-push] 
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set permissions for private key
+      run: |
+        echo "${{ secrets.DIGITALOCEAN_SSH_KEY }}" > key
+        chmod 600 key
+
+    - name: Install Docker on Droplet
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} << 'EOF'
+          sudo yum update -y
+          sudo yum install -y docker
+          sudo service docker start
+        EOF
+    - name: Verify Docker installation
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} "docker --version"
+
+    - name: Pull Docker images
+      run: |
+        services=(
+          "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
+          "updateproject" "readproject" "createcommentary" "deletecommentary" 
+          "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
+          "updatedocument" "login" "chat-service" "projectSubscriptionService"
+          "user-role-service" "createtask-service" "readtask-service"
+        )
+
+        for service in "${services[@]}"
+        do
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} "sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
+        done
+
+    - name: Stop running containers
+      run: |
+        services=(
+          "frontend" "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
+          "updateproject" "readproject" "createcommentary" "deletecommentary" 
+          "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
+          "updatedocument" "login" "chat-service" "projectSubscriptionService"
+          "user-role-service" "createtask-service" "readtask-service"
+        )
+
+        for service in "${services[@]}"
+        do
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} "sudo docker stop $service-plataform-aws || true"
+          ssh -o StrictHostKeyChecking-no -i key root@${{ secrets.DROPLET_IP }} "sudo docker rm $service-plataform-aws || true"
+        done
+
+    - name: Remove old Docker images
+      run: |
+        ssh -o StrictHostKeyChecking-no -i key root@${{ secrets.DROPLET_IP }} 'sudo docker image prune -f'
+
+    - name: Run new containers
+      run: |
+        services=(
+          "frontend" "create-user" "delete-user" "update-user" "read-user" "createproject" "deleteproject" 
+          "updateproject" "readproject" "createcommentary" "deletecommentary" 
+          "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
+          "updatedocument" "login" "chat-service" "projectSubscriptionService"
+          "user-role-service" "createtask-service" "readtask-service"
+        )
+        
+        ports=(3000 4001 4002 4003 4004 4005 4006 4007 4008 4009 4010 4011 4012 4013 4014 4015 5000 8080 4021 4023 4024 4025)
+
+        for index in ${!services[@]}
+        do
+          service=${services[$index]}
+          port=${ports[$index]}
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} "sudo docker run -d --name $service-plataform-aws -p $port:$port ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
+        done
