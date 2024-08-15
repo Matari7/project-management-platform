@@ -89,6 +89,7 @@ jobs:
           systemctl start docker
           systemctl enable docker
         EOF
+        
     - name: Verify Docker installation
       run: |
         ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP }} "docker --version"
