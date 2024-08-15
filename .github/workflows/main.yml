@@ -30,7 +30,7 @@ jobs:
     - name: Build and Push Dockers
       run: |
         services=(
-          "frontend" "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
+          "frontend" "create-user" "delete-user" "update-user" "read-user" "createproject" "deleteproject" 
           "updateproject" "readproject" "createcommentary" "deletecommentary" 
           "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
           "updatedocument" "login" "chat-service"
@@ -102,7 +102,7 @@ jobs:
     - name: Pull Docker images
       run: |
         services=(
-          "frontend" "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
+          "frontend" "create-user" "delete-user" "update-user" "read-user" "createproject" "deleteproject" 
           "updateproject" "readproject" "createcommentary" "deletecommentary" 
           "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
           "updatedocument" "login" "chat-service" "projectsubscriptionservice"
@@ -117,7 +117,7 @@ jobs:
     - name: Stop running containers
       run: |
         services=(
-          "frontend" "create-user" "delete-user" "update-user" "createproject" "deleteproject" 
+          "frontend" "create-user" "delete-user" "update-user" "read-user" "createproject" "deleteproject" 
           "updateproject" "readproject" "createcommentary" "deletecommentary" 
           "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
           "updatedocument" "login" "chat-service" "projectsubscriptionservice"
