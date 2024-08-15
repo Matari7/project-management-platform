@@ -1,20 +1,20 @@
-# Usar una imagen oficial de Python como imagen base
-FROM python:3.10-slim
+# Usa una imagen base oficial de Node.js
+FROM node:18-alpine
 
-# Establecer el directorio de trabajo en el contenedor
+# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiar el archivo requirements.txt y el archivo de configuración de la base de datos
-COPY requirements.txt .
+# Copia los archivos de package.json y package-lock.json al contenedor
+COPY package*.json ./
 
-# Instalar las dependencias
-RUN pip install --no-cache-dir -r requirements.txt
+# Instala las dependencias
+RUN npm install
 
-# Copiar el resto de la aplicación en el contenedor
+# Copia el resto del código de la aplicación al contenedor
 COPY . .
 
-# Exponer el puerto en el que Flask correrá
+# Expone el puerto en el que se ejecuta la aplicación
 EXPOSE 5000
 
-# Comando para correr la aplicación
-CMD ["python", "app.py"]
+# Inicia la aplicación
+CMD ["npm", "start"]

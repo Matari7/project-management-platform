@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";  
 import client from "./client.js";
+import client from "prom-client";
 
 const app = express();
 
@@ -17,6 +18,15 @@ app.get("/api/tasks", (req, res) => {
             });
         }
     });
+});
+
+const register = new client.Registry();
+
+client.collectDefaultMetrics({ register });
+
+app.get('/metrics', async (req, res) => {
+  res.setHeader('Content-Type', register.contentType);
+  res.end(await register.metrics());
 });
 
 app.listen(4025, () => {

@@ -1,14 +1,16 @@
 const express = require('express');
-const commentaryRoutes = require('./routes/commentaryRoutes');
 const cors = require('cors');
-const app = express();
+const authRoutes = require('./routes/authRoutes');
 const client = require('prom-client');
 require('dotenv').config();
-require('./db/connection');
+
+const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/api/commentaries', commentaryRoutes);
+
+// Configurar la ruta raíz para manejar el login
+app.use('/', authRoutes);
 
 const register = new client.Registry();
 
@@ -19,8 +21,8 @@ app.get('/metrics', async (req, res) => {
   res.end(await register.metrics());
 });
 
-const PORT = process.env.PORT || 4011;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });

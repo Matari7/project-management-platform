@@ -4,6 +4,7 @@ const schema = require('./schemas/projectSchema');
 const resolvers = require('./resolvers/projectResolver');
 const sequelize = require('./config/db');
 const cors = require('cors');
+const client = require('prom-client');
 require('dotenv').config();
 
 const app = express();
@@ -14,6 +15,15 @@ app.use('/graphql', graphqlHTTP({
     rootValue: resolvers,
     graphiql: true,
 }));
+
+const register = new client.Registry();
+
+client.collectDefaultMetrics({ register });
+
+app.get('/metrics', async (req, res) => {
+  res.setHeader('Content-Type', register.contentType);
+  res.end(await register.metrics());
+});
 
 const PORT = process.env.PORT || 4008;
 
