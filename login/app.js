@@ -1,21 +1,37 @@
 const express = require('express');
-const sequelize = require('./config/db');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const db = require('./config/db');
 const loginRoutes = require('./routes/loginRoutes');
-
+const cors = require('cors');
+require('dotenv').config();
 const app = express();
 
-app.use(express.json());
-app.use('/api', loginRoutes);
+app.use(cors());
 
-// Sincronizar con la base de datos
-sequelize.sync().then(() => {
-    console.log('Database synchronized');
-}).catch((err) => {
-    console.error('Unable to synchronize the database:', err);
-});
 
-const PORT = process.env.PORT || 5000;
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+// Configura la sesión
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true
+}));
+
+// Configura el motor de plantillas EJS
+app.set('view engine', 'ejs');
+
+// Rutas
+app.use('/', loginRoutes);
+
+// Sincronizar la base de datos
+db.sync()
+  .then(() => {
+    console.log('Database connected');
+    app.listen(5000, () => {
+      console.log('Server running on port 5000');
+    });
+  })
+  .catch(err => console.log('Error connecting to the database', err));

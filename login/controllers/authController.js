@@ -1,20 +1,17 @@
 const loginService = require('../services/loginService');
 
-const authController = {
-    login: async (req, res) => {
-        const { username, password } = req.body;
-
-        try {
-            const result = await loginService.login(username, password);
-            if (!result.success) {
-                return res.status(401).json({ message: result.message });
-            }
-            // Redirige al frontend en Ubuntu si la autenticación es exitosa
-            res.redirect(`${process.env.REACT_APP_API_URL}:3000`);
-        } catch (err) {
-            res.status(500).json({ message: 'Server error' });
-        }
-    }
+exports.loginPage = (req, res) => {
+    res.render('login');
 };
 
-module.exports = authController;
+exports.login = async (req, res) => {
+    const { username, password } = req.body;
+    const user = await loginService.authenticateUser(username, password);
+
+    if (user) {
+        // Aquí rediriges al servidor de Ubuntu
+        res.redirect(`${process.env.REACT_APP_API_URL}:3000`);
+    } else {
+        res.render('login', { error: 'Invalid username or password' });
+    }
+};

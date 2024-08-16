@@ -19,3 +19,4 @@ const User = sequelize.define('users', {
       timestamps: false // o true si quieres timestamps
     });
     
+    module.exports = User;
