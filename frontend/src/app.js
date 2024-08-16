@@ -29,7 +29,6 @@ import DeleteProject from './components/DeleteProject';
 import UpdateProject from './components/UpdateProject';
 import ReadProject from './components/ReadProject';
 
-import Login from './components/Login';
 
 function App() {
   return (
@@ -45,7 +44,6 @@ function App() {
           <li><Link to="/projectSubscriptionService">Project Subscription Service</Link></li>
           <li><Link to="/files">File Upload</Link></li>
 
-          <li><Link to="/login">Login</Link></li>
             {/* Enlaces para los microservicios de usuarios */}
             <li><Link to="/create-user">Create User</Link></li>
             <li><Link to="/delete-user">Delete User</Link></li>
@@ -82,7 +80,6 @@ function App() {
         <Route path="/chat-service" element={<Chat />} />
         <Route path="/projectSubscriptionService" element={<ProjectSubscriptionService />} />
 
-        <Route path="/login" element={<Login />} />
 
           {/* Rutas para gestionar usuarios */}
           <Route path="/create-user" element={<CreateUser />} />
