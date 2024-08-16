@@ -1,20 +1,20 @@
-# Usa una imagen base oficial de Node.js
-FROM node:18-alpine
+# Dockerfile
+FROM node:14
 
-# Establece el directorio de trabajo dentro del contenedor
-WORKDIR /app
+# Crear directorio de la aplicación
+WORKDIR /usr/src/app
 
-# Copia los archivos de package.json y package-lock.json al contenedor
+# Copiar package.json y package-lock.json
 COPY package*.json ./
 
-# Instala las dependencias
+# Instalar dependencias
 RUN npm install
 
-# Copia el resto del código de la aplicación al contenedor
+# Copiar todo el código
 COPY . .
 
-# Expone el puerto en el que se ejecuta la aplicación
+# Exponer el puerto
 EXPOSE 5000
 
-# Inicia la aplicación
+# Comando para ejecutar la aplicación
 CMD ["npm", "start"]

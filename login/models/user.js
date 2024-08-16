@@ -1,10 +1,21 @@
-const connection = require('../config/db');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
 
-async function getUserByEmail(email) {
-    const [rows] = await connection.query('SELECT * FROM users WHERE email = ?', [email]);
-    return rows[0];
-}
-
-module.exports = {
-    getUserByEmail,
-};
+const User = sequelize.define('users', {
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      },
+      password_hash: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
+    }, {
+      timestamps: false // o true si quieres timestamps
+    });
+    
