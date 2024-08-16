@@ -5,7 +5,6 @@ import ReadTask from './components/ReadTask';
 import CreateTask from './components/CreateTask'
 import Chat from './components/Chat';
 import ProjectSubscriptionService from './components/ProjectSubscriptionService';
-import FileUpload from './components/FileUpload'
 import UserRoleService from './components/UserRoleService';
 
 // Importa los componentes para cada microservicio
@@ -42,9 +41,7 @@ function App() {
             <li><Link to="/user-role-service">User Role Service</Link></li>
           <li><Link to="/chat-service">Chat</Link></li>
           <li><Link to="/projectSubscriptionService">Project Subscription Service</Link></li>
-          <li><Link to="/files">File Upload</Link></li>
 
-          <li><Link to="/login">Login</Link></li>
             {/* Enlaces para los microservicios de usuarios */}
             <li><Link to="/create-user">Create User</Link></li>
             <li><Link to="/delete-user">Delete User</Link></li>
@@ -105,7 +102,6 @@ function App() {
           <Route path="/updateproject" element={<UpdateProject />} />
           <Route path="/readproject" element={<ReadProject />} />
 
-          <Route path="/files" element={<FileUpload />} />
 
         </Routes>
       </div>
