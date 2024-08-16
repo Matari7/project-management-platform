@@ -22,13 +22,13 @@ import ReadCommentaries from './components/ReadCommentaries';
 import CreateDocument from './components/CreateDocument';
 import DeleteDocument from './components/DeleteDocument';
 import UpdateDocument from './components/UpdateDocument';
-import ReadDocument from './components/ReadDocument';
 
 import CreateProject from './components/CreateProject';
 import DeleteProject from './components/DeleteProject';
 import UpdateProject from './components/UpdateProject';
 import ReadProject from './components/ReadProject';
 
+import ProductService from './components/ProductService';
 
 function App() {
   return (
@@ -44,6 +44,7 @@ function App() {
           <li><Link to="/projectSubscriptionService">Project Subscription Service</Link></li>
           <li><Link to="/files">File Upload</Link></li>
 
+          <li><Link to="/login">Login</Link></li>
             {/* Enlaces para los microservicios de usuarios */}
             <li><Link to="/create-user">Create User</Link></li>
             <li><Link to="/delete-user">Delete User</Link></li>
@@ -60,7 +61,6 @@ function App() {
             <li><Link to="/createdocument">Create Document</Link></li>
             <li><Link to="/deletedocument">Delete Document</Link></li>
             <li><Link to="/updatedocument">Update Document</Link></li>
-            <li><Link to="/readdocument">Read Document</Link></li>
 
             {/* Enlaces para los microservicios de proyectos */}
             <li><Link to="/createproject">Create Project</Link></li>
@@ -80,6 +80,7 @@ function App() {
         <Route path="/chat-service" element={<Chat />} />
         <Route path="/projectSubscriptionService" element={<ProjectSubscriptionService />} />
 
+        <Route path="/product-service" element={<ProductService />} />
 
           {/* Rutas para gestionar usuarios */}
           <Route path="/create-user" element={<CreateUser />} />
@@ -97,7 +98,6 @@ function App() {
           <Route path="/createdocument" element={<CreateDocument />} />
           <Route path="/deletedocument" element={<DeleteDocument />} />
           <Route path="/updatedocument" element={<UpdateDocument />} />
-          <Route path="/readdocument" element={<ReadDocument />} />
 
           {/* Rutas para gestionar proyectos */}
           <Route path="/createproject" element={<CreateProject />} />

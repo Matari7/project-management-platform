@@ -10,7 +10,7 @@ function UpdateUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}:4003/api/users/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -22,7 +22,7 @@ function UpdateUser() {
       setMessage('User updated successfully!');
     } else {
       const errorData = await response.json();
-        setMessage(`Failed to create user: ${errorData.message}`);
+        setMessage(`Failed to update user: ${errorData.message}`);
     }
   };
 

@@ -2,69 +2,66 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const FileUpload = () => {
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [projectId, setProjectId] = useState('');
+    const [file, setFile] = useState(null);
+    const [files, setFiles] = useState([]);
     const [message, setMessage] = useState('');
 
     const handleFileChange = (e) => {
-        setSelectedFile(e.target.files[0]);
+        setFile(e.target.files[0]);
     };
 
-    const handleProjectIdChange = (e) => {
-        setProjectId(e.target.value);
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!selectedFile) {
-            setMessage('Please select a file');
-            return;
-        }
-        if (!projectId) {
-            setMessage('Please enter a project ID');
+    const uploadFile = async () => {
+        if (!file) {
+            setMessage('Please select a file first.');
             return;
         }
 
         const formData = new FormData();
-        formData.append('file', selectedFile);
-        formData.append('project_id', projectId);
+        formData.append('file', file);
 
         try {
-            const response = await axios.post('http://localhost:4000/api/files/upload', formData, {
+            await axios.post(`${process.env.REACT_APP_API_URL}:4027/api/files/upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            setMessage(response.data.message);
+            setMessage('File uploaded successfully');
+            fetchFiles();
         } catch (error) {
-            setMessage(`Error uploading file: ${error.response.data.message}`);
+            setMessage(`Error uploading file: ${error.message}`);
+        }
+    };
+
+    const fetchFiles = async () => {
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}:4027/api/files`);
+            setFiles(response.data);
+            setMessage('Files retrieved successfully');
+        } catch (error) {
+            setMessage(`Error fetching files: ${error.message}`);
         }
     };
 
     return (
         <div>
-            <h2>File Upload</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Project ID:</label>
-                    <input 
-                        type="text" 
-                        value={projectId} 
-                        onChange={handleProjectIdChange} 
-                        required 
-                    />
-                </div>
-                <div>
-                    <label>File:</label>
-                    <input 
-                        type="file" 
-                        onChange={handleFileChange} 
-                        required 
-                    />
-                </div>
-                <button type="submit">Upload</button>
-            </form>
+            <h2>File Upload Service</h2>
+            <div>
+                <label>Choose a file:</label>
+                <input type="file" onChange={handleFileChange} />
+            </div>
+            <button onClick={uploadFile}>Upload File</button>
+            <button onClick={fetchFiles}>Fetch Files</button>
             {message && <p>{message}</p>}
+            <ul>
+                {files.map(file => (
+                    <li key={file.id}>
+                        <h3>{file.fileName}</h3>
+                        <p>Type: {file.fileType}</p>
+                        <p>Size: {file.fileSize} bytes</p>
+                        <p><a href={`${process.env.REACT_APP_API_CENTOS}:4028/${file.filePath}`} target="_blank" rel="noopener noreferrer">Download</a></p>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };

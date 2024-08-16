@@ -3,12 +3,10 @@ const app = express();
 const userRoutes = require('./src/routes/userRoutes');
 const cors = require('cors');
 const client = require('prom-client');
-
-
-app.use(cors());
-
 require('dotenv').config();
 require('./config/db');
+
+app.use(cors());
 
 app.use(express.json());
 app.use('/api/users', userRoutes);
@@ -23,4 +21,6 @@ app.get('/metrics', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 4003;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () =>{ 
+  console.log(`Server running on port ${PORT}`)
+});

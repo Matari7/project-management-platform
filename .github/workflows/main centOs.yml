@@ -205,3 +205,84 @@ jobs:
           port=${ports[$index]}
           ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_CENTOS }} "sudo docker run -d --name $service-plataform-do -p $port:$port ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
         done
+
+  deploy-Debian:
+    needs: [build-and-push]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set permissions for private key
+      run: |
+        echo "${{ secrets.DIGITALOCEAN_SSH_KEY }}" > key
+        chmod 600 key
+
+    - name: Deploy to Debian Droplet
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_DEBIAN }} << 'EOF'
+          apt-get update -y
+          apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+          curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+          add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+          apt-get update -y
+          apt-get install -y docker-ce docker-ce-cli containerd.io
+          systemctl start docker
+          systemctl enable docker
+          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+          ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+          docker network create web || true
+        EOF
+
+    - name: Pull Docker images on Debian
+      run: |
+        services=(
+          "frontend" "create-user" "delete-user" "update-user" "read-user" "createproject" "deleteproject" 
+          "updateproject" "readproject" "createcommentary" "deletecommentary" 
+          "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
+          "updatedocument" "login" "chat-service" "projectsubscriptionservice"
+          "user-role-service" "createtask-service" "readtask-service"
+        )
+
+        for service in "${services[@]}"
+        do
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_DEBIAN }} "sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
+        done
+
+    - name: Stop running containers on Debian
+      run: |
+        services=(
+          "frontend" "create-user" "delete-user" "update-user" "read-user" "createproject" "deleteproject" 
+          "updateproject" "readproject" "createcommentary" "deletecommentary" 
+          "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
+          "updatedocument" "login" "chat-service" "projectsubscriptionservice"
+          "user-role-service" "createtask-service" "readtask-service"
+        )
+
+        for service in "${services[@]}"
+        do
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_DEBIAN }} "sudo docker stop $service-plataform-do || true"
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_DEBIAN }} "sudo docker rm $service-plataform-do || true"
+        done
+
+    - name: Remove old Docker images on Debian
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_DEBIAN }} 'sudo docker image prune -f'
+
+    - name: Run new containers on Debian
+      run: |
+        services=(
+          "frontend" "create-user" "delete-user" "update-user" "read-user" "createproject" "deleteproject" 
+          "updateproject" "readproject" "createcommentary" "deletecommentary" 
+          "updatecommentary" "readcommentaries" "createdocument" "deletedocument" 
+          "updatedocument" "login" "chat-service" "projectsubscriptionservice"
+          "user-role-service" "createtask-service" "readtask-service"
+        )
+        
+        ports=(3000 4001 4002 4003 4004 4005 4006 4007 4008 4009 4010 4011 4012 4013 4014 4015 5000 8080 4021 4023 4024 4025)
+
+        for index in ${!services[@]}
+        do
+          service=${services[$index]}
+          port=${ports[$index]}
+          ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_DEBIAN }} "sudo docker run -d --name $service-plataform-do -p $port:$port ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
+        done
