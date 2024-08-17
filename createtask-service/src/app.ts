@@ -8,22 +8,22 @@ require('dotenv').config();
 const app = express();
 
 // Middlewares
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors()); // Enable Cross-Origin Resource Sharing
+app.use(bodyParser.json()); // Parse incoming JSON requests
 
-// Prometheus metrics
+// Prometheus metrics setup
 const register = new client.Registry();
 client.collectDefaultMetrics({ register });
 
 app.get('/metrics', async (req, res) => {
     res.setHeader('Content-Type', register.contentType);
-    res.end(await register.metrics());
+    res.end(await register.metrics()); // Serve metrics for Prometheus monitoring
 });
 
 // Routes
-app.use('/api', taskRoutes);
+app.use('/api', taskRoutes); // Mount task-related routes under /api
 
-// Sync DB and Start Server
+// Start the server
 const PORT = process.env.PORT || 4024;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

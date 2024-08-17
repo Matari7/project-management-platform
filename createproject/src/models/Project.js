@@ -2,25 +2,26 @@ const { DataTypes } = require('sequelize');
 const { sequelizeProject } = require('../config/db');
 const User = require('./User');
 
+// Define the Project model linked to the projects table in the sequelizeProject database
 const Project = sequelizeProject.define('projects', {
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false // The name field is required
   },
   description: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false // The description field is required
   },
   user_id: {  
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: false, // The user_id field is required
     references: {
-      model: User, 
-      key: 'id'
+      model: User, // References the User model
+      key: 'id'    // Links to the id field in the User model
     }
   }
 }, {
-  timestamps: false 
+  timestamps: false // Disable automatic timestamp fields (createdAt, updatedAt)
 });
 
 module.exports = Project;

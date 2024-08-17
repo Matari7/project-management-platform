@@ -7,28 +7,29 @@ const CreateDocument = () => {
     const [userId, setUserId] = useState('');
     const [message, setMessage] = useState('');
 
-
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            // Send a POST request to create a new document
             const response = await fetch(`${process.env.REACT_APP_API_URL}:4013/api/documents`, { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ title, content, projectId, userId }),
+                body: JSON.stringify({ title, content, projectId, userId }), // Send the document data as JSON
             });
 
             if (response.ok) {
                 const responseData = await response.json();
                 console.log('Document created:', responseData.document);
-                setMessage('Document created successfully!');
+                setMessage('Document created successfully!'); // Display success message
             } else {
                 const errorData = await response.json();
-                setMessage(`Failed to create document: ${errorData.message}`);
+                setMessage(`Failed to create document: ${errorData.message}`); // Display error message
             }
         } catch (error) {
-            setMessage(`Error creating document: ${error.message}`);
+            setMessage(`Error creating document: ${error.message}`); // Handle any network or other errors
         }
     };
 
@@ -73,8 +74,7 @@ const CreateDocument = () => {
                 </div>
                 <button type="submit">Create Document</button>
             </form>
-            {message && <p>{message}</p>}
-
+            {message && <p>{message}</p>} {/* Display message if there is any */}
         </div>
     );
 };

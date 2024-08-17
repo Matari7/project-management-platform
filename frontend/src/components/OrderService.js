@@ -7,23 +7,25 @@ const OrderService = () => {
     const [orders, setOrders] = useState([]);
     const [message, setMessage] = useState('');
 
-    const fetchOrders = async () => {
+    const handleCreateOrder = async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_API_URL}:4026/api/orders`);
-            setOrders(response.data);
-            setMessage('Orders retrieved successfully');
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}:4027/api/orders`, {
+                orderName,
+                totalAmount: parseFloat(totalAmount)
+            });
+            setMessage('Order created successfully!'+ response);
+            fetchOrders(); // Fetch the updated list of orders
         } catch (error) {
-            setMessage(`Error fetching orders: ${error.message}`);
+            setMessage(`Error creating order: ${error.message}`);
         }
     };
 
-    const createOrder = async () => {
+    const fetchOrders = async () => {
         try {
-            await axios.post(`${process.env.REACT_APP_API_CENTOS}:4027/api/orders`, { orderName, totalAmount });
-            fetchOrders(); // Fetch orders again after creating a new one
-            setMessage('Order created successfully');
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}:4027/api/orders`);
+            setOrders(response.data);
         } catch (error) {
-            setMessage(`Error creating order: ${error.message}`);
+            setMessage(`Error fetching orders: ${error.message}`);
         }
     };
 
@@ -32,28 +34,27 @@ const OrderService = () => {
             <h2>Order Service</h2>
             <div>
                 <label>Order Name:</label>
-                <input 
-                    type="text" 
-                    value={orderName} 
-                    onChange={(e) => setOrderName(e.target.value)} 
+                <input
+                    type="text"
+                    value={orderName}
+                    onChange={(e) => setOrderName(e.target.value)}
                 />
             </div>
             <div>
                 <label>Total Amount:</label>
-                <input 
-                    type="text" 
-                    value={totalAmount} 
-                    onChange={(e) => setTotalAmount(e.target.value)} 
+                <input
+                    type="number"
+                    value={totalAmount}
+                    onChange={(e) => setTotalAmount(e.target.value)}
                 />
             </div>
-            <button onClick={createOrder}>Create Order</button>
+            <button onClick={handleCreateOrder}>Create Order</button>
             <button onClick={fetchOrders}>Fetch Orders</button>
             {message && <p>{message}</p>}
             <ul>
-                {orders.map(order => (
+                {orders.map((order) => (
                     <li key={order.id}>
-                        <h3>{order.orderName}</h3>
-                        <p>Total Amount: {order.totalAmount}</p>
+                        {order.orderName} - ${order.totalAmount}
                     </li>
                 ))}
             </ul>

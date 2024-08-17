@@ -1,17 +1,18 @@
 const User = require('../models/User');
 const projectService = require('../services/projectService');
 
+// Controller function to handle the creation of a new project
 const createProject = async (req, res) => {
     try {
         const { name, description, userId } = req.body;
 
-        // Verifica que el usuario exista en la base de datos de users
+        // Check that the user exists in the users database
         const user = await User.findByPk(userId);
         if (!user) {
             return res.status(400).json({ message: 'User does not exist' });
         }
 
-        // Crea el proyecto en la base de datos de projects
+        // Create the project in the projects database
         const project = await projectService.createProject({ name, description, user_id: user.id });
         res.status(201).json(project);
     } catch (error) {

@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../../config/db'); // Ajusta la ruta a tu archivo de configuración de la base de datos
+const sequelize = require('../../config/db'); // Adjust the path to your database configuration file
 
+// Define the User model with fields for username, email, and password_hash
 const User = sequelize.define('users', {
   username: {
     type: DataTypes.STRING,
@@ -16,7 +17,7 @@ const User = sequelize.define('users', {
     allowNull: false
   }
 }, {
-  timestamps: false // o true si quieres timestamps
+  timestamps: false // Set to true if you want Sequelize to manage createdAt and updatedAt timestamps
 });
 
 module.exports = User;

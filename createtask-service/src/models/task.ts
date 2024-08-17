@@ -1,6 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/db';
 
+// Interface defining the attributes of a Task
 interface TaskAttributes {
     id: number;
     title: string;
@@ -9,8 +10,10 @@ interface TaskAttributes {
     updatedAt?: Date;
 }
 
+// Interface for Task creation, where the 'id' field is optional
 interface TaskCreationAttributes extends Optional<TaskAttributes, 'id'> {}
 
+// Task model class definition extending Sequelize's Model class
 class Task extends Model<TaskAttributes, TaskCreationAttributes> implements TaskAttributes {
     public id!: number;
     public title!: string;
@@ -20,6 +23,7 @@ class Task extends Model<TaskAttributes, TaskCreationAttributes> implements Task
     public readonly updatedAt!: Date;
 }
 
+// Initialize the Task model with the necessary fields and options
 Task.init(
     {
         id: {
@@ -37,8 +41,8 @@ Task.init(
         },
     },
     {
-        sequelize,
-        tableName: 'tasks',
+        sequelize,           // Pass the Sequelize instance
+        tableName: 'tasks',  // Define the table name in the database
     }
 );
 

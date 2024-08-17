@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import './css/styles.css';  // Importa el archivo CSS
 
+import FileUpload from './components/FileUpload';
 import OrderService from './components/OrderService';
 import ProductService from './components/ProductService';
 import Chat from './components/Chat';
@@ -69,7 +70,10 @@ function App() {
         <div className="content">
         <Routes>
 
-        <Route path="/order-service" element={<OrderService />}></Route>
+        <Route path="/files" element={<FileUpload />} />
+
+
+        <Route path="/order-service" element={<OrderService />} />
         <Route path="/readtask-service" element={<ReadTask />} />
         <Route path="/createtask-service" element={<CreateTask />} />
         <Route path="/user-role-service" element={<UserRoleService />} />
@@ -105,7 +109,7 @@ function App() {
         </Routes>
       </div>
       <footer>
-      <p>© 2024 Microservices Frontend. Made By Ariel Campoverde Siuuuuuu!.</p>
+      <p>SI-001 Microservices Frontend. Made By Ariel Campoverde Siuuuuuu!.</p>
       </footer>
       </div>
     </Router>
