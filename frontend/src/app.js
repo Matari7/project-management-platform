@@ -1,17 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import './css/styles.css';  // Importa el archivo CSS
 
-import ReadTask from './components/ReadTask';
-import CreateTask from './components/CreateTask'
+import OrderService from './components/OrderService';
+import ProductService from './components/ProductService';
 import Chat from './components/Chat';
-import ProjectSubscriptionService from './components/ProjectSubscriptionService';
-import UserRoleService from './components/UserRoleService';
 
-// Importa los componentes para cada microservicio
 import CreateUser from './components/CreateUser';
 import DeleteUser from './components/DeleteUser';
 import UpdateUser from './components/UpdateUser';
 import ReadUser from './components/ReadUser';
+import UserRoleService from './components/UserRoleService';
 
 import CreateCommentary from './components/CreateCommentary';
 import DeleteCommentary from './components/DeleteCommentary';
@@ -26,51 +25,51 @@ import CreateProject from './components/CreateProject';
 import DeleteProject from './components/DeleteProject';
 import UpdateProject from './components/UpdateProject';
 import ReadProject from './components/ReadProject';
+import ProjectSubscriptionService from './components/ProjectSubscriptionService';
 
-import ProductService from './components/ProductService';
+import ReadTask from './components/ReadTask';
+import CreateTask from './components/CreateTask';
 
 function App() {
   return (
     <Router>
-      <div>
+      <div className="container">
         <h1>Microservices Frontend</h1>
         <nav>
-          <ul>
-            <li><Link to="/readtask-service">Read Task</Link></li>
-            <li><Link to="/createtask-service">Create Task</Link></li>
-            <li><Link to="/user-role-service">User Role Service</Link></li>
-          <li><Link to="/chat-service">Chat</Link></li>
-          <li><Link to="/projectSubscriptionService">Project Subscription Service</Link></li>
-
-            {/* Enlaces para los microservicios de usuarios */}
+          <ul className="nav-links">
+            {/* Fila 1 de enlaces */}
             <li><Link to="/create-user">Create User</Link></li>
             <li><Link to="/delete-user">Delete User</Link></li>
             <li><Link to="/update-user">Update User</Link></li>
-            <li><Link to="/read-user">Read User PENDIENTE</Link></li>
-
-            {/* Enlaces para los microservicios de comentarios */}
+            <li><Link to="/read-user">Read User</Link></li>
+            <li><Link to="/user-role-service">User Role Service</Link></li>
             <li><Link to="/createcommentary">Create Commentary</Link></li>
             <li><Link to="/deletecommentary">Delete Commentary</Link></li>
             <li><Link to="/updatecommentary">Update Commentary</Link></li>
             <li><Link to="/readcommentaries">Read Commentaries</Link></li>
 
-            {/* Enlaces para los microservicios de documentos */}
+            {/* Fila 2 de enlaces */}
             <li><Link to="/createdocument">Create Document</Link></li>
             <li><Link to="/deletedocument">Delete Document</Link></li>
             <li><Link to="/updatedocument">Update Document</Link></li>
-
-            {/* Enlaces para los microservicios de proyectos */}
             <li><Link to="/createproject">Create Project</Link></li>
             <li><Link to="/deleteproject">Delete Project</Link></li>
             <li><Link to="/updateproject">Update Project</Link></li>
             <li><Link to="/readproject">Read Project</Link></li>
-
-           
+            <li><Link to="/projectSubscriptionService">Project Subscription Service</Link></li>
+            <li><Link to="/readtask-service">Read Task</Link></li>
+            <li><Link to="/createtask-service">Create Task</Link></li>
+            <li><Link to="/files">File Upload</Link></li>
+            <li><Link to="/order-service">Order</Link></li>
+            <li><Link to="/product-service">Product</Link></li>
+            <li><Link to="/chat-service">Chat</Link></li>
           </ul>
         </nav>
 
+        <div className="content">
         <Routes>
 
+        <Route path="/order-service" element={<OrderService />}></Route>
         <Route path="/readtask-service" element={<ReadTask />} />
         <Route path="/createtask-service" element={<CreateTask />} />
         <Route path="/user-role-service" element={<UserRoleService />} />
@@ -101,9 +100,13 @@ function App() {
           <Route path="/deleteproject" element={<DeleteProject />} />
           <Route path="/updateproject" element={<UpdateProject />} />
           <Route path="/readproject" element={<ReadProject />} />
-
+  
 
         </Routes>
+      </div>
+      <footer>
+      <p>© 2024 Microservices Frontend. Made By Ariel Campoverde Siuuuuuu!.</p>
+      </footer>
       </div>
     </Router>
   );

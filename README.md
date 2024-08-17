@@ -4,55 +4,155 @@
     </a>
 </div>
 
-
-
-
-# Project Management Platform with 20 Microservices
+# Project Management Platform with 23 Microservices
 
 ## Problem
 
-The goal is to develop a Project Management System using a microservices-based architecture. Each microservice should be designed to perform a specific function, and MySQL and DynamoDB should be used as databases. In addition, a containerization with Docker and deploy with EC2 in AWS
+The goal is to develop a Project Management System using a microservices-based architecture. Each microservice is designed to perform a specific function, utilizing MySQL and MongoDB Atlas as databases. Additionally, the system is containerized with Docker and deployed on EC2 in AWS.
 
 ### Built With
 
-This multirepo was built using the technologies of express, axios, and JavaScript.
-a
+This multirepo was built using a variety of technologies, including Express.js, Axios, JavaScript, TypeScript, Go, gRPC, Kafka, and MongoDB Atlas.
+
 * [![Express][Express]][Express-url]
 * [![Ioredis][Ioredis]][Ioredis-url]
 * [![JavaScript][JavaScript]][JavaScript-url]
-* [![JsonWebToken][JsonWebToken]][JsonWebToken-url]
+* [![JsonWebToken][JsonWebToken-url]][JsonWebToken-url]
+* [![Go][Go]][Go-url]
+* [![TypeScript][TypeScript]][TypeScript-url]
+* [![gRPC][gRPC]][gRPC-url]
+* [![Kafka][Kafka]][Kafka-url]
+* [![MongoDB][MongoDB]][MongoDB-url]
 
 ## Project Structure
 
-This project is made up of several microservices:
+This project is composed of 23 microservices:
 
-1. **User Services**: Handles user registration, authentication, and authorization. 
+1. **Create User Service** (`create-user`): Handles the creation of new users.
    - **Endpoints**:
      - `POST /users`: Create a new user.
-     - `GET /users/{id}`: Retrieve user details.
-     - `PUT /users/{id}`: Update user information.
-     - `DELETE /users/{id}`: Delete a user.
-2. **Project Services**: Manages project creation, updating, and task assignments.
+
+2. **Create Commentary Service** (`createcommentary`): Manages the creation of comments associated with projects.
    - **Endpoints**:
-     - `POST /projects`: Create a new project.
-     - `GET /projects/{id}`: Retrieve project details.
-     - `PUT /projects/{id}`: Update project information.
-     - `DELETE /projects/{id}`: Delete a project.
-3. **Document Services**: Manages document creation, reading, updating, and deletion.
+     - `POST /commentaries`: Create a new commentary.
+
+3. **Create Document Service** (`createdocument`): Manages the creation of documents within projects.
    - **Endpoints**:
      - `POST /documents`: Create a new document.
-     - `GET /documents/{id}`: Retrieve document details.
-     - `PUT /documents/{id}`: Update document information.
-     - `DELETE /documents/{id}`: Delete a document.
-4. **Notification Services**: Send notifications or messages within the platform about important updates.
-5. **Audit Services**: Records audit logs for user actions within the system.
+
+4. **Create Project Service** (`createproject`): Manages the creation of new projects.
+   - **Endpoints**:
+     - `POST /projects`: Create a new project.
+
+5. **Delete User Service** (`delete-user`): Handles the deletion of users.
+   - **Endpoints**:
+     - `DELETE /users/{id}`: Delete a user by ID.
+
+6. **Delete Commentary Service** (`deletecommentary`): Manages the deletion of comments.
+   - **Endpoints**:
+     - `DELETE /commentaries/{id}`: Delete a commentary by ID.
+
+7. **Delete Document Service** (`deletedocument`): Manages the deletion of documents.
+   - **Endpoints**:
+     - `DELETE /documents/{id}`: Delete a document by ID.
+
+8. **Delete Project Service** (`deleteproject`): Manages the deletion of projects.
+   - **Endpoints**:
+     - `DELETE /projects/{id}`: Delete a project by ID.
+
+9. **Chat Service** (`chat`): Enables real-time communication between users within the platform using Kafka and WebSocket.
+   - **Endpoints**:
+     - `GET /chat`: Establish a WebSocket connection for chat.
+
+   - **Installation Dependencies**:
+     - **Language**: Go
+     - **Dependencies**:
+       ```sh
+       go get github.com/gorilla/websocket
+       go get github.com/confluentinc/confluent-kafka-go/kafka
+       ```
+
+10. **Project Subscription Service** (`projectSubscriptionService`): Allows users to subscribe to projects. This service uses Kafka to manage subscriptions and notifications.
+    - **Endpoints**:
+      - `POST /subscriptions`: Subscribe to a project.
+      - `DELETE /subscriptions/{id}`: Unsubscribe from a project.
+
+11. **Read Commentaries Service** (`readcommentaries`): Retrieves comments associated with projects.
+    - **Endpoints**:
+      - `GET /commentaries/{id}`: Retrieve a commentary by ID.
+
+12. **User Role Service** (`user-role-service`): Assigns roles to users (admin or regular user). This service is built with MongoDB Atlas.
+    - **Endpoints**:
+      - `POST /roles`: Assign roles to a user.
+    - **Database**: 
+      - **MongoDB Atlas**: A cloud-based, fully managed database service providing high availability, security, and scalability.
+
+13. **Read Project Service** (`readproject`): Retrieves project details.
+    - **Endpoints**:
+      - `GET /projects/{id}`: Retrieve project details by ID.
+
+14. **Create Task Service** (`createtask-service`): Manages the creation of tasks within projects. This service is built using TypeScript.
+    - **Endpoints**:
+      - `POST /tasks`: Create a new task.
+    - **Installation Dependencies**:
+      - **Language**: TypeScript
+      - **Dependencies**:
+        ```sh
+        npm install typescript ts-node @types/express @types/node
+        ```
+
+15. **Read Task Service** (`readtask-service`): Retrieves task details within projects. This service is implemented using gRPC.
+    - **Endpoints**:
+      - `GET /tasks/{id}`: Retrieve task details by ID.
+    - **Installation Dependencies**:
+      - **gRPC**: Requires `grpc` and `proto-loader`.
+      - **Dependencies**:
+        ```sh
+        npm install @grpc/grpc-js @grpc/proto-loader
+        ```
+
+16. **Update User Service** (`update-user`): Handles updating user information.
+    - **Endpoints**:
+      - `PUT /users/{id}`: Update user information by ID.
+
+17. **Update Commentary Service** (`updatecommentary`): Manages updating comments.
+    - **Endpoints**:
+      - `PUT /commentaries/{id}`: Update commentary by ID.
+
+18. **Update Document Service** (`updatedocument`): Manages updating documents within projects.
+    - **Endpoints**:
+      - `PUT /documents/{id}`: Update document information by ID.
+
+19. **Update Project Service** (`updateproject`): Manages updating project details.
+    - **Endpoints**:
+      - `PUT /projects/{id}`: Update project details by ID.
+
+20. **Create Task Service** (`createtask-service`): Manages the creation of tasks within projects.
+    - **Endpoints**:
+      - `POST /tasks`: Create a new task.
+
+21. **Read User Service** (`read-user`): Retrieves user information within the system. This service is built using Python.
+    - **Endpoints**:
+      - `GET /users/{id}`: Retrieve user details by ID.
+    - **Installation Dependencies**:
+      - **Language**: Python
+      - **Dependencies**:
+        ```sh
+        pip install flask pymysql
+        ```
+
+### Usage Overview
+
+In summary, the user logs in with the `login` service, which then allows them to create users and use the other microservices. Documents can only be created if the user and project exist, comments can be created if the user and project exist, and subscriptions to projects can be done if both the user and the project exist. The user can then update their respective projects, users, documents, comments, and tasks if they exist, and finally, roles (admin or user) can be assigned to users who are registered in the system.
 
 ### Prerequisites
 
-You must have the Docker desktop downloaded on the computer, due to the docker-compose in addition to having Postman installed, and the latest version of npm.
+You must have Docker Desktop installed on your computer due to the use of Docker Compose, as well as Postman, and the latest version of npm.
+
 * npm
   ```sh
   npm install npm@latest -g
+
   ```
 * Windows Version Docker Desktop
 [Docker](https://docs.docker.com/desktop/install/windows-install/)
@@ -244,7 +344,6 @@ _This is the installation of the project._
 
 This project was carried out by the following collaborator:
 
-* [Cristian Caiza](https://github.com/antichrist667)
 * [Ariel Campoverde](https://github.com/Matari7)
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -260,35 +359,3 @@ This project was carried out by the following collaborator:
 
 $env:NODE_OPTIONS = "--openssl-legacy-provider"
 npm start
-
-
-Revisar que elimine el delete-user, update-user
-
-Sale este error en el read-user
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Finished at: 2024-08-12T01:25:04-05:00
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project read-user: Compilation failure
-[ERROR] No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK?
-[ERROR]
-[ERROR] -> [Help 1]
-[ERROR]
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR]
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
-PS C:\Users\Ariel\Documents\GitHub\project-management-platform\read-user> ./mvnw.cmd clean package
->>
-"JAVA_HOME is not set or java.exe not found in JAVA_HOME."
-
-Mandar a CHATGPT
-
-Despues hay que hacer que el proyecto vincular los estudiantes
-
-Eliminar JWT para createcommentary
-
-Hay que estar muy atento en el Service ahi arregle lo de la base de datos a donde apunta
-
