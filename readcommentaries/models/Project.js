@@ -1,29 +1,30 @@
 const { DataTypes } = require('sequelize');
-const { sequelizeProject } = require('../db/connection');
-const User = require('./User');
+const { sequelizeProject } = require('../db/connection'); // Import the Sequelize instance for the project database
+const User = require('./User'); // Import the User model
 
+// Define the 'Project' model
 const Project = sequelizeProject.define('projects', {
     id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+        primaryKey: true, // Set this field as the primary key
+        autoIncrement: true // Automatically increment the value for each new record
     },
     name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false // This field cannot be null
     },
     description: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: false // This field cannot be null
     },
-    user_id: {  // Aquí se usa `user_id` como la columna que almacena la llave foránea
+    user_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false, // This field cannot be null
         references: {
-          model: User, // La referencia apunta al modelo User en la base de datos de create-user
-          key: 'id'
+            model: User, // Reference the User model
+            key: 'id' // Reference the 'id' field in the User model
         }
-      }
+    }
 });
 
 module.exports = Project;

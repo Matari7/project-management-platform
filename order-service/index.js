@@ -5,13 +5,16 @@ import sequelize from './db/connection.js';
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+// Middleware setup
+app.use(cors()); // Enables CORS
+app.use(express.json()); // Parses incoming JSON requests
 
-app.use('/api', orderRoutes);
+// API routes
+app.use('/api', orderRoutes); // Routes for order-related API endpoints
 
 const PORT = process.env.PORT || 4027;
 
+// Database and server setup
 sequelize.sync()
     .then(() => {
         app.listen(PORT, () => {

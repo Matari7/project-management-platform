@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
-const { userDb } = require('../db/connection'); // Ajusta la ruta a tu archivo de configuración de la base de datos
-
+const { userDb } = require('../db/connection'); 
+// Define the User model
 const User = userDb.define('users', {
   username: {
     type: DataTypes.STRING,
@@ -16,7 +16,7 @@ const User = userDb.define('users', {
     allowNull: false
   }
 }, {
-  timestamps: false // o true si quieres timestamps
+  timestamps: false 
 });
 
 module.exports = User;

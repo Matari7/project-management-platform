@@ -6,12 +6,13 @@ const client = require('prom-client');
 require('dotenv').config();
 require('./config/db');
 
-app.use(cors());
-app.use(express.json());
-app.use('/api/projects', projectRoutes);
+// Middleware setup
+app.use(cors()); // Enable Cross-Origin Resource Sharing
+app.use(express.json()); // Parse incoming JSON requests
+app.use('/api/projects', projectRoutes); // Route for project-related API endpoints
 
+// Prometheus metrics setup
 const register = new client.Registry();
-
 client.collectDefaultMetrics({ register });
 
 app.get('/metrics', async (req, res) => {
@@ -19,6 +20,7 @@ app.get('/metrics', async (req, res) => {
   res.end(await register.metrics());
 });
 
+// Start the server
 const PORT = process.env.PORT || 4007;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

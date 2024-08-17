@@ -3,6 +3,7 @@ const { sequelize } = require('../db/connection');
 const User = require('./User');
 const Project = require('./Project');
 
+// Define the 'documents' model
 const Document = sequelize.define('documents', {
     id: {
         type: DataTypes.INTEGER,
@@ -21,20 +22,20 @@ const Document = sequelize.define('documents', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Project,
+            model: Project, // Foreign key reference to the 'projects' model
             key: 'id'
-          }
+        }
     },
-    user_id: { 
+    user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: User,
-          key: 'id'
+            model: User, // Foreign key reference to the 'users' model
+            key: 'id'
         }
-      }
-    }, {
-        timestamps: false,
+    }
+}, {
+    timestamps: false, // Disables automatic timestamps
 });
 
 module.exports = Document;

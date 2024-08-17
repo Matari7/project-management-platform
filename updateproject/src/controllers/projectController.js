@@ -1,5 +1,6 @@
 const projectService = require('../services/projectService');
 
+// Request object with project ID and update details and response object to send the result
 exports.updateProject = async (req, res) => {
     try {
         const updatedProject = await projectService.updateProject(req.params.id, req.body);

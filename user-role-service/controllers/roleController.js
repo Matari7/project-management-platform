@@ -1,6 +1,7 @@
 const roleService = require('../services/roleService');
 const User = require('../models/userModel');
 
+//Adds a role to user, request object with userId and role in the body
 exports.addRole = async (req, res) => {
     try {
         const { userId, role } = req.body;
@@ -14,6 +15,7 @@ exports.addRole = async (req, res) => {
     }
 };
 
+// Request object with userId in the params and send the result
 exports.getRoles = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -30,10 +32,11 @@ exports.getRoles = async (req, res) => {
     }
 };
 
+//Retrieves all users with their IDs and usernames
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.findAll({
-            attributes: ['id', 'username']  // Obtenemos solo el ID y el nombre de usuario
+            attributes: ['id', 'username']  // Fetch only ID and username
         });
         res.status(200).json(users);
     } catch (error) {

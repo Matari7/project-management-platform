@@ -1,9 +1,9 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../db/connection');
-const User = require('./User'); // Asegúrate de que la ruta sea correcta
-const Project = require('./Project');
+const User = require('./User'); 
+const Project = require('./Project'); 
 
-
+// Define the 'Commentary' model
 const Commentary = sequelize.define('comments', {
     id: {
         type: DataTypes.INTEGER,
@@ -18,22 +18,22 @@ const Commentary = sequelize.define('comments', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Project, // La referencia apunta al modelo User en la base de datos de create-user
+            model: Project, // Reference to the Project model
             key: 'id'
-          }
+        }
     },
-    user_id: {  // Aquí se usa `user_id` como la columna que almacena la llave foránea
+    user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: User, // La referencia apunta al modelo User en la base de datos de create-user
-          key: 'id'
+            model: User, // Reference to the User model
+            key: 'id'
         }
-      }
-    }, {
-        timestamps: true,
-        underscored: true, // Esto asegura que Sequelize utilice el formato `snake_case` para los nombres de columnas
-        tableName: 'comments', 
+    }
+}, {
+    timestamps: true, // Enables automatic creation of `createdAt` and `updatedAt` timestamps
+    underscored: true, // Ensures Sequelize uses snake_case for column names
+    tableName: 'comments', // Specifies the table name in the database
 });
 
 module.exports = Commentary;

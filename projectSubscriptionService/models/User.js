@@ -1,22 +1,30 @@
 const { DataTypes } = require('sequelize');
-const { userDb } = require('../db/connection'); // Ajusta la ruta a tu archivo de configuración de la base de datos
+const { userDb } = require('../db/connection'); // Import the configured Sequelize instance for the user database
 
+// Define the 'users' model
 const User = userDb.define('users', {
+  
+  // Username of the user
   username: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: DataTypes.STRING, // Data type is STRING
+    allowNull: false // This field cannot be null
   },
+  
+  // Email of the user
   email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
+    type: DataTypes.STRING, // Data type is STRING
+    allowNull: false, // This field cannot be null
+    unique: true // Email must be unique across all users
   },
+  
+  // Hashed password of the user
   password_hash: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: DataTypes.STRING, // Data type is STRING
+    allowNull: false // This field cannot be null
   }
 }, {
-  timestamps: false // o true si quieres timestamps
+  timestamps: false // Disables automatic creation of 'createdAt' and 'updatedAt' fields
 });
 
+// Export the User model
 module.exports = User;

@@ -1,5 +1,6 @@
 const productService = require('../services/ProductService');
 
+// Handler to create a new product
 const createProduct = async (req, res) => {
     try {
         const product = await productService.createProduct(req.body);
@@ -9,6 +10,7 @@ const createProduct = async (req, res) => {
     }
 };
 
+// Handler to retrieve all products
 const getProducts = async (req, res) => {
     try {
         const products = await productService.getAllProducts();

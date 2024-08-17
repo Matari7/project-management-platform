@@ -2,26 +2,31 @@ const { DataTypes } = require('sequelize');
 const { sequelizeProject } = require('../db/connection');
 const User = require('./User');
 
+// Define the 'projects' model
 const Project = sequelizeProject.define('projects', {
 
+    // Project name field
     name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false // This field cannot be null
     },
+    // Project description field
     description: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: false // This field cannot be null
     },
-    user_id: {  // Aquí se usa `user_id` como la columna que almacena la llave foránea
+    // Foreign key to reference the User model
+    user_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false, // This field cannot be null
         references: {
-            model: User, // La referencia apunta al modelo User en la base de datos de create-user
-            key: 'id'
+            model: User, // The 'user_id' column references the 'User' model
+            key: 'id'   // The foreign key is mapped to the 'id' field of the User model
         }
     }
 }, {
-    timestamps: false,
+    timestamps: false, // Disables automatic creation of 'createdAt' and 'updatedAt' fields
 });
 
+// Export the Project model
 module.exports = Project;

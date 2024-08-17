@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import './css/styles.css';  // Importa el archivo CSS
+import './css/styles.css';  // Import CSS file for styling
 
+// Import components for different routes
 import FileUpload from './components/FileUpload';
 import OrderService from './components/OrderService';
 import ProductService from './components/ProductService';
@@ -31,6 +32,7 @@ import ProjectSubscriptionService from './components/ProjectSubscriptionService'
 import ReadTask from './components/ReadTask';
 import CreateTask from './components/CreateTask';
 
+// Main App component
 function App() {
   return (
     <Router>
@@ -38,7 +40,7 @@ function App() {
         <h1>Microservices Frontend</h1>
         <nav>
           <ul className="nav-links">
-            {/* Fila 1 de enlaces */}
+            {/* Row 1 of links */}
             <li><Link to="/create-user">Create User</Link></li>
             <li><Link to="/delete-user">Delete User</Link></li>
             <li><Link to="/update-user">Update User</Link></li>
@@ -49,7 +51,7 @@ function App() {
             <li><Link to="/updatecommentary">Update Commentary</Link></li>
             <li><Link to="/readcommentaries">Read Commentaries</Link></li>
 
-            {/* Fila 2 de enlaces */}
+            {/* Row 2 of links */}
             <li><Link to="/createdocument">Create Document</Link></li>
             <li><Link to="/deletedocument">Delete Document</Link></li>
             <li><Link to="/updatedocument">Update Document</Link></li>
@@ -68,49 +70,46 @@ function App() {
         </nav>
 
         <div className="content">
-        <Routes>
+          <Routes>
+            {/* Route definitions */}
+            <Route path="/files" element={<FileUpload />} />
 
-        <Route path="/files" element={<FileUpload />} />
+            <Route path="/order-service" element={<OrderService />} />
 
+            <Route path="/readtask-service" element={<ReadTask />} />
+            <Route path="/createtask-service" element={<CreateTask />} />
+            
+            <Route path="/user-role-service" element={<UserRoleService />} />
+            <Route path="/chat-service" element={<Chat />} />
+            
+            <Route path="/projectSubscriptionService" element={<ProjectSubscriptionService />} />
+            
+            <Route path="/product-service" element={<ProductService />} />
 
-        <Route path="/order-service" element={<OrderService />} />
-        <Route path="/readtask-service" element={<ReadTask />} />
-        <Route path="/createtask-service" element={<CreateTask />} />
-        <Route path="/user-role-service" element={<UserRoleService />} />
-        <Route path="/chat-service" element={<Chat />} />
-        <Route path="/projectSubscriptionService" element={<ProjectSubscriptionService />} />
+            <Route path="/create-user" element={<CreateUser />} />
+            <Route path="/delete-user" element={<DeleteUser />} />
+            <Route path="/update-user" element={<UpdateUser />} />
+            <Route path="/read-user" element={<ReadUser />} />
 
-        <Route path="/product-service" element={<ProductService />} />
+            <Route path="/createcommentary" element={<CreateCommentary />} />
+            <Route path="/deletecommentary" element={<DeleteCommentary />} />
+            <Route path="/updatecommentary" element={<UpdateCommentary />} />
+            <Route path="/readcommentaries" element={<ReadCommentaries />} />
 
-          {/* Rutas para gestionar usuarios */}
-          <Route path="/create-user" element={<CreateUser />} />
-          <Route path="/delete-user" element={<DeleteUser />} />
-          <Route path="/update-user" element={<UpdateUser />} />
-          <Route path="/read-user" element={<ReadUser />} />
+            <Route path="/createdocument" element={<CreateDocument />} />
+            <Route path="/deletedocument" element={<DeleteDocument />} />
+            <Route path="/updatedocument" element={<UpdateDocument />} />
 
-          {/* Rutas para gestionar comentarios */}
-          <Route path="/createcommentary" element={<CreateCommentary />} />
-          <Route path="/deletecommentary" element={<DeleteCommentary />} />
-          <Route path="/updatecommentary" element={<UpdateCommentary />} />
-          <Route path="/readcommentaries" element={<ReadCommentaries />} />
-
-          {/* Rutas para gestionar documentos */}
-          <Route path="/createdocument" element={<CreateDocument />} />
-          <Route path="/deletedocument" element={<DeleteDocument />} />
-          <Route path="/updatedocument" element={<UpdateDocument />} />
-
-          {/* Rutas para gestionar proyectos */}
-          <Route path="/createproject" element={<CreateProject />} />
-          <Route path="/deleteproject" element={<DeleteProject />} />
-          <Route path="/updateproject" element={<UpdateProject />} />
-          <Route path="/readproject" element={<ReadProject />} />
-  
-
-        </Routes>
-      </div>
-      <footer>
-      <p>SI-001 Microservices Frontend. Made By Ariel Campoverde Siuuuuuu!.</p>
-      </footer>
+            <Route path="/createproject" element={<CreateProject />} />
+            <Route path="/deleteproject" element={<DeleteProject />} />
+            <Route path="/updateproject" element={<UpdateProject />} />
+            <Route path="/readproject" element={<ReadProject />} />
+          </Routes>
+        </div>
+        
+        <footer>
+          <p>SI-001 Microservices Frontend. Made By Ariel Campoverde Siuuuuuu!.</p>
+        </footer>
       </div>
     </Router>
   );

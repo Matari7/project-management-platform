@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const { sequelizeProject } = require('../db/connection');
 const User = require('./User');
 
+// Define the 'projects' model
 const Project = sequelizeProject.define('projects', {
     id: {
         type: DataTypes.INTEGER,
@@ -16,14 +17,14 @@ const Project = sequelizeProject.define('projects', {
         type: DataTypes.TEXT,
         allowNull: false
     },
-    user_id: {  // Aquí se usa `user_id` como la columna que almacena la llave foránea
+    user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: User, // La referencia apunta al modelo User en la base de datos de create-user
-          key: 'id'
+            model: User, // Foreign key referencing the 'User' model
+            key: 'id'
         }
-      }
+    }
 });
 
 module.exports = Project;

@@ -1,8 +1,9 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../db/connection');
-const User = require('./User'); // Asegúrate de que la ruta sea correcta
+const User = require('./User'); // Ensure the path to User model is correct
 const Project = require('./Project');
 
+// Define the Commentary model
 const Commentary = sequelize.define('comments', {
     id: {
         type: DataTypes.INTEGER,
@@ -17,20 +18,20 @@ const Commentary = sequelize.define('comments', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Project, // La referencia apunta al modelo User en la base de datos de create-user
+            model: Project, // Foreign key reference to Project model
             key: 'id'
-          }
+        }
     },
-    user_id: {  // Aquí se usa `user_id` como la columna que almacena la llave foránea
+    user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: User, // La referencia apunta al modelo User en la base de datos de create-user
-          key: 'id'
+            model: User, // Foreign key reference to User model
+            key: 'id'
         }
-      }
-    }, {
-        timestamps: false,
+    }
+}, {
+    timestamps: false, // Disable automatic timestamps
 });
 
 module.exports = Commentary;

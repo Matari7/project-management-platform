@@ -6,6 +6,7 @@ const sequelize = new Sequelize(process.env.PRODUCT_DB_NAME, process.env.PRODUCT
     dialect: 'mysql',
 });
 
+// Authenticate connection to the database
 sequelize.authenticate()
     .then(() => console.log('Connected to products_db'))
     .catch((err) => console.error('Unable to connect to the database:', err));

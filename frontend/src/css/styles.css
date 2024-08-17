@@ -24,13 +24,13 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;  /* Añade espacio entre los elementos */
+    gap: 10px;  
     list-style: none;
     padding: 0;
   }
   
   .nav-links li {
-    flex: 1 0 21%; /* Ajusta el tamaño de los enlaces para que se distribuyan equitativamente */
+    flex: 1 0 21%; 
     margin: 5px 0;
   }
   

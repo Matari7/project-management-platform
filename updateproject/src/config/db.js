@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
+// Initialize Sequelize instances for project database
 const sequelize = new Sequelize(
     process.env.PROJECT_DB_NAME, 
     process.env.PROJECT_DB_USER, 

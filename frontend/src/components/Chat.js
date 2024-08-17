@@ -39,7 +39,7 @@ const Chat = () => {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)} // Update the message state as the user types
             />
-            <button onClick={sendMessage}>Send</button> // Send the message when the button is clicked
+            <button onClick={sendMessage}>Send</button>      
         </div>
     );
 };

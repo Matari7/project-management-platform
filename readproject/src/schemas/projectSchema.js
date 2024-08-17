@@ -1,5 +1,6 @@
 const { buildSchema } = require('graphql');
 
+// Define GraphQL schema
 const schema = buildSchema(`
     type Project {
         id: ID!

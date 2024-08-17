@@ -2,6 +2,7 @@ const { Sequelize } = require('sequelize');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+// Set up Sequelize for MySQL database
 const sequelize = new Sequelize(process.env.USER_DB_NAME, 
     process.env.USER_DB_USER, 
     process.env.USER_DB_PASSWORD, {
@@ -9,6 +10,7 @@ const sequelize = new Sequelize(process.env.USER_DB_NAME,
     dialect: 'mysql'
 });
 
+// Connect to MongoDB Atlas
 const mongoDBConnection = async () => {
     try {
         await mongoose.connect(process.env.MONGODB_URI, {
