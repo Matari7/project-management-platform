@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import './css/styles.css';  // Import CSS file for styling
 
 // Import components for different routes
+import Login from './components/Login';
 import FileUpload from './components/FileUpload';
 import OrderService from './components/OrderService';
 import ProductService from './components/ProductService';
@@ -41,6 +42,7 @@ function App() {
         <nav>
           <ul className="nav-links">
             {/* Row 1 of links */}
+            <li><Link to="/login">Login</Link></li>
             <li><Link to="/create-user">Create User</Link></li>
             <li><Link to="/delete-user">Delete User</Link></li>
             <li><Link to="/update-user">Update User</Link></li>
@@ -72,6 +74,7 @@ function App() {
         <div className="content">
           <Routes>
             {/* Route definitions */}
+            <Route path="/login" element={<Login />} />
             <Route path="/files" element={<FileUpload />} />
 
             <Route path="/order-service" element={<OrderService />} />

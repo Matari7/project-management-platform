@@ -174,54 +174,57 @@ _This is the installation of the project._
    ```
 3. Open the terminal and type the following command
    ```sh
+   cd docker
    docker-compose up --build
    ```
-4. You can push the project to use the CI/CD for EC2 and use the microservices
+4. You can push the project to use the CI/CD for DigitalOcean and use the microservices
    ```sh
    Only commit and push the project to use the CI/CD and go to EC2 AWS
    ```
 
 ## Usage
 
-1. **Creating Projects**:
-   - Open Postman and add the following URL in the POST method:
-     ```sh
-     http://localhost:3018/createprojects
-     ```
-   - Add the following body in the JSON format:
-     ```sh
-     {
-       "name": "New Project",
-       "description": "Project description"
-     }
-     ```
-   - Click on the Send button and you will see the following response:
-     'Project added'
+**In Localhost**
 
-2. **Retrieving Projects**:
-   - To review the created projects, change the endpoint to and switch to the GET method:
-     ```sh
-     http://localhost:3018/projects
-     ```
+- Go to the .env and change the REACT_APP_API_URL and paste
+```sh
+http://localhost
+```
+1. **Using the frontend**:
+- Open the frontend folder and run the following command to start the frontend server:
+- Paste the following command in the terminal
+- $env:NODE_OPTIONS = "--openssl-legacy-provider"
+Then in terminal
+    ```sh
+     npm start
+    ```
 
-3. **User Login**:
-   - Open a new tab in Postman and put the following URL in the POST method:
-     ```sh
-     http://localhost:3002/login
-     ```
-   - To log in, use the following JSON for an existing user:
-     ```sh
-     {
-       "username": "admin",
-       "password": "password"
-     }
-     ```
-   - Click on the Send button and you will see the following response with a JSON message containing the token that lasts only 1 hour.
+2. **Using the microservices in python**:
+- Open other terminal an paste the following command to start the python microservice (read-user)
+ ```sh
+ cd read-user
+venv\Scripts\activate
+python app.py
+```
+3. **Using the microservices in golang**:
+- Open other terminal an paste the following command to start the golang microservice (chat-service)
+ ```sh
 
-4. **Using the Token**:
-   - After receiving the token, go to the Authorization tab, select Bearer Token, and paste the received token.
+cd chat-service
+go run main.go
+```
 
-![Screenshot](https://i.imgur.com/BW8qBIx.png)
+**In Docker-compose**
+- In terminal put the following command:
+ ```sh
+
+cd docker
+docker-compose up --build
+```
+- And go to the browser and write in the URL
+ ```sh
+REACT_APP_API_URL=http://localhost
+```
 
 ## Microservices Explanation
 
@@ -355,7 +358,3 @@ This project was carried out by the following collaborator:
 [JavaScript-url]: https://developer.mozilla.org/es/docs/Learn/JavaScript/First_steps/What_is_JavaScript
 [JsonWebToken]: https://img.shields.io/badge/JsonWebToken-D5A000
 [JsonWebToken-url]: https://jwt.io/introduction
-
-
-$env:NODE_OPTIONS = "--openssl-legacy-provider"
-npm start
