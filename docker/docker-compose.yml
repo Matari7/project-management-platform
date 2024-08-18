@@ -13,14 +13,16 @@ services:
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"       
-      - "443:443"   
+      - "443:443"
+      - "8080:8080"   
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./letsencrypt:/letsencrypt"
+      - ./traefik.log:/traefik.log
     networks:
       - web
     labels:
-      - "traefik.http.routers.api.rule=Host(`traefik.yourdomain.com`)"
+      - "traefik.http.routers.api.rule=Host(`traefik.localhost`)"
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.entrypoints=web"
 
@@ -31,6 +33,9 @@ services:
       - "3000:3000"
     working_dir: /app
     command: npm start
+    labels:
+    - "traefik.http.routers.frontend.rule=Host(`frontend.localhost`)"
+    - "traefik.http.services.frontend.loadbalancer.server.port=3000"
     networks:
       - web
 
@@ -44,7 +49,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.login.rule=Host(`login.yourdomain.com`)"
+      - "traefik.http.routers.login.rule=Host(`login.localhost`)"
       - "traefik.http.services.login.loadbalancer.server.port=5000"
 
   create-user:
@@ -57,7 +62,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.create-user.rule=Host(`create-user.yourdomain.com`)"
+      - "traefik.http.routers.create-user.rule=Host(`create-user.localhost`)"
       - "traefik.http.services.create-user.loadbalancer.server.port=4001"
 
   delete-user:
@@ -70,7 +75,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.delete-user.rule=Host(`delete-user.yourdomain.com`)"
+      - "traefik.http.routers.delete-user.rule=Host(`delete-user.localhost`)"
       - "traefik.http.services.delete-user.loadbalancer.server.port=4002"
 
   update-user:
@@ -83,7 +88,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.update-user.rule=Host(`update-user.yourdomain.com`)"
+      - "traefik.http.routers.update-user.rule=Host(`update-user.localhost`)"
       - "traefik.http.services.update-user.loadbalancer.server.port=4003"
 
   read-user:
@@ -96,7 +101,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.read-user.rule=Host(`read-user.yourdomain.com`)"
+      - "traefik.http.routers.read-user.rule=Host(`read-user.localhost`)"
       - "traefik.http.services.read-user.loadbalancer.server.port=4004"
 
   createproject:
@@ -109,7 +114,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.createproject.rule=Host(`createproject.yourdomain.com`)"
+      - "traefik.http.routers.createproject.rule=Host(`createproject.localhost`)"
       - "traefik.http.services.createproject.loadbalancer.server.port=4005"
 
   deleteproject:
@@ -122,7 +127,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.deleteproject.rule=Host(`deleteproject.yourdomain.com`)"
+      - "traefik.http.routers.deleteproject.rule=Host(`deleteproject.localhost`)"
       - "traefik.http.services.deleteproject.loadbalancer.server.port=4006"
 
   updateproject:
@@ -135,7 +140,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.updateproject.rule=Host(`updateproject.yourdomain.com`)"
+      - "traefik.http.routers.updateproject.rule=Host(`updateproject.localhost`)"
       - "traefik.http.services.updateproject.loadbalancer.server.port=4007"
 
   readproject:
@@ -148,7 +153,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.readproject.rule=Host(`readproject.yourdomain.com`)"
+      - "traefik.http.routers.readproject.rule=Host(`readproject.localhost`)"
       - "traefik.http.services.readproject.loadbalancer.server.port=4008"
 
   createcommentary:
@@ -161,7 +166,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.createcommentary.rule=Host(`createcommentary.yourdomain.com`)"
+      - "traefik.http.routers.createcommentary.rule=Host(`createcommentary.localhost`)"
       - "traefik.http.services.createcommentary.loadbalancer.server.port=4009"
 
   deletecommentary:
@@ -174,7 +179,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.deletecommentary.rule=Host(`deletecommentary.yourdomain.com`)"
+      - "traefik.http.routers.deletecommentary.rule=Host(`deletecommentary.localhost`)"
       - "traefik.http.services.deletecommentary.loadbalancer.server.port=4010"
 
   updatecommentary:
@@ -187,7 +192,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.updatecommentary.rule=Host(`updatecommentary.yourdomain.com`)"
+      - "traefik.http.routers.updatecommentary.rule=Host(`updatecommentary.localhost`)"
       - "traefik.http.services.updatecommentary.loadbalancer.server.port=4011"
 
   readcommentaries:
@@ -200,7 +205,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.readcommentaries.rule=Host(`readcommentaries.yourdomain.com`)"
+      - "traefik.http.routers.readcommentaries.rule=Host(`readcommentaries.localhost`)"
       - "traefik.http.services.readcommentaries.loadbalancer.server.port=4012"
 
   createdocument:
@@ -213,7 +218,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.createdocument.rule=Host(`createdocument.yourdomain.com`)"
+      - "traefik.http.routers.createdocument.rule=Host(`createdocument.localhost`)"
       - "traefik.http.services.createdocument.loadbalancer.server.port=4013"
 
   deletedocument:
@@ -226,7 +231,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.deletedocument.rule=Host(`deletedocument.yourdomain.com`)"
+      - "traefik.http.routers.deletedocument.rule=Host(`deletedocument.localhost`)"
       - "traefik.http.services.deletedocument.loadbalancer.server.port=4014"
 
   updatedocument:
@@ -239,14 +244,14 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.updatedocument.rule=Host(`updatedocument.yourdomain.com`)"
+      - "traefik.http.routers.updatedocument.rule=Host(`updatedocument.localhost`)"
       - "traefik.http.services.updatedocument.loadbalancer.server.port=4015"
 
   chat-service:
     build:
       context: ../chat-service
     ports:
-      - "8080:8080"
+      - "8081:8081"
     working_dir: /app
     command: go run main.go
     env_file:
@@ -254,8 +259,8 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.chat.rule=Host(`chat.yourdomain.com`)"
-      - "traefik.http.services.chat.loadbalancer.server.port=8080"
+      - "traefik.http.routers.chat.rule=Host(`chat.localhost`)"
+      - "traefik.http.services.chat.loadbalancer.server.port=8081"
 
   projectsubscriptionservice:
     build:
@@ -267,7 +272,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.projectSubscriptionService.rule=Host(`projectSubscriptionService.yourdomain.com`)"
+      - "traefik.http.routers.projectSubscriptionService.rule=Host(`projectSubscriptionService.localhost`)"
       - "traefik.http.services.projectSubscriptionService.loadbalancer.server.port=4021"
 
   user-role-service:
@@ -280,7 +285,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.user-role-service.rule=Host(`user-role-service.yourdomain.com`)"
+      - "traefik.http.routers.user-role-service.rule=Host(`user-role-service.localhost`)"
       - "traefik.http.services.user-role-service.loadbalancer.server.port=4023"
 
   zookeeper:
@@ -324,7 +329,7 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.createtask-service.rule=Host(`createtask-service.yourdomain.com`)"
+      - "traefik.http.routers.createtask-service.rule=Host(`createtask-service.localhost`)"
       - "traefik.http.services.createtask-service.loadbalancer.server.port=4024"
 
   readtask-service:
@@ -339,8 +344,48 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.readtask-service.rule=Host(`readtask-service.yourdomain.com`)"
+      - "traefik.http.routers.readtask-service.rule=Host(`readtask-service.localhost`)"
       - "traefik.http.services.readtask-service.loadbalancer.server.port=4025"
+
+  files:
+    build:
+      context: ../files
+    ports:
+      - "4028:4028"
+    env_file:
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.files.rule=Host(`files-service.localhost`)"
+      - "traefik.http.services.files.loadbalancer.server.port=4028"
+
+  product-service:
+    build:
+      context: ../product-service
+    ports:
+      - "4026:4026"
+    env_file:
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.product-service.rule=Host(`product-service.localhost`)"
+      - "traefik.http.services.product-service.loadbalancer.server.port=4026"
+
+  order-service:
+    build:
+      context: ../order-service
+    ports:
+      - "4027:4027"
+    env_file:
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.http.routers.order-service.rule=Host(`order-service.localhost`)"
+      - "traefik.http.services.order-service.loadbalancer.server.port=4027"
+
 
 networks:
   web:
