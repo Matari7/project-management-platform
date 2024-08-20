@@ -1,6 +1,7 @@
 const { exec } = require('child_process');
 
 const services = [
+    { name: 'login', command: 'npm start --prefix ./login' },
     { name: 'create-user', command: 'npm start --prefix ./create-user' },
     { name: 'createcommentary', command: 'npm start --prefix ./createcommentary' },
     { name: 'createdocument', command: 'npm start --prefix ./createdocument' },
