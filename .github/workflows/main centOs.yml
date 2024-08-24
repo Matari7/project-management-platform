@@ -207,3 +207,16 @@ jobs:
           port=${ports[$index]}
           ssh -o StrictHostKeyChecking=no -i key root@${{ secrets.DROPLET_IP_DEBIAN }} "sudo docker run -d --name $service-plataform-do -p $port:$port ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest"
         done
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Deploy to DigitalOcean
+      if: ${{ github.event_name == 'push' }}
+      env:
+        DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+      run: |
+            curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $DIGITALOCEAN_TOKEN" https://api.digitalocean.com/v2/apps/$APP_ID/deployments  
