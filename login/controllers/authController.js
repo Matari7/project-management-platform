@@ -16,7 +16,6 @@ export const loginUser = async (req, res) => {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
 
-        // Generates a JWT for the user
         // Returns a response message
 
         res.status(200).json({ message: 'Login successful', userId: user.id });
