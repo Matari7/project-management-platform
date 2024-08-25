@@ -9,7 +9,7 @@ services:
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.email=tu-email@example.com"
+      - "--certificatesresolvers.myresolver.acme.email=arimcf10@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"       
@@ -34,7 +34,8 @@ services:
     working_dir: /app
     command: npm start
     labels:
-    - "traefik.http.routers.frontend.rule=Host(`frontend.localhost`)"
+    - "traefik.http.routers.frontend.rule=Host(`frontend.sea-turtle-app-ylpr8.ondigitalocean.app`)"
+    - "traefik.http.routers.frontend.entrypoints=websecure"
     - "traefik.http.services.frontend.loadbalancer.server.port=3000"
     networks:
       - web
@@ -49,7 +50,8 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.login.rule=Host(`login.localhost`)"
+      - "traefik.http.routers.login.rule=Host(`login.sea-turtle-app-ylpr8.ondigitalocean.app`)"
+      - "traefik.http.routers.login.entrypoints=websecure"
       - "traefik.http.services.login.loadbalancer.server.port=5000"
 
   create-user:
@@ -62,7 +64,8 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.create-user.rule=Host(`create-user.localhost`)"
+      - "traefik.http.routers.create-user.rule=Host(`create-user.sea-turtle-app-ylpr8.ondigitalocean.app`) && PathPrefix(`/create-user`)"
+      - "traefik.http.routers.create-user.entrypoints=websecure"
       - "traefik.http.services.create-user.loadbalancer.server.port=4001"
 
   delete-user:
@@ -75,7 +78,8 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.delete-user.rule=Host(`delete-user.localhost`)"
+      - "traefik.http.routers.delete-user.rule=Host(`sea-turtle-app-ylpr8.ondigitalocean.app`) && PathPrefix(`/delete-user`)"
+      - "traefik.http.routers.delete-user.entrypoints=websecure"
       - "traefik.http.services.delete-user.loadbalancer.server.port=4002"
 
   update-user:
@@ -101,7 +105,8 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.read-user.rule=Host(`read-user.localhost`)"
+      - "traefik.http.routers.read-user.rule=Host(`sea-turtle-app-ylpr8.ondigitalocean.app`) && PathPrefix(`/read-user`)"
+      - "traefik.http.routers.read-user.entrypoints=websecure"
       - "traefik.http.services.read-user.loadbalancer.server.port=4004"
 
   createproject:

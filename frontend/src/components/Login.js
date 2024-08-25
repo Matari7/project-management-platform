@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+
+const Login = ({ onLoginSuccess }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,6 +25,8 @@ const Login = () => {
                 const responseData = await response.json();
                 console.log('Login successful:', responseData);
                 setMessage('Login successful!');
+                onLoginSuccess();
+                navigate('/');
             } else {
                 const errorData = await response.json();
                 setMessage(`Failed to login: ${errorData.message}`);

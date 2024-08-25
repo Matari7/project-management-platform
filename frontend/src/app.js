@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import './css/styles.css';  // Import CSS file for styling
 
 // Import components for different routes
@@ -35,6 +35,17 @@ import CreateTask from './components/CreateTask';
 
 // Main App component
 function App() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('isLoggedIn'));
+
+
+  const handleLoginSuccess = () => {
+    localStorage.setItem('isLoggedIn', 'true'); 
+    setIsLoggedIn(true);
+  };
+
+
+
   return (
     <Router>
       <div className="container">
@@ -42,7 +53,6 @@ function App() {
         <nav>
           <ul className="nav-links">
             {/* Row 1 of links */}
-            <li><Link to="/login">Login</Link></li>
             <li><Link to="/create-user">Create User</Link></li>
             <li><Link to="/delete-user">Delete User</Link></li>
             <li><Link to="/update-user">Update User</Link></li>
@@ -74,7 +84,9 @@ function App() {
         <div className="content">
           <Routes>
             {/* Route definitions */}
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Navigate to={isLoggedIn ? "/create-user" : "/login"} />} />
+
+            <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
             <Route path="/files" element={<FileUpload />} />
 
             <Route path="/order-service" element={<OrderService />} />
@@ -111,7 +123,7 @@ function App() {
         </div>
         
         <footer>
-          <p>SI-001 Microservices Frontend. Made By Ariel Campoverde Siuuuuuu!.</p>
+          <p>SI-001 Microservices Frontend. Made By Ariel Campoverde Siuuuuuu!</p>
         </footer>
       </div>
     </Router>
