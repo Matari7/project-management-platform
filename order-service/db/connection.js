@@ -5,7 +5,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Create a new Sequelize instance to connect to the MySQL database
-const sequelize = new Sequelize(process.env.ORDER_DB_NAME, process.env.ORDER_DB_USER, process.env.ORDER_DB_PASSWORD, {
+const sequelize = new Sequelize(process.env.ORDER_DB_NAME, 
+    process.env.ORDER_DB_USER, 
+    process.env.ORDER_DB_PASSWORD, 
+    {
     host: process.env.ORDER_DB_HOST,  // Database host address
     dialect: 'mysql',  // Dialect for the database (MySQL in this case)
 });
